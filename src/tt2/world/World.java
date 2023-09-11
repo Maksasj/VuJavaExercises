@@ -1,5 +1,6 @@
 package tt2.world;
 
+import com.raylib.java.raymath.Vector2;
 import tt2.common.IRenderable;
 import tt2.common.IStepable;
 import tt2.common.ITickable;
@@ -14,7 +15,7 @@ public class World implements IRenderable, ITickable, IStepable {
 
         for(int x = 0; x < 16; ++x) {
             for(int y = 0; y < 16; ++y) {
-                tiles[x][y] = new DefaultTile();
+                tiles[x][y] = new DefaultTile(new Vector2(x, y));
             }
         }
     }

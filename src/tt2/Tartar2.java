@@ -38,11 +38,11 @@ public class Tartar2 {
     public static void run() {
         while (!raylib.core.WindowShouldClose()) {
             // Tick part
-                activeScene.tick();
+            activeScene.tick();
 
             // Rendering part
             raylib.core.BeginDrawing();
-                raylib.core.ClearBackground(Color.WHITE);
+                raylib.core.ClearBackground(Color.DARKGRAY);
                 activeScene.render();
             raylib.core.EndDrawing();
         }
