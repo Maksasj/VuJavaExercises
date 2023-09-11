@@ -1,6 +1,6 @@
 package tt2.scene;
 
-import tt2.common.Camera;
+import tt2.common.camera.Camera;
 
 public class MainMenuScene extends Scene {
     @Override

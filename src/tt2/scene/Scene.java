@@ -1,6 +1,6 @@
 package tt2.scene;
 
-import tt2.common.Camera;
+import tt2.common.camera.Camera;
 import tt2.common.IRenderable;
 import tt2.common.IStepable;
 import tt2.common.ITickable;

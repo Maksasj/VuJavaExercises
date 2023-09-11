@@ -2,6 +2,7 @@ package tt2;
 
 import com.raylib.java.Raylib;
 import com.raylib.java.core.Color;
+import tt2.common.Settings;
 import tt2.scene.GameScene;
 import tt2.scene.MainMenuScene;
 import tt2.scene.Scene;
@@ -11,7 +12,6 @@ public class Tartar2 {
     public static Raylib raylib;
 
     public static TextureAssetManager textureAssetManager;
-
     public static GameScene gameScene;
     public static MainMenuScene mainMenuScene;
     public static Scene activeScene;
@@ -21,7 +21,7 @@ public class Tartar2 {
     }
 
     public static void init() {
-        raylib.core.InitWindow(800, 600, "Tartar 2");
+        raylib.core.InitWindow(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT, "Tartar 2");
 
         textureAssetManager = new TextureAssetManager();
 

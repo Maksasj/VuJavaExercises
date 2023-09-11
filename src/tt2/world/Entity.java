@@ -1,14 +1,15 @@
 package tt2.world;
 
 import com.raylib.java.raymath.Vector2;
+import com.raylib.java.raymath.Vector3;
 import tt2.common.IPositioned;
 import tt2.common.IStepable;
 import tt2.common.ITickable;
 
 public class Entity implements ITickable, IStepable, IPositioned {
-    private Vector2 position;
+    private Vector3 position;
 
-    public Entity(Vector2 pos) {
+    public Entity(Vector3 pos) {
         position = pos;
     }
 
@@ -23,12 +24,12 @@ public class Entity implements ITickable, IStepable, IPositioned {
     }
 
     @Override
-    public Vector2 getPosition() {
+    public Vector3 getPosition() {
         return position;
     }
 
     @Override
-    public void setPosition(Vector2 newPos) {
+    public void setPosition(Vector3 newPos) {
         position = newPos;
     }
 
@@ -36,7 +37,8 @@ public class Entity implements ITickable, IStepable, IPositioned {
     public Vector2 getIsometricPosition() {
         float x = position.x;
         float y = position.y;
+        float z = position.z;
 
-        return new Vector2(0.5f * x + y * -0.5f, 0.25f * x + y * 0.25f);
+        return new Vector2(0.5f * x + z * -0.5f, 0.25f * x + z * 0.25f + y * 0.5f);
     }
 }

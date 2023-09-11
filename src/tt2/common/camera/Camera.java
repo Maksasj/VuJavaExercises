@@ -1,26 +1,29 @@
-package tt2.common;
+package tt2.common.camera;
 
 import com.raylib.java.raymath.Vector2;
+import com.raylib.java.raymath.Vector3;
+import tt2.common.IPositioned;
 
 public class Camera implements IPositioned {
-    private Vector2 position;
+    private Vector3 position;
 
-    public Camera(Vector2 pos) {
+    public Camera(Vector3 pos) {
         position = pos;
     }
 
-    public void move(Vector2 moveDir) {
+    public void move(Vector3 moveDir) {
         position.x += moveDir.x;
         position.y += moveDir.y;
+        position.z += moveDir.z;
     }
 
     @Override
-    public Vector2 getPosition() {
+    public Vector3 getPosition() {
         return position;
     }
 
     @Override
-    public void setPosition(Vector2 newPos) {
+    public void setPosition(Vector3 newPos) {
         position = newPos;
     }
 
