@@ -33,7 +33,7 @@ public class WavyTile extends Tile {
             TextureAssetManager.BASE_TILE_TEXTURE,
             new Vector2(
                 tilePosition.x * DEFAULT_TILE_SCALE * 32.0f - DEFAULT_TILE_SCALE * 16 + cameraPosition.x,
-                tilePosition.y * DEFAULT_TILE_SCALE * 32.0f + cameraPosition.z + wavyRate * waveAmplitude
+                tilePosition.y * DEFAULT_TILE_SCALE * 32.0f + cameraPosition.z + wavyRate * waveAmplitude - getYOffset()
             ),
             0,
             3,

@@ -6,9 +6,11 @@ import tt2.common.IAssetManager;
 
 public class TextureAssetManager implements IAssetManager {
     public static Texture2D BASE_TILE_TEXTURE;
+    public static Texture2D PLAYER_TEXTURE;
 
     public void load() {
         BASE_TILE_TEXTURE = rTextures.LoadTexture("assets/textures/baseTile.png");
+        PLAYER_TEXTURE = rTextures.LoadTexture("assets/textures/player.png");
     }
 
     public void unload() {

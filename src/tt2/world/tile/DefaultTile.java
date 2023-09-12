@@ -22,15 +22,28 @@ public class DefaultTile extends Tile {
         Vector2 tilePosition = getIsometricPosition();
         Vector3 cameraPosition = Tartar2.activeScene.getActiveCamera().getPosition();
 
-        Tartar2.raylib.textures.DrawTextureEx(
-            TextureAssetManager.BASE_TILE_TEXTURE,
-            new Vector2(
-                tilePosition.x * DEFAULT_TILE_SCALE * 32.0f - DEFAULT_TILE_SCALE * 16 + cameraPosition.x,
-                tilePosition.y * DEFAULT_TILE_SCALE * 32.0f + cameraPosition.z
-            ),
-            0,
-            3,
-            Color.WHITE
-        );
+        if (isTintColorApplied()) {
+            Tartar2.raylib.textures.DrawTextureEx(
+                    TextureAssetManager.BASE_TILE_TEXTURE,
+                    new Vector2(
+                            tilePosition.x * DEFAULT_TILE_SCALE * 32.0f - DEFAULT_TILE_SCALE * 16 + cameraPosition.x,
+                            tilePosition.y * DEFAULT_TILE_SCALE * 32.0f + cameraPosition.z - getYOffset()
+                    ),
+                    0,
+                    3,
+                    getTintColor()
+            );
+        } else {
+            Tartar2.raylib.textures.DrawTextureEx(
+                    TextureAssetManager.BASE_TILE_TEXTURE,
+                    new Vector2(
+                            tilePosition.x * DEFAULT_TILE_SCALE * 32.0f - DEFAULT_TILE_SCALE * 16 + cameraPosition.x,
+                            tilePosition.y * DEFAULT_TILE_SCALE * 32.0f + cameraPosition.z - getYOffset()
+                    ),
+                    0,
+                    3,
+                    Color.WHITE
+            );
+        }
     }
 }
