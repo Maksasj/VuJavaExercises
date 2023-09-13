@@ -2,6 +2,7 @@ package tt2.items;
 
 import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
+import com.raylib.java.raymath.Vector3;
 import tt2.Tartar2;
 import tt2.common.GameController;
 import tt2.common.camera.Camera;
@@ -65,9 +66,9 @@ public class MoveAbility extends Ability {
     public void updateNeighbourTiles() {
         World world = GameController.getWorld();
 
-        int playerX = (int) player.getPosition().x;
-        int playerY = (int) player.getPosition().y;
-        int playerZ = (int) player.getPosition().z;
+        int playerX = Math.round(player.getPosition().x);
+        int playerY = Math.round(player.getPosition().y);
+        int playerZ = Math.round(player.getPosition().z);
 
         tiles[0] = world.getTileAt(playerX - 1, playerY - 1, playerZ);
         tiles[1] = world.getTileAt(playerX + 1, playerY - 1, playerZ);
@@ -86,16 +87,26 @@ public class MoveAbility extends Ability {
 
         hoveringTile.submitYOffset(7.0f);
 
+        boolean invokeStep = false;
+
         if(Tartar2.raylib.core.IsMouseButtonPressed(0)) {
             if(hoveringTile == tiles[0]) {
-                System.out.println("Player tried to move");
+                player.movePosition(new Vector3(-1.0f, 0.0f, 0.0f));
+                invokeStep = true;
             } else if (hoveringTile == tiles[1]) {
-                System.out.println("Player tried to move");
+                player.movePosition(new Vector3(1.0f, 0.0f, 0.0f));
+                invokeStep = true;
             } else if (hoveringTile == tiles[2]) {
-                System.out.println("Player tried to move");
+                player.movePosition(new Vector3(0.0f, 0.0f, -1.0f));
+                invokeStep = true;
             } else if (hoveringTile == tiles[3]) {
-                System.out.println("Player tried to move");
+                player.movePosition(new Vector3(0.0f, 0.0f, 1.0f));
+                invokeStep = true;
             }
+
+            // Tartar2.raylib.core.IsMouseButtonPressed(0) insures that this part will be invoked only once per click
+            if(invokeStep)
+                Tartar2.activeScene.step();
         }
     }
 }
