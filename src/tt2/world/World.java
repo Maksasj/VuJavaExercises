@@ -6,6 +6,7 @@ import tt2.common.IStepable;
 import tt2.common.ITickable;
 import tt2.entity.Entity;
 import tt2.entity.Player;
+import tt2.entity.Skeleton;
 import tt2.world.tile.DefaultTile;
 import tt2.world.tile.Tile;
 
@@ -29,6 +30,7 @@ public class World implements IRenderable, ITickable, IStepable {
         }
 
         entities.add(player);
+        entities.add(new Skeleton(new Vector3(12.0f, 1.0f, 4.0f)));
     }
 
     public Tile getTileAt(int x, int y, int z) {
