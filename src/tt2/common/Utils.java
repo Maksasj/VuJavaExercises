@@ -7,6 +7,13 @@ public class Utils {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
+    public static int clamp(int value, int min, int max) {
+        if(value < min)
+            return min;
+
+        return Math.min(value, max);
+    }
+
     public static float pointDistance2(Vector3 firstPoint, Vector3 secondPoint) {
         float x = firstPoint.x - secondPoint.x;
         float y = firstPoint.y - secondPoint.y;
