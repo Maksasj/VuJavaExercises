@@ -32,6 +32,11 @@ public class GameController implements IRenderable, ITickable, IStepable {
     }
 
     @Override
+    public void resetRenderingFlags() {
+
+    }
+
+    @Override
     public void step() {
 
     }

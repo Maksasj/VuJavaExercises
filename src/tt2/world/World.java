@@ -4,9 +4,7 @@ import com.raylib.java.raymath.Vector3;
 import tt2.common.IRenderable;
 import tt2.common.IStepable;
 import tt2.common.ITickable;
-import tt2.entity.Entity;
-import tt2.entity.Player;
-import tt2.entity.Skeleton;
+import tt2.entity.*;
 import tt2.world.tile.DefaultTile;
 import tt2.world.tile.Tile;
 
@@ -14,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class World implements IRenderable, ITickable, IStepable {
-    private Tile[][][] tiles;
-    private List<Entity> entities;
+    private final Tile[][][] tiles;
+    private final List<Entity> entities;
 
     public World(Player player) {
         tiles = new Tile[16][16][16];
@@ -29,8 +27,30 @@ public class World implements IRenderable, ITickable, IStepable {
             }
         }
 
+        for(int z = 0; z < 8; ++z) {
+            tiles[5][1][z] = new DefaultTile(new Vector3(5.0f, 1.0f, z));
+        }
+
+        for(int z = 9; z < 16; ++z) {
+            tiles[5][1][z] = new DefaultTile(new Vector3(5.0f, 1.0f, z));
+        }
+
         entities.add(player);
         entities.add(new Skeleton(new Vector3(12.0f, 1.0f, 4.0f)));
+    }
+
+    public static void getNeighbourGroundTiles(World world, int x, int y, int z, Tile[] tiles) {
+        tiles[0] = world.getTileAt(x - 1, y - 1, z);
+        tiles[1] = world.getTileAt(x + 1, y - 1, z);
+        tiles[2] = world.getTileAt(x, y - 1, z - 1);
+        tiles[3] = world.getTileAt(x, y - 1, z + 1);
+    }
+
+    public static void getNeighbourTiles(World world, int x, int y, int z, Tile[] tiles) {
+        tiles[0] = world.getTileAt(x - 1, y, z);
+        tiles[1] = world.getTileAt(x + 1, y, z);
+        tiles[2] = world.getTileAt(x, y, z - 1);
+        tiles[3] = world.getTileAt(x, y, z + 1);
     }
 
     public Tile getTileAt(int x, int y, int z) {
@@ -48,22 +68,34 @@ public class World implements IRenderable, ITickable, IStepable {
 
     @Override
     public void render() {
+        // Before rendering we need to sort all renderable objects
+        ArrayList<GameObject> renderables = new ArrayList<GameObject>();
+
         for (int y = 0; y < 16; ++y) {
             for (int z = 0; z < 16; ++z) {
                 for (int x = 0; x < 16; ++x) {
                     if (tiles[x][y][z] != null) {
-                        tiles[x][y][z].render();
-
-                        tiles[x][y][z].submitApplyTintColorFlag(false);
-                        tiles[x][y][z].resetYOffset();
+                        renderables.add(tiles[x][y][z]);
                     }
                 }
             }
         }
 
-        for(Entity entity : entities) {
-            entity.render();
+        renderables.addAll(entities);
+
+        // Sorting
+        renderables.sort(new GameObjectSorterByPerspective());
+
+        // Rendering
+        for(GameObject object : renderables) {
+            ((IRenderable) object).render();
+            ((IRenderable) object).resetRenderingFlags();
         }
+    }
+
+    @Override
+    public void resetRenderingFlags() {
+
     }
 
     @Override

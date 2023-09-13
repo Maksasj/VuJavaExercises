@@ -11,26 +11,26 @@ import tt2.entity.Player;
 import tt2.world.World;
 import tt2.world.tile.Tile;
 
-import javax.swing.plaf.synth.SynthTextAreaUI;
-
 public class MoveAbility extends Ability {
     private Player player;
-
-    private Tile[] tiles;
-
+    private Tile[] groundTiles;
+    private Tile[] wallTiles;
 
     public MoveAbility(Player player) {
         super();
 
-        tiles = new Tile[4];
+        groundTiles = new Tile[4];
+        wallTiles = new Tile[4];
 
         this.player = player;
     }
 
     @Override
     public void render() {
-        for(Tile tile : tiles) {
-            if(tile != null) {
+        for(int i = 0; i < 4; ++i) {
+            Tile tile = groundTiles[i];
+
+            if(tile != null && wallTiles[i] == null) {
                 tile.setTintColor(Color.RED);
                 tile.submitApplyTintColorFlag(true);
             }
@@ -40,20 +40,22 @@ public class MoveAbility extends Ability {
     private Tile getPlayerHoveringTile() {
         World world = GameController.getWorld();
 
-        Camera cameraPos = Tartar2.activeScene.getActiveCamera();
+        Camera camera = Tartar2.activeScene.getActiveCamera();
+        float cameraZoom = camera.getZoom();
+
         Vector2 mousePos = CameraController.getMousePosition();
-        mousePos.x -= cameraPos.getPosition().x;
-        mousePos.y -= cameraPos.getPosition().z;
+        mousePos.x -= camera.getPosition().x;
+        mousePos.y -= camera.getPosition().z;
 
         float i_x = 1.0f;
         float i_y = 0.5f;
         float j_x = -1.0f;
         float j_y = 0.5f;
 
-        float a = i_x * 0.5f * 32.0f * 3.0f;
-        float b = j_x * 0.5f * 32.0f * 3.0f;
-        float c = i_y * 0.5f * 32.0f * 3.0f;
-        float d = j_y * 0.5f * 32.0f * 3.0f;
+        float a = i_x * 0.5f * 32.0f * cameraZoom;
+        float b = j_x * 0.5f * 32.0f * cameraZoom;
+        float c = i_y * 0.5f * 32.0f * cameraZoom;
+        float d = j_y * 0.5f * 32.0f * cameraZoom;
 
         float det = (1 / (a * d - b * c));
 
@@ -70,10 +72,12 @@ public class MoveAbility extends Ability {
         int playerY = Math.round(player.getPosition().y);
         int playerZ = Math.round(player.getPosition().z);
 
-        tiles[0] = world.getTileAt(playerX - 1, playerY - 1, playerZ);
-        tiles[1] = world.getTileAt(playerX + 1, playerY - 1, playerZ);
-        tiles[2] = world.getTileAt(playerX, playerY - 1, playerZ - 1);
-        tiles[3] = world.getTileAt(playerX, playerY - 1, playerZ + 1);
+        World.getNeighbourGroundTiles(world, playerX, playerY, playerZ, groundTiles);
+        World.getNeighbourTiles(world, playerX, playerY, playerZ, wallTiles);
+    }
+
+    public boolean checkDirection(Tile hoveringTile, Tile groundTile, Tile sideTile) {
+        return (hoveringTile == groundTile) && (sideTile == null);
     }
 
     @Override
@@ -87,21 +91,19 @@ public class MoveAbility extends Ability {
 
         hoveringTile.submitYOffset(7.0f);
 
-        boolean invokeStep = false;
-
         if(Tartar2.raylib.core.IsMouseButtonPressed(0)) {
-            if(hoveringTile == tiles[0]) {
+            boolean invokeStep = true;
+
+            if(checkDirection(hoveringTile, groundTiles[0], wallTiles[0])) {
                 player.movePosition(new Vector3(-1.0f, 0.0f, 0.0f));
-                invokeStep = true;
-            } else if (hoveringTile == tiles[1]) {
+            } else if (checkDirection(hoveringTile, groundTiles[1], wallTiles[1])) {
                 player.movePosition(new Vector3(1.0f, 0.0f, 0.0f));
-                invokeStep = true;
-            } else if (hoveringTile == tiles[2]) {
+            } else if (checkDirection(hoveringTile, groundTiles[2], wallTiles[2])) {
                 player.movePosition(new Vector3(0.0f, 0.0f, -1.0f));
-                invokeStep = true;
-            } else if (hoveringTile == tiles[3]) {
+            } else if (checkDirection(hoveringTile, groundTiles[3], wallTiles[3])) {
                 player.movePosition(new Vector3(0.0f, 0.0f, 1.0f));
-                invokeStep = true;
+            } else {
+                invokeStep = false;
             }
 
             // Tartar2.raylib.core.IsMouseButtonPressed(0) insures that this part will be invoked only once per click

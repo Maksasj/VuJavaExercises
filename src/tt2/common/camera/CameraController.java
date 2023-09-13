@@ -7,6 +7,7 @@ import tt2.Tartar2;
 import tt2.common.Settings;
 
 import java.lang.Math;
+import java.util.Set;
 
 public class CameraController {
     private final Rectangle interactionZone;
@@ -25,6 +26,18 @@ public class CameraController {
 
     public static Vector2 getMousePosition() {
         return new Vector2(Tartar2.raylib.core.GetMouseX(), Tartar2.raylib.core.GetMouseY());
+    }
+
+    public void zoomCamera(Camera camera) {
+        if(!Settings.ENABLE_INTERACTION_ZONE_SLIDING)
+            return;
+
+        float mouseWheelDelta = Tartar2.raylib.core.GetMouseWheelMove();
+
+        if (mouseWheelDelta != 0) {
+            float newZoom = camera.getZoom() + mouseWheelDelta * Settings.CAMERA_ZOOM_SPEED;
+            camera.setZoom(newZoom);
+        }
     }
 
     public void moveCamera(Camera camera) {

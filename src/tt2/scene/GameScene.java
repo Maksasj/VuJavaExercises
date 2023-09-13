@@ -36,6 +36,7 @@ public class GameScene extends Scene {
     @Override
     public void tick() {
         cameraController.moveCamera(camera);
+        cameraController.zoomCamera(camera);
 
         gameController.tick();
         gameWorld.tick();

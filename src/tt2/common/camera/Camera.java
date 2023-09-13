@@ -6,15 +6,26 @@ import tt2.common.IPositioned;
 
 public class Camera implements IPositioned {
     private Vector3 position;
+    private float zoom;
 
     public Camera(Vector3 pos) {
         position = pos;
+
+        zoom = 3.0f;
     }
 
     public void move(Vector3 moveDir) {
         position.x += moveDir.x;
         position.y += moveDir.y;
         position.z += moveDir.z;
+    }
+
+    public void setZoom(float newZoom) {
+        zoom = newZoom;
+    }
+
+    public float getZoom() {
+        return zoom;
     }
 
     @Override

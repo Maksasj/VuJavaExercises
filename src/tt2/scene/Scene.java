@@ -7,4 +7,9 @@ import tt2.common.ITickable;
 
 public abstract class Scene implements IRenderable, ITickable, IStepable {
     abstract public Camera getActiveCamera();
+
+    @Override
+    public void resetRenderingFlags() {
+
+    }
 }

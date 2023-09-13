@@ -10,7 +10,6 @@ public abstract class Tile extends GameObject implements IRenderable {
     private Color tintColor;
     private boolean applyTintColor;
 
-    public static final float DEFAULT_TILE_SCALE = 3.0f;
     public Tile(Vector3 pos) {
         super(pos);
     }
@@ -41,5 +40,11 @@ public abstract class Tile extends GameObject implements IRenderable {
 
     public float getYOffset() {
         return yOffset;
+    }
+
+    @Override
+    public void resetRenderingFlags() {
+        submitApplyTintColorFlag(false);
+        resetYOffset();
     }
 }
