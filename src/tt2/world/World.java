@@ -44,10 +44,10 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
         tiles[1][1][1] = new DefaultTile(new Vector3(1.0f, 1.0f, 1.0f));
         tiles[1][1][2] = new DefaultTile(new Vector3(1.0f, 1.0f, 2.0f));
-        tiles[1][1][3] = new StairsTile(new Vector3(1.0f, 1.0f, 3.0f));
+        tiles[1][1][3] = new StairsTile(new Vector3(1.0f, 1.0f, 3.0f), IsometricRotation.RIGHT_UP);
 
         tiles[1][2][1] = new DefaultTile(new Vector3(1.0f, 2.0f, 1.0f));
-        tiles[1][2][2] = new StairsTile(new Vector3(1.0f, 2.0f, 2.0f));
+        tiles[1][2][2] = new StairsTile(new Vector3(1.0f, 2.0f, 2.0f), IsometricRotation.RIGHT_UP);
         tiles[1][2][3] = null;
 
         entities.add(player);
@@ -174,7 +174,7 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
             if(visibilityLevel == VisibilityLevel.VISIBLE) {
                 renderable.render();
             } else if(visibilityLevel == VisibilityLevel.SEMI_VISIBLE) {
-                renderable.setTintColor(new Color(255, 255, 255, 75));
+                renderable.setTintColor(new Color(255, 255, 255, 125));
                 renderable.setApplyTint(true);
                 renderable.render();
             }
