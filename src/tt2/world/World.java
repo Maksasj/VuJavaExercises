@@ -33,7 +33,7 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         }
 
         for(int z = 0; z < 16; ++z) {
-            for(int y = 1; y < 3; ++y) {
+            for(int y = 1; y < 16; ++y) {
                 tiles[0][y][z] = new DefaultTile(new Vector3(0.0f, y, z));
                 tiles[15][y][z] = new DefaultTile(new Vector3(15.0f, y, z));
 
@@ -48,6 +48,7 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
         tiles[1][2][1] = new DefaultTile(new Vector3(1.0f, 2.0f, 1.0f));
         tiles[1][2][2] = new StairsTile(new Vector3(1.0f, 2.0f, 2.0f));
+        tiles[1][2][3] = null;
 
         entities.add(player);
         this.player = player;
@@ -110,13 +111,29 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
     }
 
     private void setAllUpperTilesTransparent(int playerX, int playerY, int playerZ) {
-        int yBound = Utils.clamp(playerY + 1, 0, 16);
+        {
+            int yBound = Utils.clamp(playerY + 2, 0, 15);
 
-        for (int y = yBound; y < 16; ++y) {
-            for (int z = 1; z < 15; ++z) {
-                for (int x = 1; x < 15; ++x) {
-                    if (tiles[x][y][z] != null)
-                        tiles[x][y][z].setVisibilityLevel(VisibilityLevel.TRANSPARENT);
+            for (int y = yBound; y < 16; ++y) {
+                for (int z = 0; z < 16; ++z) {
+                    for (int x = 0; x < 16; ++x) {
+                        if (tiles[x][y][z] != null)
+                            tiles[x][y][z].setVisibilityLevel(VisibilityLevel.TRANSPARENT);
+                    }
+                }
+            }
+        }
+
+        {
+            int yLowBound = Utils.clamp(playerY + 1, 0, 15);
+            int yUpBound = Math.min(yLowBound + 1, 16);
+
+            for (int y = yLowBound; y < yUpBound; ++y) {
+                for (int z = 1; z < 15; ++z) {
+                    for (int x = 1; x < 15; ++x) {
+                        if (tiles[x][y][z] != null)
+                            tiles[x][y][z].setVisibilityLevel(VisibilityLevel.TRANSPARENT);
+                    }
                 }
             }
         }
@@ -142,7 +159,7 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         // Adding all regular entities to renderables list
         renderables.addAll(entities);
 
-        // Now we do visibility post processing
+        // Now we do visibility post-processing
         for(GameObject object : renderables)
             ((IRenderable) object).doVisibilityPostProcessing();
 
@@ -168,6 +185,10 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
     @Override
     public void step() {
+        for(Entity entity : entities) {
+            entity.step();
+        }
+
         for (int y = 15; y >= 0; --y) {
             for (int z = 0; z < 16; ++z) {
                 for (int x = 0; x < 16; ++x) {
@@ -176,10 +197,6 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
                     }
                 }
             }
-        }
-
-        for(Entity entity : entities) {
-            entity.step();
         }
     }
 

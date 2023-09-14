@@ -39,6 +39,10 @@ public abstract class Entity extends GameObject implements IRenderable {
         intermediatePosition.z += movePos.z;
     }
 
+    public Vector3 getIntermediatePosition() {
+        return intermediatePosition;
+    }
+
     @Override
     public VisibilityLevel getVisibilityLevel() {
         return visibilityFlag;

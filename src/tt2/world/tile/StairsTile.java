@@ -7,6 +7,8 @@ import tt2.Tartar2;
 import tt2.common.GameController;
 import tt2.common.VisibilityLevel;
 import tt2.common.camera.Camera;
+import tt2.entity.Player;
+import tt2.scene.GameScene;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 
@@ -15,24 +17,38 @@ public class StairsTile extends Tile {
     private Tile upSideTile;
 
     public StairsTile(Vector3 position) {
-        super(position);
+        super(position, TileDensity.HOLLOW);
 
         sideTile = null;
         upSideTile = null;
     }
 
     @Override
-    public void step() {
+    public void tick() {
         updateSideTiles();
+
+        Player player = Tartar2.gameScene.getGameController().getPlayer();
+        if(player == null)
+            return;
+
+        int playerX = Math.round(player.getIntermediatePosition().x);
+        int playerY = Math.round(player.getIntermediatePosition().y);
+        int playerZ = Math.round(player.getIntermediatePosition().z);
+
+        int selfX = Math.round(getPosition().x);
+        int selfY = Math.round(getPosition().y);
+        int selfZ = Math.round(getPosition().z);
+
+        if((playerX == selfX) && (playerY == selfY) && (playerZ == selfZ))
+            player.movePosition(new Vector3(0.0f, 1.0f, -1.0f));
     }
 
     @Override
     public void doVisibilityPostProcessing() {
-        if (sideTile != null)
-            if (sideTile.getVisibilityLevel() == VisibilityLevel.TRANSPARENT)
+        if(sideTile != null && sideTile.getVisibilityLevel() == VisibilityLevel.TRANSPARENT)
                 sideTile.setVisibilityLevel(VisibilityLevel.SEMI_VISIBLE);
 
-        if(upSideTile != null)
+        if(upSideTile != null && upSideTile.getVisibilityLevel() == VisibilityLevel.TRANSPARENT)
             upSideTile.setVisibilityLevel(VisibilityLevel.SEMI_VISIBLE);
     }
 

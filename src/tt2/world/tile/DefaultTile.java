@@ -10,7 +10,7 @@ import tt2.textures.TextureAssetManager;
 
 public class DefaultTile extends Tile {
     public DefaultTile(Vector3 position) {
-        super(position);
+        super(position, TileDensity.DENSE);
     }
 
     @Override

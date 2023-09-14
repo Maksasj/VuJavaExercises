@@ -11,11 +11,17 @@ public abstract class Tile extends GameObject implements IRenderable {
     private Color tintColor;
     private boolean applyTintColor;
     private VisibilityLevel visibilityFlag;
+    private TileDensity tileDensity;
 
-    public Tile(Vector3 pos) {
+    public Tile(Vector3 pos, TileDensity tileDensity) {
         super(pos);
 
-        visibilityFlag = VisibilityLevel.VISIBLE;
+        this.tileDensity = tileDensity;
+        this.visibilityFlag = VisibilityLevel.VISIBLE;
+    }
+
+    public TileDensity getTileDensity() {
+        return tileDensity;
     }
 
     @Override

@@ -21,6 +21,10 @@ public class GameScene extends Scene {
         cameraController = new CameraController();
     }
 
+    public GameController getGameController() {
+        return gameController;
+    }
+
     @Override
     public void render() {
         gameController.render();

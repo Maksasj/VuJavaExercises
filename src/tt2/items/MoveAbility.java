@@ -10,6 +10,7 @@ import tt2.common.camera.CameraController;
 import tt2.entity.Player;
 import tt2.world.World;
 import tt2.world.tile.Tile;
+import tt2.world.tile.TileDensity;
 
 public class MoveAbility extends Ability {
     private Player player;
@@ -30,7 +31,16 @@ public class MoveAbility extends Ability {
         for(int i = 0; i < 4; ++i) {
             Tile tile = groundTiles[i];
 
-            if(tile != null && wallTiles[i] == null) {
+            if(tile != null) {
+                tile.setTintColor(new Color(255, 125, 125, 255));
+                tile.setApplyTint(true);
+            }
+        }
+
+        for(int i = 0; i < 4; ++i) {
+            Tile tile = wallTiles[i];
+
+            if((tile != null) && (tile.getTileDensity() == TileDensity.HOLLOW)) {
                 tile.setTintColor(new Color(255, 125, 125, 255));
                 tile.setApplyTint(true);
             }
@@ -43,9 +53,11 @@ public class MoveAbility extends Ability {
         Camera camera = Tartar2.activeScene.getActiveCamera();
         float cameraZoom = camera.getZoom();
 
+        int playerY = Math.round(player.getPosition().y);
+
         Vector2 mousePos = CameraController.getMousePosition();
         mousePos.x -= camera.getPosition().x;
-        mousePos.y -= camera.getPosition().z;
+        mousePos.y -= camera.getPosition().z - (playerY - 1)*48.0f;
 
         float i_x = 1.0f;
         float i_y = 0.5f;
@@ -62,7 +74,8 @@ public class MoveAbility extends Ability {
         int worldPosX = (int) (mousePos.x * (det * d) + mousePos.y * (det * -b));
         int worldPosZ = (int) (mousePos.x * (det * -c) + mousePos.y * (det * a));
 
-        return world.getTileAt(worldPosX, 0, worldPosZ);
+
+        return world.getTileAt(worldPosX, playerY - 1, worldPosZ);
     }
 
     public void updateNeighbourTiles() {
@@ -76,8 +89,15 @@ public class MoveAbility extends Ability {
         World.getNeighbourTiles(world, playerX, playerY, playerZ, wallTiles);
     }
 
-    public boolean checkDirection(Tile hoveringTile, Tile groundTile, Tile sideTile) {
-        return (hoveringTile == groundTile) && (sideTile == null);
+    public boolean checkDirection(Tile hoveringTile, Tile groundTile, Tile wallTile) {
+        boolean wallTileIsHollow = false;
+
+        if(wallTile == null)
+            wallTileIsHollow = true;
+        else
+            wallTileIsHollow = wallTile.getTileDensity() == TileDensity.HOLLOW;
+
+        return (hoveringTile == groundTile) && wallTileIsHollow;
     }
 
     @Override
