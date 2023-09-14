@@ -4,6 +4,7 @@ import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.Tartar2;
+import tt2.common.VisibilityLevel;
 import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
 
@@ -30,10 +31,5 @@ public class Player extends Entity {
                 cameraZoom,
                 Color.WHITE
         );
-    }
-
-    @Override
-    public void resetRenderingFlags() {
-
     }
 }

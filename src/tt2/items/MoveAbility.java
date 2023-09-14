@@ -32,7 +32,7 @@ public class MoveAbility extends Ability {
 
             if(tile != null && wallTiles[i] == null) {
                 tile.setTintColor(new Color(255, 125, 125, 255));
-                tile.submitApplyTintColorFlag(true);
+                tile.setApplyTint(true);
             }
         }
     }

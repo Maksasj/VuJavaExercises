@@ -1,7 +1,6 @@
 package tt2.common;
 
 import com.raylib.java.raymath.Vector3;
-import org.lwjgl.system.CallbackI;
 import tt2.Tartar2;
 import tt2.entity.Player;
 import tt2.items.Ability;
@@ -12,7 +11,7 @@ import tt2.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameController implements IRenderable, ITickable, IStepable {
+public class GameController extends CommonRenderingMaster implements ITickable, IStepable {
     private final List<Ability> abilities;
     private final int selectedAbility;
     private final Player player;
@@ -34,6 +33,11 @@ public class GameController implements IRenderable, ITickable, IStepable {
     @Override
     public void resetRenderingFlags() {
 
+    }
+
+    @Override
+    public VisibilityLevel getVisibilityLevel() {
+        return null;
     }
 
     @Override

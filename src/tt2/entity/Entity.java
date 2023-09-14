@@ -1,17 +1,22 @@
 package tt2.entity;
 
+import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.common.IRenderable;
+import tt2.common.VisibilityLevel;
 
 import javax.swing.plaf.synth.SynthTextAreaUI;
 
 public abstract class Entity extends GameObject implements IRenderable {
     private final Vector3 intermediatePosition;
 
+    private VisibilityLevel visibilityFlag;
+
     public Entity(Vector3 pos) {
         super(pos);
 
+        visibilityFlag = VisibilityLevel.VISIBLE;
         intermediatePosition = new Vector3(pos.x, pos.y, pos.z);
     }
 
@@ -32,5 +37,40 @@ public abstract class Entity extends GameObject implements IRenderable {
         intermediatePosition.x += movePos.x;
         intermediatePosition.y += movePos.y;
         intermediatePosition.z += movePos.z;
+    }
+
+    @Override
+    public VisibilityLevel getVisibilityLevel() {
+        return visibilityFlag;
+    }
+
+    @Override
+    public void setApplyTint(boolean applyTint) {
+
+    }
+
+    @Override
+    public void resetRenderingFlags() {
+        visibilityFlag = VisibilityLevel.VISIBLE;
+    }
+
+    @Override
+    public void setVisibilityLevel(VisibilityLevel visibilityLevel) {
+        visibilityFlag = visibilityLevel;
+    }
+
+    @Override
+    public void setTintColor(Color color) {
+
+    }
+
+    @Override
+    public Color getTintColor() {
+        return null;
+    }
+
+    @Override
+    public void doVisibilityPostProcessing() {
+
     }
 }

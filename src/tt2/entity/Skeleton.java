@@ -55,9 +55,4 @@ public class Skeleton extends GroundEntity {
                 Color.WHITE
         );
     }
-
-    @Override
-    public void resetRenderingFlags() {
-
-    }
 }
