@@ -64,6 +64,19 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         entities.add(new Skeleton(new Vector3(12.0f, 1.0f, 4.0f)));
     }
 
+    public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue) {
+        for(Entity entity : entities) {
+            Vector3 position = entity.getPosition();
+
+            int posX = Math.round(position.x);
+            int posY = Math.round(position.y);
+            int posZ = Math.round(position.z);
+
+            if(posX == x && posY == y && posZ == z)
+                entity.takeDamage(damageValue);
+        }
+    }
+
     public static void getNeighbourGroundTiles(World world, int x, int y, int z, Tile[] tiles) {
         tiles[0] = world.getTileAt(x - 1, y - 1, z);
         tiles[1] = world.getTileAt(x + 1, y - 1, z);

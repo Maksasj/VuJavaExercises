@@ -28,6 +28,10 @@ public abstract class Entity extends GameObject implements IRenderable {
         newPos.z += (intermediatePosition.z - newPos.z) / 10.0f;
     }
 
+    public void takeDamage(int damageValue) {
+        System.out.println("Entity took damage !");
+    }
+
     @Override
     public void tick() {
         handleSmoothMovement();

@@ -106,6 +106,10 @@ public class SwordAttackAbility extends Ability {
         return (hoveringTile == groundTile) && wallTileIsHollow;
     }
 
+    public int getDamage() {
+        return 1;
+    }
+
     @Override
     public void tick() {
         Tile hoveringTile = getPlayerHoveringTile();
@@ -121,14 +125,20 @@ public class SwordAttackAbility extends Ability {
         if(Tartar2.raylib.core.IsMouseButtonPressed(0)) {
             boolean invokeStep = true;
 
+            int playerX = Math.round(player.getPosition().x);
+            int playerY = Math.round(player.getPosition().y);
+            int playerZ = Math.round(player.getPosition().z);
+
+            World world = GameController.getWorld();
+
             if(checkDirection(hoveringTile, groundTiles[0], wallTiles[0])) {
-                player.movePosition(new Vector3(-1.0f, 0.0f, 0.0f));
+                world.dealDamageToEntitiesAt(playerX - 1, playerY, playerZ, getDamage());
             } else if (checkDirection(hoveringTile, groundTiles[1], wallTiles[1])) {
-                player.movePosition(new Vector3(1.0f, 0.0f, 0.0f));
+                world.dealDamageToEntitiesAt(playerX + 1, playerY, playerZ, getDamage());
             } else if (checkDirection(hoveringTile, groundTiles[2], wallTiles[2])) {
-                player.movePosition(new Vector3(0.0f, 0.0f, -1.0f));
+                world.dealDamageToEntitiesAt(playerX, playerY, playerZ - 1, getDamage());
             } else if (checkDirection(hoveringTile, groundTiles[3], wallTiles[3])) {
-                player.movePosition(new Vector3(0.0f, 0.0f, 1.0f));
+                world.dealDamageToEntitiesAt(playerX, playerY, playerZ + 1, getDamage());
             } else {
                 invokeStep = false;
             }
