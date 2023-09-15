@@ -107,7 +107,7 @@ public class SwordAttackAbility extends Ability {
     }
 
     public int getDamage() {
-        return 1;
+        return player.getMeleeDamage();
     }
 
     @Override

@@ -1,21 +1,16 @@
 package tt2.entity;
 
-import com.raylib.java.core.Color;
-import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
-import tt2.Tartar2;
 import tt2.common.GameController;
-import tt2.common.Utils;
-import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 import tt2.world.tile.Tile;
 
-public abstract class GroundEntity extends Entity {
+public abstract class GroundMob extends Mob {
     private final Tile[] groundTiles;
     private final Tile[] sideTiles;
 
-    public GroundEntity(Vector3 pos) {
-        super(pos);
+    public GroundMob(Vector3 pos, Statblock statblock) {
+        super(pos, statblock);
 
         groundTiles = new Tile[4];
         sideTiles = new Tile[4];

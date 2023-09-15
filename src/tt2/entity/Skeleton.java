@@ -9,9 +9,9 @@ import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
 import tt2.world.tile.Tile;
 
-public class Skeleton extends GroundEntity {
+public class Skeleton extends GroundMob {
     public Skeleton(Vector3 pos) {
-        super(pos);
+        super(pos, new Statblock(2, 1, 1, 1));
     }
 
     @Override

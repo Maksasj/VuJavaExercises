@@ -8,9 +8,9 @@ import tt2.common.VisibilityLevel;
 import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
 
-public class Player extends Entity {
+public class Player extends Mob {
     public Player(Vector3 pos) {
-        super(pos);
+        super(pos, new Statblock(4, 1, 1, 1));
     }
 
     @Override

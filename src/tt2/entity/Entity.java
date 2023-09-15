@@ -4,18 +4,18 @@ import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.common.IRenderable;
+import tt2.common.IStatable;
 import tt2.common.VisibilityLevel;
 
 import javax.swing.plaf.synth.SynthTextAreaUI;
 
 public abstract class Entity extends GameObject implements IRenderable {
     private final Vector3 intermediatePosition;
-
     private VisibilityLevel visibilityFlag;
+
 
     public Entity(Vector3 pos) {
         super(pos);
-
         visibilityFlag = VisibilityLevel.VISIBLE;
         intermediatePosition = new Vector3(pos.x, pos.y, pos.z);
     }
@@ -26,10 +26,6 @@ public abstract class Entity extends GameObject implements IRenderable {
         newPos.x += (intermediatePosition.x - newPos.x) / 10.0f;
         newPos.y += (intermediatePosition.y - newPos.y) / 10.0f;
         newPos.z += (intermediatePosition.z - newPos.z) / 10.0f;
-    }
-
-    public void takeDamage(int damageValue) {
-        System.out.println("Entity took damage !");
     }
 
     @Override
