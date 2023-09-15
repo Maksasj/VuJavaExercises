@@ -4,26 +4,50 @@ import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import com.raylib.java.textures.Texture2D;
+import org.lwjgl.system.CallbackI;
 import tt2.Tartar2;
 import tt2.common.GameController;
 import tt2.common.camera.Camera;
 import tt2.common.camera.CameraController;
+import tt2.entity.ArrowEntity;
 import tt2.entity.Player;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 import tt2.world.tile.Tile;
 import tt2.world.tile.TileDensity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class BowAttackAbility extends Ability {
     private Player player;
-    private Tile[] groundTiles;
-    private Tile[] wallTiles;
+    private Tile[] groundTilesLeftUp;
+    private Tile[] groundTilesRightUp;
+    private Tile[] groundTilesRightDown;
+    private Tile[] groundTilesLeftDown;
+
+    private Tile[] wallTilesLeftUp;
+    private Tile[] wallTilesRightUp;
+    private Tile[] wallTilesRightDown;
+    private Tile[] wallTilesLeftDown;
+
+    private int bowRange;
 
     public BowAttackAbility(Player player) {
         super();
 
-        groundTiles = new Tile[4];
-        wallTiles = new Tile[4];
+        bowRange = 3;
+
+        groundTilesLeftUp = new Tile[bowRange];
+        groundTilesRightUp = new Tile[bowRange];
+        groundTilesRightDown = new Tile[bowRange];
+        groundTilesLeftDown = new Tile[bowRange];
+
+        wallTilesLeftUp = new Tile[bowRange];
+        wallTilesRightUp = new Tile[bowRange];
+        wallTilesRightDown = new Tile[bowRange];
+        wallTilesLeftDown = new Tile[bowRange];
 
         this.player = player;
     }
@@ -33,23 +57,31 @@ public class BowAttackAbility extends Ability {
 
     }
 
+    private List<Tile> getListOfAllTiles() {
+        List<Tile> tiles = new ArrayList<Tile>();
+
+        tiles.addAll(Arrays.asList(groundTilesLeftUp));
+        tiles.addAll(Arrays.asList(groundTilesRightUp));
+        tiles.addAll(Arrays.asList(groundTilesRightDown));
+        tiles.addAll(Arrays.asList(groundTilesLeftDown));
+
+        tiles.addAll(Arrays.asList(wallTilesLeftUp));
+        tiles.addAll(Arrays.asList(wallTilesRightUp));
+        tiles.addAll(Arrays.asList(wallTilesRightDown));
+        tiles.addAll(Arrays.asList(wallTilesLeftDown));
+
+        return tiles;
+    }
+
     private void updateAvailableTilesTint() {
-        for(int i = 0; i < 4; ++i) {
-            Tile tile = groundTiles[i];
+        List<Tile> tiles = getListOfAllTiles();
 
-            if(tile != null) {
-                tile.setTintColor(new Color(255, 125, 125, 255));
-                tile.setApplyTint(true);
-            }
-        }
+        for(Tile tile : tiles) {
+            if(tile == null)
+                continue;
 
-        for(int i = 0; i < 4; ++i) {
-            Tile tile = wallTiles[i];
-
-            if((tile != null) && (tile.getTileDensity() == TileDensity.HOLLOW)) {
-                tile.setTintColor(new Color(255, 125, 125, 255));
-                tile.setApplyTint(true);
-            }
+            tile.setTintColor(new Color(255, 125, 125, 255));
+            tile.setApplyTint(true);
         }
     }
 
@@ -80,7 +112,6 @@ public class BowAttackAbility extends Ability {
         int worldPosX = (int) (mousePos.x * (det * d) + mousePos.y * (det * -b));
         int worldPosZ = (int) (mousePos.x * (det * -c) + mousePos.y * (det * a));
 
-
         return world.getTileAt(worldPosX, playerY - 1, worldPosZ);
     }
 
@@ -91,19 +122,33 @@ public class BowAttackAbility extends Ability {
         int playerY = Math.round(player.getPosition().y);
         int playerZ = Math.round(player.getPosition().z);
 
-        World.getNeighbourGroundTiles(world, playerX, playerY, playerZ, groundTiles);
-        World.getNeighbourTiles(world, playerX, playerY, playerZ, wallTiles);
+        for(int i = 0; i < bowRange ; ++i) {
+            groundTilesLeftUp[i] = world.getTileAt(playerX - i - 2, playerY - 1, playerZ);
+            groundTilesLeftDown[i] = world.getTileAt(playerX, playerY - 1, playerZ + i + 2);
+            groundTilesRightUp[i] = world.getTileAt(playerX, playerY - 1, playerZ - i - 2);
+            groundTilesRightDown[i] = world.getTileAt(playerX + i + 2, playerY - 1, playerZ);
+
+            wallTilesLeftUp[i] = world.getTileAt(playerX - i - 2, playerY, playerZ);
+            wallTilesLeftDown[i] = world.getTileAt(playerX, playerY, playerZ + i + 2);
+            wallTilesRightUp[i] = world.getTileAt(playerX, playerY, playerZ - i - 2);
+            wallTilesRightDown[i] = world.getTileAt(playerX + i + 2, playerY, playerZ);
+        }
     }
 
-    public boolean checkDirection(Tile hoveringTile, Tile groundTile, Tile wallTile) {
-        boolean wallTileIsHollow = false;
+    public boolean checkTileRow(Tile hoveringTile, Tile[] tileRow) {
+        for(Tile tile : tileRow)
+            if(hoveringTile == tile)
+                return true;
 
-        if(wallTile == null)
-            wallTileIsHollow = true;
-        else
-            wallTileIsHollow = wallTile.getTileDensity() == TileDensity.HOLLOW;
+        return false;
+    }
 
-        return (hoveringTile == groundTile) && wallTileIsHollow;
+    public int getDirectionTileDistance(Tile hoveringTile, Tile[] tileRow) {
+        for(int i = 0; i < tileRow.length; ++i)
+            if(hoveringTile == tileRow[i])
+                return i;
+
+        return 0;
     }
 
     @Override
@@ -121,21 +166,45 @@ public class BowAttackAbility extends Ability {
         if(Tartar2.raylib.core.IsMouseButtonPressed(0)) {
             boolean invokeStep = true;
 
-            if(checkDirection(hoveringTile, groundTiles[0], wallTiles[0])) {
-                player.movePosition(new Vector3(-1.0f, 0.0f, 0.0f));
-            } else if (checkDirection(hoveringTile, groundTiles[1], wallTiles[1])) {
-                player.movePosition(new Vector3(1.0f, 0.0f, 0.0f));
-            } else if (checkDirection(hoveringTile, groundTiles[2], wallTiles[2])) {
-                player.movePosition(new Vector3(0.0f, 0.0f, -1.0f));
-            } else if (checkDirection(hoveringTile, groundTiles[3], wallTiles[3])) {
-                player.movePosition(new Vector3(0.0f, 0.0f, 1.0f));
+            Vector3 arrowDirection = new Vector3(0.0f, 0.0f, 0.0f);
+            Tile[] tileDirectionRow = null;
+
+            if(checkTileRow(hoveringTile, groundTilesLeftUp)) {
+                arrowDirection = new Vector3(-1.0f, 0.0f, 0.0f);
+                tileDirectionRow = groundTilesLeftUp;
+            } else if(checkTileRow(hoveringTile, groundTilesRightUp)) {
+                arrowDirection = new Vector3(0.0f, 0.0f, -1.0f);
+                tileDirectionRow = groundTilesRightUp;
+            } else if(checkTileRow(hoveringTile, groundTilesRightDown)) {
+                arrowDirection = new Vector3(1.0f, 0.0f, 0.0f);
+                tileDirectionRow = groundTilesRightDown;
+            } else if(checkTileRow(hoveringTile, groundTilesLeftDown)) {
+                arrowDirection = new Vector3(0.0f, 0.0f, 1.0f);
+                tileDirectionRow = groundTilesLeftDown;
             } else {
                 invokeStep = false;
             }
 
             // Tartar2.raylib.core.IsMouseButtonPressed(0) insures that this part will be invoked only once per click
-            if(invokeStep)
+            if(invokeStep) {
                 Tartar2.activeScene.step();
+
+                Vector3 playerPos = player.getPosition();
+                Vector3 arrowStartPos = new Vector3(playerPos.x, playerPos.y, playerPos.z);
+                float arrowSpeed = 0.08f;
+
+                int directionalDistance = getDirectionTileDistance(hoveringTile, tileDirectionRow) + 2;
+
+                World world = GameController.getWorld();
+                world.addEntity(
+                        new ArrowEntity(
+                                arrowStartPos,
+                                arrowDirection,
+                                arrowSpeed,
+                                (float )directionalDistance
+                        )
+                );
+            }
         }
     }
 
