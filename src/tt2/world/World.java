@@ -50,6 +50,14 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         tiles[1][2][2] = new StairsTile(new Vector3(1.0f, 2.0f, 2.0f), IsometricRotation.RIGHT_UP);
         tiles[1][2][3] = null;
 
+        tiles[1][1][1] = new DefaultTile(new Vector3(1.0f, 1.0f, 1.0f));
+        tiles[2][1][1] = new DefaultTile(new Vector3(2.0f, 1.0f, 1.0f));
+        tiles[3][1][1] = new StairsTile(new Vector3(3.0f, 1.0f, 1.0f), IsometricRotation.LEFT_UP);
+
+        tiles[1][2][1] = new DefaultTile(new Vector3(1.0f, 2.0f, 1.0f));
+        tiles[2][2][1] = new StairsTile(new Vector3(2.0f, 2.0f, 1.0f), IsometricRotation.LEFT_UP);
+        tiles[3][2][1] = null;
+
         entities.add(player);
         this.player = player;
 

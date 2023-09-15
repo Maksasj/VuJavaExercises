@@ -33,6 +33,11 @@ public class StairsTile extends RotatableTile {
         if(player == null)
             return;
 
+        handlePlayerMovingUp(player);
+        handlePlayerMovingDown(player);
+    }
+
+    private void handlePlayerMovingUp(Player player) {
         int playerX = Math.round(player.getIntermediatePosition().x);
         int playerY = Math.round(player.getIntermediatePosition().y);
         int playerZ = Math.round(player.getIntermediatePosition().z);
@@ -49,6 +54,27 @@ public class StairsTile extends RotatableTile {
                 case RIGHT_UP -> player.movePosition(new Vector3(0.0f, 1.0f, -1.0f));
                 case RIGHT_DOWN -> player.movePosition(new Vector3(1.0f, 1.0f, 0.0f));
                 case LEFT_DOWN -> player.movePosition(new Vector3(0.0f, 1.0f, 1.0f));
+            }
+        }
+    }
+
+    private void handlePlayerMovingDown(Player player) {
+        int playerX = Math.round(player.getIntermediatePosition().x);
+        int playerY = Math.round(player.getIntermediatePosition().y);
+        int playerZ = Math.round(player.getIntermediatePosition().z);
+
+        int selfX = Math.round(getPosition().x);
+        int selfY = Math.round(getPosition().y) + 1;
+        int selfZ = Math.round(getPosition().z);
+
+        IsometricRotation rotation = getIsometricRotation();
+
+        if((playerX == selfX) && (playerY == selfY) && (playerZ == selfZ)) {
+            switch(rotation) {
+                case LEFT_UP -> player.movePosition(new Vector3(1.0f, -1.0f, 0.0f));
+                case RIGHT_UP -> player.movePosition(new Vector3(0.0f, -1.0f, 1.0f));
+                case RIGHT_DOWN -> player.movePosition(new Vector3(-1.0f, -1.0f, 0.0f));
+                case LEFT_DOWN -> player.movePosition(new Vector3(0.0f, -1.0f, -1.0f));
             }
         }
     }
