@@ -27,8 +27,8 @@ public class GameScene extends Scene {
 
     @Override
     public void render() {
-        gameController.render();
         gameWorld.render();
+        gameController.render();
     }
 
     @Override

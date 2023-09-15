@@ -1,11 +1,17 @@
 package tt2.common;
 
+import com.raylib.java.core.Color;
+import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
+import com.raylib.java.textures.Texture2D;
 import tt2.Tartar2;
 import tt2.entity.Player;
 import tt2.items.Ability;
+import tt2.items.BowAttackAbility;
 import tt2.items.MoveAbility;
+import tt2.items.SwordAttackAbility;
 import tt2.scene.GameScene;
+import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 
 import java.util.ArrayList;
@@ -13,7 +19,7 @@ import java.util.List;
 
 public class GameController extends CommonRenderingMaster implements ITickable, IStepable {
     private final List<Ability> abilities;
-    private final int selectedAbility;
+    private int selectedAbility;
     private final Player player;
 
     public GameController() {
@@ -23,11 +29,42 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
         abilities = new ArrayList<Ability>();
 
         abilities.add(new MoveAbility(player));
+        abilities.add(new SwordAttackAbility(player));
+        abilities.add(new BowAttackAbility(player));
     }
 
     @Override
     public void render() {
         abilities.get(selectedAbility).render();
+
+        int abilityCount = abilities.size();
+
+        for(int i = 0; i < abilityCount; ++i) {
+            Ability ability = abilities.get(i);
+
+            Texture2D icon = ability.getIconTexture();
+            if(icon == null)
+                continue;
+
+            float iconScale = 2.0f;
+
+            Vector2 iconPosition = new Vector2(
+                16.0f,
+                16.0f + (i * (32.0f * iconScale + + 6.0f)) // 4.0f is just y offset
+            );
+
+            Tartar2.raylib.textures.DrawTextureEx(icon, iconPosition,0, iconScale, Color.WHITE);
+
+            // if ability is selected lets draw selection frame
+            if(i == selectedAbility) {
+                Vector2 frameIconPosition = iconPosition;
+
+                frameIconPosition.x -= 16.0f * (iconScale * 1.1f - iconScale);
+                frameIconPosition.y -= 16.0f * (iconScale * 1.1f - iconScale);
+
+                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.SELECTION_FRAME_ICON, iconPosition,0, iconScale * 1.1f, Color.WHITE);
+            }
+        }
     }
 
     @Override
@@ -47,6 +84,14 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
 
     @Override
     public void tick() {
+        float mouseWheelDelta = Tartar2.raylib.core.GetMouseWheelMove();
+
+        if(mouseWheelDelta > 0.0f)
+            selectedAbility = Math.max(selectedAbility - 1, 0);
+
+        if(mouseWheelDelta < 0.0f)
+            selectedAbility = Math.min(selectedAbility + 1, abilities.size() - 1);
+
         abilities.get(selectedAbility).tick();
     }
 

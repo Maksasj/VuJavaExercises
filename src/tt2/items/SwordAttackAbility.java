@@ -14,12 +14,12 @@ import tt2.world.World;
 import tt2.world.tile.Tile;
 import tt2.world.tile.TileDensity;
 
-public class MoveAbility extends Ability {
+public class SwordAttackAbility extends Ability {
     private Player player;
     private Tile[] groundTiles;
     private Tile[] wallTiles;
 
-    public MoveAbility(Player player) {
+    public SwordAttackAbility(Player player) {
         super();
 
         groundTiles = new Tile[4];
@@ -38,7 +38,7 @@ public class MoveAbility extends Ability {
             Tile tile = groundTiles[i];
 
             if(tile != null) {
-                tile.setTintColor(new Color(125, 125, 255, 255));
+                tile.setTintColor(new Color(255, 125, 125, 255));
                 tile.setApplyTint(true);
             }
         }
@@ -47,7 +47,7 @@ public class MoveAbility extends Ability {
             Tile tile = wallTiles[i];
 
             if((tile != null) && (tile.getTileDensity() == TileDensity.HOLLOW)) {
-                tile.setTintColor(new Color(125, 125, 255, 255));
+                tile.setTintColor(new Color(255, 125, 125, 255));
                 tile.setApplyTint(true);
             }
         }
@@ -141,6 +141,6 @@ public class MoveAbility extends Ability {
 
     @Override
     public Texture2D getIconTexture() {
-        return TextureAssetManager.MOVE_ABILITY_ICON;
+        return TextureAssetManager.SWORD_ATTACK_ABILITY_ICON;
     }
 }
