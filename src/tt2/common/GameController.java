@@ -70,6 +70,14 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
         }
     }
 
+    private boolean isAnyAbilityIsBlocked() {
+        for(Ability ability : abilities)
+            if(ability.isBlocked())
+                return true;
+
+        return false;
+    }
+
     @Override
     public void doRenderingPreProcessing() {
         abilities.get(selectedAbility).doRenderingPreProcessing();
@@ -92,7 +100,7 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
 
         Ability selected = abilities.get(selectedAbility);
 
-        if(!selected.isBlocked())
+        if(!isAnyAbilityIsBlocked())
             selected.tick();
     }
 

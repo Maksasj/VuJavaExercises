@@ -4,9 +4,11 @@ import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.Tartar2;
+import tt2.common.GameController;
 import tt2.common.IStatable;
 import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
+import tt2.world.World;
 
 public class ArrowEntity extends Entity {
     private Vector3 direction;
@@ -18,7 +20,9 @@ public class ArrowEntity extends Entity {
     private int prevY;
     private int prevZ;
 
-    public ArrowEntity(Vector3 pos, Vector3 direction, float arrowSpeed, float travelDistance) {
+    private Mob shooter;
+
+    public ArrowEntity(Vector3 pos, Vector3 direction, float arrowSpeed, float travelDistance, Mob shooter) {
         super(pos);
 
         startPos = new Vector3(pos.x, pos.y, pos.z);
@@ -26,6 +30,7 @@ public class ArrowEntity extends Entity {
         this.travelDistance = travelDistance;
         this.direction = direction;
         this.arrowSpeed = arrowSpeed;
+        this.shooter = shooter;
 
         prevX = Math.round(pos.x);
         prevY = Math.round(pos.y);
@@ -35,6 +40,10 @@ public class ArrowEntity extends Entity {
     @Override
     public void step() {
         super.tick();
+    }
+
+    public DamageDealerType getDealerType() {
+        return DamageDealerType.NONE;
     }
 
     @Override
@@ -57,8 +66,25 @@ public class ArrowEntity extends Entity {
 
         float traveledDistance = x0*x0 + y0*y0 + z0*z0;
 
-        if(traveledDistance >= travelDistance*travelDistance)
+        int newPosX = Math.round(position.x);
+        int newPosY = Math.round(position.y);
+        int newPosZ = Math.round(position.z);
+
+        if(newPosX != prevX || newPosY != prevY || newPosZ != prevZ) {
+            prevX = newPosX;
+            prevY = newPosY;
+            prevZ = newPosZ;
+
+            World world = GameController.getWorld();
+            world.dealDamageToEntitiesAt(prevX, prevY, prevZ, shooter.getRangedDamage(), shooter);
+        }
+
+        if(traveledDistance >= travelDistance*travelDistance) {
             markAsDeleted();
+
+            if(getDealerType() == DamageDealerType.PLAYER)
+                Tartar2.activeScene.step();
+        }
     }
 
     @Override

@@ -67,9 +67,29 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         entities.add(new Skeleton(new Vector3(12.0f, 1.0f, 4.0f)));
     }
 
-    public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue) {
-        List<Mob> toDelete = new ArrayList<Mob>();
+    public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue, Mob damageDealer) {
+        for(Entity entity : entities) {
+            if(!(entity instanceof Mob mob))
+                continue;
 
+            if(mob == damageDealer)
+                continue;
+
+            Vector3 position = entity.getPosition();
+
+            int posX = Math.round(position.x);
+            int posY = Math.round(position.y);
+            int posZ = Math.round(position.z);
+
+            if(posX == x && posY == y && posZ == z)
+                mob.takeDamage(damageValue);
+
+            if(mob.isDead())
+                mob.markAsDeleted();
+        }
+    }
+
+    public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue) {
         for(Entity entity : entities) {
             if(!(entity instanceof Mob mob))
                 continue;
@@ -84,10 +104,8 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
                 mob.takeDamage(damageValue);
 
             if(mob.isDead())
-                toDelete.add(mob);
+                mob.markAsDeleted();
         }
-
-        entities.removeAll(toDelete);
     }
 
     public static void getNeighbourGroundTiles(World world, int x, int y, int z, Tile[] tiles) {

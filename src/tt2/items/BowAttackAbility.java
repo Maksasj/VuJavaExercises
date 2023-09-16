@@ -11,6 +11,7 @@ import tt2.common.camera.Camera;
 import tt2.common.camera.CameraController;
 import tt2.entity.ArrowEntity;
 import tt2.entity.Player;
+import tt2.entity.PlayerArrowEntity;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 import tt2.world.tile.Tile;
@@ -168,7 +169,7 @@ public class BowAttackAbility extends Ability {
         hoveringTile.submitYOffset(7.0f);
 
         if(Tartar2.raylib.core.IsMouseButtonPressed(0)) {
-            boolean invokeStep = true;
+            boolean arrowIsShoot = true;
 
             Vector3 arrowDirection = new Vector3(0.0f, 0.0f, 0.0f);
             Tile[] tileDirectionRow = null;
@@ -186,12 +187,12 @@ public class BowAttackAbility extends Ability {
                 arrowDirection = new Vector3(0.0f, 0.0f, 1.0f);
                 tileDirectionRow = groundTilesLeftDown;
             } else {
-                invokeStep = false;
+                arrowIsShoot = false;
             }
 
             // Tartar2.raylib.core.IsMouseButtonPressed(0) insures that this part will be invoked only once per click
-            if(invokeStep) {
-                Tartar2.activeScene.step();
+            if(arrowIsShoot) {
+                // Tartar2.activeScene.step();
 
                 Vector3 playerPos = player.getPosition();
                 Vector3 arrowStartPos = new Vector3(playerPos.x, playerPos.y, playerPos.z);
@@ -199,11 +200,12 @@ public class BowAttackAbility extends Ability {
 
                 int directionalDistance = getDirectionTileDistance(hoveringTile, tileDirectionRow) + 2;
 
-                arrowEntity = new ArrowEntity(
+                arrowEntity = new PlayerArrowEntity(
                         arrowStartPos,
                         arrowDirection,
                         arrowSpeed,
-                        (float )directionalDistance
+                        (float )directionalDistance,
+                        player
                 );
 
                 World world = GameController.getWorld();
