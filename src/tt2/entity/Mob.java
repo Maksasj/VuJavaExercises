@@ -26,9 +26,8 @@ public abstract class Mob extends Entity implements IStatable {
         health -= damageValue;
     }
 
-    // This thing should work like, is isDead() && isDeleted()
     public boolean isDead() {
-        return health <= 0.0f;
+        return (health <= 0.0f) || isDeleted();
     }
 
     @Override

@@ -247,16 +247,12 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
             entity.tick();
         }
 
-        // There we check if any entity need to dye !
-        List<Mob> toDelete = new ArrayList<Mob>();
+        // There we check if any entity need to be deleted !
+        List<Entity> toDelete = new ArrayList<Entity>();
 
-        for(Entity entity : entities) {
-            if(!(entity instanceof Mob mob))
-                continue;
-
-            if(mob.isDead())
-                toDelete.add(mob);
-        }
+        for(Entity entity : entities)
+            if(entity != null && entity.isDeleted())
+                toDelete.add(entity);
 
         entities.removeAll(toDelete);
     }

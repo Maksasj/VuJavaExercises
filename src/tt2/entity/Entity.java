@@ -11,12 +11,15 @@ import javax.swing.plaf.synth.SynthTextAreaUI;
 
 public abstract class Entity extends GameObject implements IRenderable {
     private final Vector3 intermediatePosition;
+
     private VisibilityLevel visibilityFlag;
+    private boolean deletedFlag;
 
 
     public Entity(Vector3 pos) {
         super(pos);
         visibilityFlag = VisibilityLevel.VISIBLE;
+        deletedFlag = false;
         intermediatePosition = new Vector3(pos.x, pos.y, pos.z);
     }
 
@@ -37,6 +40,14 @@ public abstract class Entity extends GameObject implements IRenderable {
         intermediatePosition.x += movePos.x;
         intermediatePosition.y += movePos.y;
         intermediatePosition.z += movePos.z;
+    }
+
+    public boolean isDeleted() {
+        return deletedFlag;
+    }
+
+    public void markAsDeleted() {
+        deletedFlag = true;
     }
 
     public Vector3 getIntermediatePosition() {

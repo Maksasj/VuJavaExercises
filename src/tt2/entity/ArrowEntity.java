@@ -44,9 +44,8 @@ public class ArrowEntity extends Entity {
 
         float traveledDistance = x0*x0 + y0*y0 + z0*z0;
 
-        if(traveledDistance >= travelDistance*travelDistance) {
-            System.out.println("Bullet should die !");
-        }
+        if(traveledDistance >= travelDistance*travelDistance)
+            markAsDeleted();
     }
 
     @Override
