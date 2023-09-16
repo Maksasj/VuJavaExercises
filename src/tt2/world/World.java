@@ -2,19 +2,21 @@ package tt2.world;
 
 import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector3;
+import org.lwjgl.system.CallbackI;
 import tt2.common.*;
 import tt2.entity.*;
 import tt2.world.tile.DefaultTile;
 import tt2.world.tile.StairsTile;
 import tt2.world.tile.Tile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class World extends CommonRenderingMaster implements IRenderable, ITickable, IStepable {
     private final Tile[][][] tiles;
     private final List<Entity> entities;
     private ArrayList<GameObject> renderables;
+    private PathCalculator pathCalculator;
+
 
     private final Player player;
 
@@ -22,6 +24,8 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         tiles = new Tile[16][16][16];
         entities = new ArrayList<Entity>();
         renderables = new ArrayList<GameObject>();
+
+        pathCalculator = new PathCalculator();
 
         for(int x = 0; x < 16; ++x) {
             for(int z = 0; z < 16; ++z) {
@@ -43,6 +47,10 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
                 tiles[z][y][15] = new DefaultTile(new Vector3(z, y,15.0f));
                 tiles[z][y][0] = new DefaultTile(new Vector3(z, y,0.0f));
             }
+        }
+
+        for(int z = 0; z < 16; ++z) {
+            tiles[5][1][z] = new DefaultTile(new Vector3(5.0f, 1.0f, z));
         }
 
         tiles[1][1][1] = new DefaultTile(new Vector3(1.0f, 1.0f, 1.0f));
@@ -135,6 +143,10 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         return tiles[x][y][z];
     }
 
+    public PathCalculator getPathCalculator() {
+        return pathCalculator;
+    }
+
     private void setVisibilityLevelAroundPlayer(int playerX, int playerY, int playerZ) {
         int xBound = Utils.clamp(playerX + 5, 0, 16);
         int zBound = Utils.clamp(playerZ + 5, 0, 16);
@@ -210,9 +222,37 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         }
     }
 
+    // Needed for debuging
+    private void visualizeFlatPaths() {
+        for (int x = 0; x < 16; ++x) {
+            for (int y = 0; y < 16; ++y) {
+                for (int z = 0; z < 16; ++z) {
+                    Tile groundTile = getTileAt(x, y, z);
+
+                    if (groundTile == null)
+                        continue;
+
+                    Vector3 position = groundTile.getPosition();
+
+                    int posX = Math.round(position.x);
+                    int posY = Math.round(position.y) + 1;
+                    int posZ = Math.round(position.z);
+
+                    IsometricDirection dir = pathCalculator.getFlatDirectionAt(posX, posY, posZ);
+                    if(dir == IsometricDirection.NONE) {
+                        groundTile.setApplyTint(true);
+                        groundTile.setTintColor(new Color(125, 255, 125, 255));
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void doRenderingPreProcessing() {
         renderables.clear();
+
+        // visualizeFlatPaths() needed for debuging
 
         // Adding all tile to renderables
         addAllTilesToRenderables(renderables);
@@ -240,6 +280,9 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
     @Override
     public void step() {
+        pathCalculator.reCalculateFlatPaths(this, player);
+        pathCalculator.reCalculateCubicPaths(this, player);
+
         for(Entity entity : entities) {
             entity.step();
         }
