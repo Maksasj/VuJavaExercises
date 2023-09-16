@@ -70,7 +70,7 @@ public abstract class Tile extends GameObject implements IRenderable {
     }
 
     @Override
-    public void doVisibilityPostProcessing() {
+    public void doRenderingPreProcessing() {
 
     }
 }

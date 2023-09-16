@@ -39,7 +39,7 @@ public class CommonRenderingMaster implements IRenderable {
     }
 
     @Override
-    public void doVisibilityPostProcessing() {
+    public void doRenderingPreProcessing() {
 
     }
 }

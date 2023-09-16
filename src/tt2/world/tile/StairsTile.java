@@ -80,7 +80,7 @@ public class StairsTile extends RotatableTile {
     }
 
     @Override
-    public void doVisibilityPostProcessing() {
+    public void doRenderingPreProcessing() {
         if(sideTile != null && sideTile.getVisibilityLevel() == VisibilityLevel.TRANSPARENT)
             sideTile.setVisibilityLevel(VisibilityLevel.SEMI_VISIBLE);
 

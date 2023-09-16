@@ -111,7 +111,6 @@ public class MoveAbility extends Ability {
         Tile hoveringTile = getPlayerHoveringTile();
 
         updateNeighbourTiles();
-        updateAvailableTilesTint();
 
         if(hoveringTile == null)
             return;
@@ -137,6 +136,16 @@ public class MoveAbility extends Ability {
             if(invokeStep)
                 Tartar2.activeScene.step();
         }
+    }
+
+    @Override
+    public boolean isBlocked() {
+        return false;
+    }
+
+    @Override
+    public void doRenderingPreProcessing() {
+        updateAvailableTilesTint();
     }
 
     @Override

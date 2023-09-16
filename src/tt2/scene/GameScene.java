@@ -27,7 +27,10 @@ public class GameScene extends Scene {
 
     @Override
     public void render() {
+        gameController.doRenderingPreProcessing();
+        gameWorld.doRenderingPreProcessing();
         gameWorld.render();
+
         gameController.render();
     }
 
@@ -42,8 +45,8 @@ public class GameScene extends Scene {
         cameraController.moveCamera(camera);
         cameraController.zoomCamera(camera);
 
-        gameController.tick();
         gameWorld.tick();
+        gameController.tick();
     }
 
     @Override

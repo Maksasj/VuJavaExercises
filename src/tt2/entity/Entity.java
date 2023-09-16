@@ -85,7 +85,7 @@ public abstract class Entity extends GameObject implements IRenderable {
     }
 
     @Override
-    public void doVisibilityPostProcessing() {
+    public void doRenderingPreProcessing() {
 
     }
 }

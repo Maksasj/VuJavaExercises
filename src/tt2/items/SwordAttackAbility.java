@@ -115,7 +115,6 @@ public class SwordAttackAbility extends Ability {
         Tile hoveringTile = getPlayerHoveringTile();
 
         updateNeighbourTiles();
-        updateAvailableTilesTint();
 
         if(hoveringTile == null)
             return;
@@ -147,6 +146,16 @@ public class SwordAttackAbility extends Ability {
             if(invokeStep)
                 Tartar2.activeScene.step();
         }
+    }
+
+    @Override
+    public void doRenderingPreProcessing() {
+        updateAvailableTilesTint();
+    }
+
+    @Override
+    public boolean isBlocked() {
+        return false;
     }
 
     @Override

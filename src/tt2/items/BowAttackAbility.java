@@ -34,6 +34,9 @@ public class BowAttackAbility extends Ability {
 
     private int bowRange;
 
+    private ArrowEntity arrowEntity;
+
+
     public BowAttackAbility(Player player) {
         super();
 
@@ -48,6 +51,8 @@ public class BowAttackAbility extends Ability {
         wallTilesRightUp = new Tile[bowRange];
         wallTilesRightDown = new Tile[bowRange];
         wallTilesLeftDown = new Tile[bowRange];
+
+        arrowEntity = null;
 
         this.player = player;
     }
@@ -156,7 +161,6 @@ public class BowAttackAbility extends Ability {
         Tile hoveringTile = getPlayerHoveringTile();
 
         updateNeighbourTiles();
-        updateAvailableTilesTint();
 
         if(hoveringTile == null)
             return;
@@ -195,17 +199,27 @@ public class BowAttackAbility extends Ability {
 
                 int directionalDistance = getDirectionTileDistance(hoveringTile, tileDirectionRow) + 2;
 
-                World world = GameController.getWorld();
-                world.addEntity(
-                        new ArrowEntity(
-                                arrowStartPos,
-                                arrowDirection,
-                                arrowSpeed,
-                                (float )directionalDistance
-                        )
+                arrowEntity = new ArrowEntity(
+                        arrowStartPos,
+                        arrowDirection,
+                        arrowSpeed,
+                        (float )directionalDistance
                 );
+
+                World world = GameController.getWorld();
+                world.addEntity(arrowEntity);
             }
         }
+    }
+
+    @Override
+    public void doRenderingPreProcessing() {
+        updateAvailableTilesTint();
+    }
+
+    @Override
+    public boolean isBlocked() {
+        return arrowEntity != null && !arrowEntity.isDeleted();
     }
 
     @Override

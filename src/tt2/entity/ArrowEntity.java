@@ -14,6 +14,10 @@ public class ArrowEntity extends Entity {
     private float travelDistance;
     private Vector3 startPos;
 
+    private int prevX;
+    private int prevY;
+    private int prevZ;
+
     public ArrowEntity(Vector3 pos, Vector3 direction, float arrowSpeed, float travelDistance) {
         super(pos);
 
@@ -22,6 +26,15 @@ public class ArrowEntity extends Entity {
         this.travelDistance = travelDistance;
         this.direction = direction;
         this.arrowSpeed = arrowSpeed;
+
+        prevX = Math.round(pos.x);
+        prevY = Math.round(pos.y);
+        prevZ = Math.round(pos.z);
+    }
+
+    @Override
+    public void step() {
+        super.tick();
     }
 
     @Override

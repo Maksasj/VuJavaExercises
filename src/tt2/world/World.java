@@ -14,11 +14,14 @@ import java.util.List;
 public class World extends CommonRenderingMaster implements IRenderable, ITickable, IStepable {
     private final Tile[][][] tiles;
     private final List<Entity> entities;
+    private ArrayList<GameObject> renderables;
+
     private final Player player;
 
     public World(Player player) {
         tiles = new Tile[16][16][16];
         entities = new ArrayList<Entity>();
+        renderables = new ArrayList<GameObject>();
 
         for(int x = 0; x < 16; ++x) {
             for(int z = 0; z < 16; ++z) {
@@ -172,7 +175,26 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
     @Override
     public void render() {
-        ArrayList<GameObject> renderables = new ArrayList<GameObject>();
+        // Rendering
+        for(GameObject object : renderables) {
+            IRenderable renderable = (IRenderable) object;
+            VisibilityLevel visibilityLevel = renderable.getVisibilityLevel();
+
+            if(visibilityLevel == VisibilityLevel.VISIBLE) {
+                renderable.render();
+            } else if(visibilityLevel == VisibilityLevel.SEMI_VISIBLE) {
+                renderable.setTintColor(new Color(255, 255, 255, 125));
+                renderable.setApplyTint(true);
+                renderable.render();
+            }
+
+            renderable.resetRenderingFlags();
+        }
+    }
+
+    @Override
+    public void doRenderingPreProcessing() {
+        renderables.clear();
 
         // Adding all tile to renderables
         addAllTilesToRenderables(renderables);
@@ -192,26 +214,10 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
         // Now we do visibility post-processing
         for(GameObject object : renderables)
-            ((IRenderable) object).doVisibilityPostProcessing();
+            ((IRenderable) object).doRenderingPreProcessing();
 
         // Sorting all renderables
         renderables.sort(new GameObjectSorterByPerspective());
-
-        // Rendering
-        for(GameObject object : renderables) {
-            IRenderable renderable = (IRenderable) object;
-            VisibilityLevel visibilityLevel = renderable.getVisibilityLevel();
-
-            if(visibilityLevel == VisibilityLevel.VISIBLE) {
-                renderable.render();
-            } else if(visibilityLevel == VisibilityLevel.SEMI_VISIBLE) {
-                renderable.setTintColor(new Color(255, 255, 255, 125));
-                renderable.setApplyTint(true);
-                renderable.render();
-            }
-
-            renderable.resetRenderingFlags();
-        }
     }
 
     @Override

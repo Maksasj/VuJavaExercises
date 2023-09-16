@@ -8,7 +8,7 @@ public interface IRenderable {
 
     public VisibilityLevel getVisibilityLevel();
     public void setVisibilityLevel(VisibilityLevel visibilityLevel);
-    public void doVisibilityPostProcessing();
+    public void doRenderingPreProcessing();
 
     public void setTintColor(Color color);
     public void setApplyTint(boolean applyTint);

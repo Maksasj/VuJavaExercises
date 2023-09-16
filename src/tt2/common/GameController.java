@@ -1,10 +1,13 @@
 package tt2.common;
 
 import com.raylib.java.core.Color;
+import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import com.raylib.java.textures.Texture2D;
 import tt2.Tartar2;
+import tt2.entity.GameObject;
+import tt2.entity.GameObjectSorterByPerspective;
 import tt2.entity.Player;
 import tt2.items.Ability;
 import tt2.items.BowAttackAbility;
@@ -68,13 +71,8 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
     }
 
     @Override
-    public void resetRenderingFlags() {
-
-    }
-
-    @Override
-    public VisibilityLevel getVisibilityLevel() {
-        return null;
+    public void doRenderingPreProcessing() {
+        abilities.get(selectedAbility).doRenderingPreProcessing();
     }
 
     @Override
@@ -84,7 +82,7 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
 
     @Override
     public void tick() {
-        float mouseWheelDelta = Tartar2.raylib.core.GetMouseWheelMove();
+        float mouseWheelDelta = rCore.GetMouseWheelMove();
 
         if(mouseWheelDelta > 0.0f)
             selectedAbility = Math.max(selectedAbility - 1, 0);
@@ -92,7 +90,10 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
         if(mouseWheelDelta < 0.0f)
             selectedAbility = Math.min(selectedAbility + 1, abilities.size() - 1);
 
-        abilities.get(selectedAbility).tick();
+        Ability selected = abilities.get(selectedAbility);
+
+        if(!selected.isBlocked())
+            selected.tick();
     }
 
     public Player getPlayer() {
