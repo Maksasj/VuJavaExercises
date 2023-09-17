@@ -45,7 +45,6 @@ public class Tartar2 {
 
             // Rendering part
             raylib.core.BeginDrawing();
-                raylib.core.ClearBackground(Color.DARKGRAY);
                 activeScene.render();
             raylib.core.EndDrawing();
         }

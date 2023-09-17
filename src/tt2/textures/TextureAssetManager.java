@@ -19,6 +19,8 @@ public class TextureAssetManager implements IAssetManager {
     public static Texture2D SWORD_ATTACK_ABILITY_ICON;
     public static Texture2D BOW_ATTACK_ABILITY_ICON;
 
+    public static Texture2D UFO_ENJOYERS_LOGO;
+
     public void load() {
         BASE_TILE_TEXTURE = rTextures.LoadTexture("assets/textures/baseTile.png");
         PLAYER_TEXTURE = rTextures.LoadTexture("assets/textures/player.png");
@@ -35,6 +37,8 @@ public class TextureAssetManager implements IAssetManager {
         STAIRS_TILE1_TEXTURE = rTextures.LoadTexture("assets/textures/stairsTile1.png");
         STAIRS_TILE2_TEXTURE = rTextures.LoadTexture("assets/textures/stairsTile2.png");
         STAIRS_TILE3_TEXTURE = rTextures.LoadTexture("assets/textures/stairsTile3.png");
+
+        UFO_ENJOYERS_LOGO = rTextures.LoadTexture("assets/textures/ufoEnjoyersLogo.png");
     }
 
     public void unload() {
@@ -52,5 +56,7 @@ public class TextureAssetManager implements IAssetManager {
         Tartar2.raylib.textures.UnloadTexture(STAIRS_TILE1_TEXTURE);
         Tartar2.raylib.textures.UnloadTexture(STAIRS_TILE2_TEXTURE);
         Tartar2.raylib.textures.UnloadTexture(STAIRS_TILE3_TEXTURE);
+
+        Tartar2.raylib.textures.UnloadTexture(UFO_ENJOYERS_LOGO);
     }
 }

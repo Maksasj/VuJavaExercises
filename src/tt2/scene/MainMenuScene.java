@@ -1,5 +1,6 @@
 package tt2.scene;
 
+import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector3;
 import com.raylib.java.shapes.Rectangle;
 import tt2.Tartar2;
@@ -24,6 +25,8 @@ public class MainMenuScene extends Scene {
 
     @Override
     public void render() {
+        Tartar2.raylib.core.ClearBackground(Color.DARKGRAY);
+
         beginGameButton.render();
     }
 

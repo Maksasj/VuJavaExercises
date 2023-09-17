@@ -1,7 +1,9 @@
 package tt2.scene;
 
+import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
+import tt2.Tartar2;
 import tt2.common.GameController;
 import tt2.common.camera.Camera;
 import tt2.common.camera.CameraController;
@@ -29,6 +31,8 @@ public class GameScene extends Scene {
 
     @Override
     public void render() {
+        Tartar2.raylib.core.ClearBackground(Color.DARKGRAY);
+
         gameController.doRenderingPreProcessing();
         gameWorld.doRenderingPreProcessing();
         gameWorld.render();

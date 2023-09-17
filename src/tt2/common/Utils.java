@@ -14,6 +14,13 @@ public class Utils {
         return Math.min(value, max);
     }
 
+    public static float clamp(float value, float min, float max) {
+        if(value < min)
+            return min;
+
+        return Math.min(value, max);
+    }
+
     public static float pointDistance2(Vector3 firstPoint, Vector3 secondPoint) {
         float x = firstPoint.x - secondPoint.x;
         float y = firstPoint.y - secondPoint.y;
