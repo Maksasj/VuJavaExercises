@@ -21,6 +21,9 @@ public class Skeleton extends GroundMob {
     public void step() {
         super.step();
 
+        if(isDead())
+            return;
+
         World world = GameController.getWorld();
 
         Vector3 position = getPosition();
@@ -39,22 +42,38 @@ public class Skeleton extends GroundMob {
             default -> {}
         }
 
-        // int turn = Utils.getRandomInRange(0, 4);
-        // Tile groundTile = getGroundTiles()[turn];
-        // Tile sideTile = getSideTiles()[turn];
+        Player player = Tartar2.gameScene.getGameController().getPlayer();
+        if(player == null)
+            return;
 
-        // We check is there any ground tile, and also check is there no any wall
-        // if(groundTile == null || sideTile != null)
-        //     return;
-//
-        // if(turn == 0)
-        //     movePosition(new Vector3(-1.0f, 0.0f, 0.0f));
-        // else if (turn == 1)
-        //     movePosition(new Vector3(1.0f, 0.0f, 0.0f));
-        // else if (turn == 2)
-        //     movePosition(new Vector3(0.0f, 0.0f, -1.0f));
-        // else if (turn == 3)
-        //     movePosition(new Vector3(0.0f, 0.0f, 1.0f));
+        Vector3 playerPos = player.getIntermediatePosition();
+        Vector3 selfPos = getPosition();
+
+        int playerPosX = Math.round(playerPos.x);
+        int playerPosY = Math.round(playerPos.y);
+        int playerPosZ = Math.round(playerPos.z);
+
+        int selfPosX = Math.round(selfPos.x);
+        int selfPosY = Math.round(selfPos.y);
+        int selfPosZ = Math.round(selfPos.z);
+
+        IsometricDirection attackDirection = IsometricDirection.NONE;
+        if(playerPosY != selfPosY)
+            return;
+
+        if((playerPosX + 1) == selfPosX && playerPosZ == selfPosZ) {
+            attackDirection = IsometricDirection.RIGHT_DOWN;
+            world.dealDamageToEntitiesAt(playerPosX, playerPosY, selfPosZ, getMeleeDamage(), this);
+        } else if((playerPosX - 1) == selfPosX && playerPosZ == selfPosZ) {
+            attackDirection = IsometricDirection.LEFT_UP;
+            world.dealDamageToEntitiesAt(playerPosX, playerPosY, selfPosZ, getMeleeDamage(), this);
+        } else if(playerPosX == selfPosX && playerPosZ == (selfPosZ + 1)) {
+            attackDirection = IsometricDirection.LEFT_DOWN;
+            world.dealDamageToEntitiesAt(playerPosX, playerPosY, selfPosZ, getMeleeDamage(), this);
+        } else if(playerPosX == selfPosX && playerPosZ == (selfPosZ - 1)) {
+            attackDirection = IsometricDirection.RIGHT_UP;
+            world.dealDamageToEntitiesAt(playerPosX, playerPosY, selfPosZ, getMeleeDamage(), this);
+        }
     }
 
     @Override

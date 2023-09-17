@@ -38,6 +38,40 @@ public class PathCalculator {
         // Todo implement
     }
 
+    private boolean isValidCoord(int x, int y, int z) {
+        if(x < 0 || x > 15)
+            return false;
+
+        if(y < 0 || y > 15)
+            return false;
+
+        if(z < 0 || z > 15)
+            return false;
+
+        return true;
+    }
+
+    private void addDistanceBarrierToFlatPaths(Vector3 playerPos) {
+        int playerPosX = Math.round(playerPos.x);
+        int playerPosY = Math.round(playerPos.y);
+        int playerPosZ = Math.round(playerPos.z);
+
+        if(isValidCoord(playerPosX, playerPosY, playerPosZ))
+            pathToPlayerFlat[playerPosX][playerPosY][playerPosZ] = IsometricDirection.NONE;
+
+        if(isValidCoord(playerPosX + 1, playerPosY, playerPosZ))
+            pathToPlayerFlat[playerPosX + 1][playerPosY][playerPosZ] = IsometricDirection.NONE;
+
+        if(isValidCoord(playerPosX - 1, playerPosY, playerPosZ))
+            pathToPlayerFlat[playerPosX - 1][playerPosY][playerPosZ] = IsometricDirection.NONE;
+
+        if(isValidCoord(playerPosX, playerPosY, playerPosZ + 1))
+            pathToPlayerFlat[playerPosX][playerPosY][playerPosZ + 1] = IsometricDirection.NONE;
+
+        if(isValidCoord(playerPosX, playerPosY, playerPosZ - 1))
+            pathToPlayerFlat[playerPosX][playerPosY][playerPosZ - 1] = IsometricDirection.NONE;
+    }
+
     public void reCalculateFlatPaths(World world, Player player) {
         Vector3 playerPos = player.getIntermediatePosition();
 
@@ -113,31 +147,21 @@ public class PathCalculator {
                 }
             }
         }
+
+        addDistanceBarrierToFlatPaths(playerPos);
     }
 
     public IsometricDirection getFlatDirectionAt(int x, int y, int z) {
-        if(x < 0 || x > 15)
-            return IsometricDirection.NONE;
+        if(isValidCoord(x, y, z))
+            return pathToPlayerFlat[x][y][z];
 
-        if(y < 0 || y > 15)
-            return IsometricDirection.NONE;
-
-        if(z < 0 || z > 15)
-            return IsometricDirection.NONE;
-
-        return pathToPlayerFlat[x][y][z];
+        return IsometricDirection.NONE;
     }
 
     public IsometricDirection getCubicDirectionAt(int x, int y, int z) {
-        if(x < 0 || x > 15)
-            return IsometricDirection.NONE;
+        if(isValidCoord(x, y, z))
+            return pathToPlayerCubic[x][y][z];
 
-        if(y < 0 || y > 15)
-            return IsometricDirection.NONE;
-
-        if(z < 0 || z > 15)
-            return IsometricDirection.NONE;
-
-        return pathToPlayerCubic[x][y][z];
+        return IsometricDirection.NONE;
     }
 }

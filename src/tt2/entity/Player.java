@@ -14,6 +14,11 @@ public class Player extends Mob {
     }
 
     @Override
+    public void tick() {
+        super.tick();
+    }
+
+    @Override
     public void render() {
         if(isDeleted())
             return;

@@ -89,13 +89,13 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
             if(mob == damageDealer)
                 continue;
 
-            Vector3 position = entity.getPosition();
+            Vector3 position = entity.getIntermediatePosition();
 
             int posX = Math.round(position.x);
             int posY = Math.round(position.y);
             int posZ = Math.round(position.z);
 
-            if(posX == x && posY == y && posZ == z) {
+            if((posX == x) && (posY == y) && (posZ == z)) {
                 mob.takeDamage(damageValue);
 
                 addEntity(new TextPopupEntity(
