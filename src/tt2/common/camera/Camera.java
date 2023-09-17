@@ -4,6 +4,8 @@ import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.common.IPositioned;
 
+import static tt2.common.Settings.DEFAULT_SPRITE_SCALE;
+
 public class Camera implements IPositioned {
     private Vector3 position;
     private float zoom;
@@ -11,7 +13,7 @@ public class Camera implements IPositioned {
     public Camera(Vector3 pos) {
         position = pos;
 
-        zoom = 3.0f;
+        zoom = DEFAULT_SPRITE_SCALE;
     }
 
     public void move(Vector3 moveDir) {

@@ -14,6 +14,8 @@ public class GameScene extends Scene {
     private final GameController gameController;
 
     public GameScene() {
+        super();
+
         gameController = new GameController();
 
         gameWorld = new World(gameController.getPlayer());
@@ -42,6 +44,8 @@ public class GameScene extends Scene {
 
     @Override
     public void tick() {
+        super.tick();
+
         cameraController.moveCamera(camera);
         cameraController.zoomCamera(camera);
 

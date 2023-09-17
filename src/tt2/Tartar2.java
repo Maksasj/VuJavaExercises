@@ -6,6 +6,7 @@ import tt2.common.Settings;
 import tt2.scene.GameScene;
 import tt2.scene.MainMenuScene;
 import tt2.scene.Scene;
+import tt2.scene.SplashScene;
 import tt2.textures.TextureAssetManager;
 
 public class Tartar2 {
@@ -14,6 +15,7 @@ public class Tartar2 {
     public static TextureAssetManager textureAssetManager;
     public static GameScene gameScene;
     public static MainMenuScene mainMenuScene;
+    public static SplashScene splashScene;
     public static Scene activeScene;
 
     public static void preinit() {
@@ -24,15 +26,16 @@ public class Tartar2 {
         raylib.core.InitWindow(Settings.WINDOW_WIDTH, Settings.WINDOW_HEIGHT, "Tartar 2");
 
         textureAssetManager = new TextureAssetManager();
-
-        gameScene = new GameScene();
-        mainMenuScene = new MainMenuScene();
-
-        activeScene = gameScene;
     }
 
     public static void load() {
         textureAssetManager.load();
+
+        gameScene = new GameScene();
+        mainMenuScene = new MainMenuScene();
+        splashScene = new SplashScene();
+
+        activeScene = splashScene;
     }
 
     public static void run() {
@@ -50,6 +53,10 @@ public class Tartar2 {
 
     public static void unload() {
         textureAssetManager.unload();
+    }
+
+    public static void setActiveScene(Scene scene) {
+        activeScene = scene;
     }
 
     public static void main(String[] args) {
