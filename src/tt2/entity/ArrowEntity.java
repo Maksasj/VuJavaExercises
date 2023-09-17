@@ -64,8 +64,6 @@ public class ArrowEntity extends Entity {
         float y0 = position.y - startPos.y;
         float z0 = position.z - startPos.z;
 
-        float traveledDistance = x0*x0 + y0*y0 + z0*z0;
-
         int newPosX = Math.round(position.x);
         int newPosY = Math.round(position.y);
         int newPosZ = Math.round(position.z);
@@ -77,7 +75,12 @@ public class ArrowEntity extends Entity {
 
             World world = GameController.getWorld();
             world.dealDamageToEntitiesAt(prevX, prevY, prevZ, shooter.getRangedDamage(), shooter);
+
+            if(world.getTileAt(prevX, prevY, prevZ) != null)
+                markAsDeleted();
         }
+
+        float traveledDistance = x0*x0 + y0*y0 + z0*z0;
 
         if(traveledDistance >= travelDistance*travelDistance) {
             markAsDeleted();
