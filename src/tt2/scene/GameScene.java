@@ -10,7 +10,7 @@ import tt2.common.camera.CameraController;
 import tt2.world.World;
 
 public class GameScene extends Scene {
-    private final World gameWorld;
+    private World gameWorld;
     private final Camera camera;
     private final CameraController cameraController;
     private final GameController gameController;
@@ -64,5 +64,10 @@ public class GameScene extends Scene {
 
     public World getWorld() {
         return gameWorld;
+    }
+
+    public void nextLevel() {
+        // For now we just create new world
+        gameWorld = new World(gameController.getPlayer());
     }
 }

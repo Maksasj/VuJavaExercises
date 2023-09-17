@@ -15,7 +15,6 @@ public abstract class Entity extends GameObject implements IRenderable {
     private VisibilityLevel visibilityFlag;
     private boolean deletedFlag;
 
-
     public Entity(Vector3 pos) {
         super(pos);
         visibilityFlag = VisibilityLevel.VISIBLE;

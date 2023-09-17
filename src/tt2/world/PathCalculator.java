@@ -29,7 +29,7 @@ public class PathCalculator {
     }
 
     public void reCalculateCubicPaths(World world, Player player) {
-        Vector3 playerPos = player.getPosition();
+        Vector3 playerPos = player.getIntermediatePosition();
 
         int posX = Math.round(playerPos.x);
         int posY = Math.round(playerPos.y);
@@ -39,7 +39,7 @@ public class PathCalculator {
     }
 
     public void reCalculateFlatPaths(World world, Player player) {
-        Vector3 playerPos = player.getPosition();
+        Vector3 playerPos = player.getIntermediatePosition();
 
         int playerPosX = Math.round(playerPos.x);
         int playerPosY = Math.round(playerPos.y);

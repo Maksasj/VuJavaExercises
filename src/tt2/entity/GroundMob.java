@@ -32,11 +32,11 @@ public abstract class GroundMob extends Mob {
     public void updateNeighbourTiles() {
         World world = GameController.getWorld();
 
-        int playerX = Math.round(getPosition().x);
-        int playerY = Math.round(getPosition().y);
-        int playerZ = Math.round(getPosition().z);
+        int posX = Math.round(getPosition().x);
+        int posY = Math.round(getPosition().y);
+        int posZ = Math.round(getPosition().z);
 
-        World.getNeighbourGroundTiles(world, playerX, playerY, playerZ, groundTiles);
-        World.getNeighbourTiles(world, playerX, playerY, playerZ, sideTiles);
+        World.getNeighbourGroundTiles(world, posX, posY, posZ, groundTiles);
+        World.getNeighbourTiles(world, posX, posY, posZ, sideTiles);
     }
 }

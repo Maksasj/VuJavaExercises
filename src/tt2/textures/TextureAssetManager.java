@@ -9,6 +9,7 @@ import java.util.List;
 
 public class TextureAssetManager implements IAssetManager {
     public static Texture2D BASE_TILE_TEXTURE;
+    public static Texture2D PORTAL_TILE_TEXTURE;
     public static Texture2D STAIRS_TILE0_TEXTURE;
     public static Texture2D STAIRS_TILE1_TEXTURE;
     public static Texture2D STAIRS_TILE2_TEXTURE;
@@ -34,6 +35,8 @@ public class TextureAssetManager implements IAssetManager {
         allTextures = new ArrayList<>();
 
         BASE_TILE_TEXTURE = addTexture("assets/textures/baseTile.png");
+        PORTAL_TILE_TEXTURE = addTexture("assets/textures/portalTile.png");
+
         PLAYER_TEXTURE = addTexture("assets/textures/player.png");
         SKELETON_TEXTURE = addTexture("assets/textures/skeleton.png");
         ARROW_TEXTURE = addTexture("assets/textures/arrow.png");

@@ -21,28 +21,16 @@ public class DefaultTile extends Tile {
         Vector3 cameraPosition = activeCamera.getPosition();
         float cameraZoom = activeCamera.getZoom();
 
-        if (isTintColorApplied()) {
-            Tartar2.raylib.textures.DrawTextureEx(
-                    TextureAssetManager.BASE_TILE_TEXTURE,
-                    new Vector2(
-                            tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
-                            tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
-                    ),
-                    0,
-                    cameraZoom,
-                    getTintColor()
-            );
-        } else {
-            Tartar2.raylib.textures.DrawTextureEx(
-                    TextureAssetManager.BASE_TILE_TEXTURE,
-                    new Vector2(
-                            tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
-                            tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
-                    ),
-                    0,
-                    cameraZoom,
-                    Color.WHITE
-            );
-        }
+        Color tintColor = Color.WHITE;
+
+        if (isTintColorApplied())
+            tintColor = getTintColor();
+
+        Vector2 texturePos = new Vector2(
+                tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
+                tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
+        );
+
+        Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.BASE_TILE_TEXTURE, texturePos, 0, cameraZoom, tintColor);
     }
 }

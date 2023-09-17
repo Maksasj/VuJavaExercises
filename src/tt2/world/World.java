@@ -2,13 +2,14 @@ package tt2.world;
 
 import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector3;
-import org.lwjgl.system.CallbackI;
 import tt2.common.*;
 import tt2.entity.*;
 import tt2.world.tile.DefaultTile;
+import tt2.world.tile.PortalTile;
 import tt2.world.tile.StairsTile;
 import tt2.world.tile.Tile;
 
+import javax.sound.sampled.Port;
 import java.util.*;
 
 public class World extends CommonRenderingMaster implements IRenderable, ITickable, IStepable {
@@ -17,7 +18,6 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
     private final Stack<Entity> entitiesToAdd; // Array used for storing all entities that are waiting to be spawned
     private ArrayList<GameObject> renderables;
     private PathCalculator pathCalculator;
-
 
     private final Player player;
 
@@ -73,6 +73,8 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         tiles[2][2][1] = new StairsTile(new Vector3(2.0f, 2.0f, 1.0f), IsometricRotation.LEFT_UP);
         tiles[3][2][1] = null;
 
+        tiles[14][0][14] = new PortalTile(new Vector3(14.0f, 0.0f, 14.0f));
+
         addEntity(player);
         this.player = player;
 
@@ -80,8 +82,6 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
     }
 
     public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue, Mob damageDealer) {
-        List<Entity> textPopupsToAdd = new ArrayList<>();
-
         for(Entity entity : entities) {
             if(!(entity instanceof Mob mob))
                 continue;
@@ -98,23 +98,18 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
             if(posX == x && posY == y && posZ == z) {
                 mob.takeDamage(damageValue);
 
-                textPopupsToAdd.add(
-                    new TextPopupEntity(
-                            new Vector3(posX, posY, posZ),
-                            Integer.toString(damageValue),
-                            new Color(255, 0, 0, 255),
-                            2.0f,
-                            1.5f
-                    )
-                );
+                addEntity(new TextPopupEntity(
+                        new Vector3(posX, posY, posZ),
+                        Integer.toString(damageValue),
+                        new Color(255, 0, 0, 255),
+                        2.0f,
+                        1.5f
+                ));
             }
 
             if(mob.isDead())
                 mob.markAsDeleted();
         }
-
-        for(Entity textPopup : textPopupsToAdd)
-            addEntity(textPopup);
     }
 
     public static void getNeighbourGroundTiles(World world, int x, int y, int z, Tile[] tiles) {
@@ -253,7 +248,7 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
     public void doRenderingPreProcessing() {
         renderables.clear();
 
-        // visualizeFlatPaths() needed for debuging
+        // visualizeFlatPaths(); // needed for debuging
 
         // Adding all tile to renderables
         addAllTilesToRenderables(renderables);
