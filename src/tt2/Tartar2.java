@@ -37,7 +37,7 @@ public class Tartar2 {
         splashScene = new SplashScene();
 
         // activeScene = splashScene;
-        activeScene = mainMenuScene;
+        activeScene = gameScene;
     }
 
     public static void run() {

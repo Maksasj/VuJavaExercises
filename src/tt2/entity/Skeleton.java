@@ -59,6 +59,9 @@ public class Skeleton extends GroundMob {
 
     @Override
     public void render() {
+        if(isDeleted())
+            return;
+
         Camera activeCamera = Tartar2.activeScene.getActiveCamera();
 
         Vector2 tilePosition = getIsometricPosition();

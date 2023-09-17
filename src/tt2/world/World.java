@@ -14,6 +14,7 @@ import java.util.*;
 public class World extends CommonRenderingMaster implements IRenderable, ITickable, IStepable {
     private final Tile[][][] tiles;
     private final List<Entity> entities;
+    private final Stack<Entity> entitiesToAdd; // Array used for storing all entities that are waiting to be spawned
     private ArrayList<GameObject> renderables;
     private PathCalculator pathCalculator;
 
@@ -22,7 +23,10 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
     public World(Player player) {
         tiles = new Tile[16][16][16];
+
         entities = new ArrayList<Entity>();
+        entitiesToAdd = new Stack<>();
+
         renderables = new ArrayList<GameObject>();
 
         pathCalculator = new PathCalculator();
@@ -69,13 +73,15 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         tiles[2][2][1] = new StairsTile(new Vector3(2.0f, 2.0f, 1.0f), IsometricRotation.LEFT_UP);
         tiles[3][2][1] = null;
 
-        entities.add(player);
+        addEntity(player);
         this.player = player;
 
-        entities.add(new Skeleton(new Vector3(12.0f, 1.0f, 4.0f)));
+        addEntity(new Skeleton(new Vector3(12.0f, 1.0f, 8.0f)));
     }
 
     public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue, Mob damageDealer) {
+        List<Entity> textPopupsToAdd = new ArrayList<>();
+
         for(Entity entity : entities) {
             if(!(entity instanceof Mob mob))
                 continue;
@@ -89,31 +95,26 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
             int posY = Math.round(position.y);
             int posZ = Math.round(position.z);
 
-            if(posX == x && posY == y && posZ == z)
+            if(posX == x && posY == y && posZ == z) {
                 mob.takeDamage(damageValue);
+
+                textPopupsToAdd.add(
+                    new TextPopupEntity(
+                            new Vector3(posX, posY, posZ),
+                            Integer.toString(damageValue),
+                            new Color(255, 0, 0, 255),
+                            2.0f,
+                            1.5f
+                    )
+                );
+            }
 
             if(mob.isDead())
                 mob.markAsDeleted();
         }
-    }
 
-    public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue) {
-        for(Entity entity : entities) {
-            if(!(entity instanceof Mob mob))
-                continue;
-
-            Vector3 position = entity.getPosition();
-
-            int posX = Math.round(position.x);
-            int posY = Math.round(position.y);
-            int posZ = Math.round(position.z);
-
-            if(posX == x && posY == y && posZ == z)
-                mob.takeDamage(damageValue);
-
-            if(mob.isDead())
-                mob.markAsDeleted();
-        }
+        for(Entity textPopup : textPopupsToAdd)
+            addEntity(textPopup);
     }
 
     public static void getNeighbourGroundTiles(World world, int x, int y, int z, Tile[] tiles) {
@@ -298,8 +299,28 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         }
     }
 
+    private void spawnAllWaitingEntities() {
+        while (!entitiesToAdd.isEmpty()) {
+            Entity entity = entitiesToAdd.pop();
+            entities.add(entity);
+        }
+    }
+
+    private void deleteAllWaitingEntities() {
+        // There we check if any entity need to be deleted !
+        List<Entity> toDelete = new ArrayList<Entity>();
+
+        for(Entity entity : entities)
+            if(entity != null && entity.isDeleted())
+                toDelete.add(entity);
+
+        entities.removeAll(toDelete);
+    }
+
     @Override
     public void tick() {
+        spawnAllWaitingEntities();
+
         for (int y = 15; y >= 0; --y) {
             for (int z = 0; z < 16; ++z) {
                 for (int x = 0; x < 16; ++x) {
@@ -314,17 +335,10 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
             entity.tick();
         }
 
-        // There we check if any entity need to be deleted !
-        List<Entity> toDelete = new ArrayList<Entity>();
-
-        for(Entity entity : entities)
-            if(entity != null && entity.isDeleted())
-                toDelete.add(entity);
-
-        entities.removeAll(toDelete);
+        deleteAllWaitingEntities();
     }
 
     public void addEntity(Entity entity) {
-        entities.add(entity);
+        entitiesToAdd.push(entity);
     }
 }

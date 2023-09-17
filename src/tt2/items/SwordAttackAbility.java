@@ -131,13 +131,13 @@ public class SwordAttackAbility extends Ability {
             World world = GameController.getWorld();
 
             if(checkDirection(hoveringTile, groundTiles[0], wallTiles[0])) {
-                world.dealDamageToEntitiesAt(playerX - 1, playerY, playerZ, getDamage());
+                world.dealDamageToEntitiesAt(playerX - 1, playerY, playerZ, getDamage(), player);
             } else if (checkDirection(hoveringTile, groundTiles[1], wallTiles[1])) {
-                world.dealDamageToEntitiesAt(playerX + 1, playerY, playerZ, getDamage());
+                world.dealDamageToEntitiesAt(playerX + 1, playerY, playerZ, getDamage(), player);
             } else if (checkDirection(hoveringTile, groundTiles[2], wallTiles[2])) {
-                world.dealDamageToEntitiesAt(playerX, playerY, playerZ - 1, getDamage());
+                world.dealDamageToEntitiesAt(playerX, playerY, playerZ - 1, getDamage(), player);
             } else if (checkDirection(hoveringTile, groundTiles[3], wallTiles[3])) {
-                world.dealDamageToEntitiesAt(playerX, playerY, playerZ + 1, getDamage());
+                world.dealDamageToEntitiesAt(playerX, playerY, playerZ + 1, getDamage(), player);
             } else {
                 invokeStep = false;
             }

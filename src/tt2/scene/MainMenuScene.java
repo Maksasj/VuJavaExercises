@@ -3,14 +3,10 @@ package tt2.scene;
 import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
-import com.raylib.java.shapes.Rectangle;
 import tt2.Tartar2;
-import tt2.common.Settings;
 import tt2.common.camera.Camera;
 import tt2.scene.button.*;
 import tt2.textures.TextureAssetManager;
-
-import java.util.Set;
 
 public class MainMenuScene extends Scene {
     private Button playButton;
