@@ -17,24 +17,46 @@ public class Button extends CommonRenderingMaster implements IPositioned, IRende
     private Vector3 position;
     private Rectangle buttonRect;
     private Texture2D buttonTexture;
-    private ButtonAction buttonAction;
-    private boolean btnAction = false;
+    private ButtonActionClick buttonAction;
+    private ButtonActionHovering buttonHoveringAction;
+    private boolean btnAction;
+    private boolean mouseHovering;
+    private float buttonScale;
 
-    public Button(Vector3 position, Rectangle buttonRect, Texture2D buttonTexture, ButtonAction buttonAction) {
+    public Button(Vector3 position, Vector2 buttonRect, Texture2D buttonTexture, ButtonActionClick buttonAction, ButtonActionHovering buttonHoveringAction) {
+        btnAction = false;
+        mouseHovering = false;
+
+        buttonScale = DEFAULT_SPRITE_SCALE;
+
         this.position = position;
         this.buttonRect = new Rectangle(
-            buttonRect.x * DEFAULT_SPRITE_SCALE,
-            buttonRect.y * DEFAULT_SPRITE_SCALE,
-            buttonRect.width * DEFAULT_SPRITE_SCALE,
-            buttonRect.height * DEFAULT_SPRITE_SCALE
+                position.x, position.y,
+            buttonRect.x,
+            buttonRect.y
         );
         this.buttonTexture = buttonTexture;
+
         this.buttonAction = buttonAction;
+        this.buttonHoveringAction = buttonHoveringAction;
     }
 
     @Override
     public void render() {
-        Tartar2.raylib.textures.DrawTextureEx(buttonTexture, new Vector2(position.x, position.y),0,DEFAULT_SPRITE_SCALE, Color.WHITE);
+        Tartar2.raylib.textures.DrawTextureEx(
+                buttonTexture,
+                new Vector2(
+                        position.x - ((buttonScale * buttonRect.width) / 2.0f),
+                        position.y - ((buttonScale * buttonRect.height) / 2.0f)
+                ),
+                0,
+                buttonScale,
+                Color.WHITE
+        );
+    }
+
+    public void setButtonScale(float scale) {
+        buttonScale = scale;
     }
 
     @Override
@@ -43,16 +65,29 @@ public class Button extends CommonRenderingMaster implements IPositioned, IRende
 
         rCore core = Tartar2.raylib.core;
 
-        if (Tartar2.raylib.shapes.CheckCollisionPointRec(mousePos, buttonRect)) {
+        Rectangle rectToCheck = new Rectangle(
+            position.x - ((buttonScale * buttonRect.width) / 2.0f),
+            position.y - ((buttonScale * buttonRect.height) / 2.0f),
+            buttonScale * buttonRect.width,
+            buttonScale * buttonRect.height
+        );
+
+        mouseHovering = Tartar2.raylib.shapes.CheckCollisionPointRec(mousePos, rectToCheck);
+
+        if(mouseHovering) {
             if(core.IsMouseButtonDown(MOUSE_BUTTON_LEFT))
                 btnAction = false;
 
             if(core.IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
                 btnAction = true;
+
+            buttonHoveringAction.doAction(this);
+        } else {
+            setButtonScale(DEFAULT_SPRITE_SCALE);
         }
 
         if(btnAction) {
-            buttonAction.doAction();
+            buttonAction.doAction(null);
 
             btnAction = false;
         }

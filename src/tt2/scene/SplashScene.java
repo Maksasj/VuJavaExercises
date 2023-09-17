@@ -8,8 +8,6 @@ import tt2.common.Utils;
 import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
 
-import static tt2.common.Settings.DEFAULT_SPRITE_SCALE;
-
 public class SplashScene extends Scene {
     private float ufoEnjoersLogoTransparency;
 

@@ -4,5 +4,5 @@ import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 
 public interface IActionable {
-    public void doAction();
+    public void doAction(Object obj);
 }

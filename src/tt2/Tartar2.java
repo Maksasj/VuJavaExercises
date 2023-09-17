@@ -11,7 +11,7 @@ import tt2.textures.TextureAssetManager;
 
 public class Tartar2 {
     public static Raylib raylib;
-
+    public static boolean gameRunning;
     public static TextureAssetManager textureAssetManager;
     public static GameScene gameScene;
     public static MainMenuScene mainMenuScene;
@@ -20,6 +20,7 @@ public class Tartar2 {
 
     public static void preinit() {
         raylib = new Raylib();
+        gameRunning = true;
     }
 
     public static void init() {
@@ -35,11 +36,12 @@ public class Tartar2 {
         mainMenuScene = new MainMenuScene();
         splashScene = new SplashScene();
 
-        activeScene = splashScene;
+        // activeScene = splashScene;
+        activeScene = mainMenuScene;
     }
 
     public static void run() {
-        while (!raylib.core.WindowShouldClose()) {
+        while ((!raylib.core.WindowShouldClose()) && gameRunning) {
             // Tick part
             activeScene.tick();
 
@@ -64,5 +66,9 @@ public class Tartar2 {
         load();
         run();
         unload();
+    }
+
+    public static void quitGame() {
+        gameRunning = false;
     }
 }
