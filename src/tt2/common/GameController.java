@@ -5,6 +5,7 @@ import com.raylib.java.core.rCore;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import com.raylib.java.textures.Texture2D;
+import org.lwjgl.system.CallbackI;
 import tt2.Tartar2;
 import tt2.entity.GameObject;
 import tt2.entity.GameObjectSorterByPerspective;
@@ -65,7 +66,31 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
                 frameIconPosition.x -= 16.0f * (iconScale * 1.1f - iconScale);
                 frameIconPosition.y -= 16.0f * (iconScale * 1.1f - iconScale);
 
-                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.SELECTION_FRAME_ICON, iconPosition,0, iconScale * 1.1f, Color.WHITE);
+                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.SELECTION_FRAME_ICON, frameIconPosition,0, iconScale * 1.1f, Color.WHITE);
+            }
+        }
+
+        renderHealthUI();
+    }
+
+    private void renderHealthUI() {
+        int maxHealth = player.getMaxHealth();
+        int health = player.getHealth();
+
+        for(int i = 0; i < maxHealth; ++i) {
+            float heartSpriteScale = 5.0f;
+
+            Vector2 heartPosition = new Vector2(
+                    Settings.WINDOW_WIDTH - 8.0f * heartSpriteScale,
+                    Settings.WINDOW_HEIGHT - 8.0f * heartSpriteScale
+            );
+
+            heartPosition.y -= i * 8.0f * heartSpriteScale + 4.0f; // 4.0f is just an offset
+
+            if(i <= health) {
+                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.HEART_FULL, heartPosition,0, heartSpriteScale, Color.WHITE);
+            } else {
+                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.HEART_EMPTY, heartPosition,0, heartSpriteScale, Color.WHITE);
             }
         }
     }

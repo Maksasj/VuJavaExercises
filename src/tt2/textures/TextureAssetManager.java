@@ -29,6 +29,9 @@ public class TextureAssetManager implements IAssetManager {
     public static Texture2D PLAY_BUTTON;
     public static Texture2D QUIT_BUTTON;
 
+    public static Texture2D HEART_FULL;
+    public static Texture2D HEART_EMPTY;
+
     public static List<Texture2D> allTextures;
 
     public void load() {
@@ -54,6 +57,9 @@ public class TextureAssetManager implements IAssetManager {
 
         UFO_ENJOYERS_LOGO = addTexture("assets/textures/ufoEnjoyersLogo.png");
         TARTAR2_LOGO = addTexture("assets/textures/tartar2Logo.png");
+
+        HEART_FULL = addTexture("assets/textures/heartFull.png");
+        HEART_EMPTY = addTexture("assets/textures/heartEmpty.png");
 
         PLAY_BUTTON = addTexture("assets/textures/playButton.png");
         QUIT_BUTTON = addTexture("assets/textures/quitButton.png");
