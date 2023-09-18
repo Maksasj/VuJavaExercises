@@ -98,15 +98,11 @@ public class ArrowEntity extends Entity {
         Vector3 cameraPosition = Tartar2.activeScene.getActiveCamera().getPosition();
         float cameraZoom = activeCamera.getZoom();
 
-        Tartar2.raylib.textures.DrawTextureEx(
-                TextureAssetManager.ARROW_TEXTURE,
-                new Vector2(
-                        pos.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
-                        pos.y * cameraZoom * 32.0f + cameraPosition.z
-                ),
-                0,
-                cameraZoom,
-                Color.WHITE
+        Vector2 texturePos = new Vector2(
+                pos.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
+                pos.y * cameraZoom * 32.0f + cameraPosition.z
         );
+
+        TextureAssetManager.mobsTexture.getSubTexture(2).render(texturePos, cameraZoom, Color.WHITE);
     }
 }

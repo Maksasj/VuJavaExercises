@@ -10,20 +10,22 @@ import tt2.Tartar2;
 import tt2.common.*;
 import tt2.common.camera.CameraController;
 
+import java.awt.image.ColorModel;
+
 import static com.raylib.java.core.input.Mouse.MouseButton.*;
 import static tt2.common.Settings.DEFAULT_SPRITE_SCALE;
 
 public class Button extends CommonRenderingMaster implements IPositioned, IRenderable, ITickable {
     private Vector3 position;
     private Rectangle buttonRect;
-    private Texture2D buttonTexture;
+    private ITexture buttonTexture;
     private ButtonActionClick buttonAction;
     private ButtonActionHovering buttonHoveringAction;
     private boolean btnAction;
     private boolean mouseHovering;
     private float buttonScale;
 
-    public Button(Vector3 position, Vector2 buttonRect, Texture2D buttonTexture, ButtonActionClick buttonAction, ButtonActionHovering buttonHoveringAction) {
+    public Button(Vector3 position, Vector2 buttonRect, ITexture buttonTexture, ButtonActionClick buttonAction, ButtonActionHovering buttonHoveringAction) {
         btnAction = false;
         mouseHovering = false;
 
@@ -43,16 +45,12 @@ public class Button extends CommonRenderingMaster implements IPositioned, IRende
 
     @Override
     public void render() {
-        Tartar2.raylib.textures.DrawTextureEx(
-                buttonTexture,
-                new Vector2(
-                        position.x - ((buttonScale * buttonRect.width) / 2.0f),
-                        position.y - ((buttonScale * buttonRect.height) / 2.0f)
-                ),
-                0,
-                buttonScale,
-                Color.WHITE
+        Vector2 texturePosition = new Vector2(
+                position.x - ((buttonScale * buttonRect.width) / 2.0f),
+                position.y - ((buttonScale * buttonRect.height) / 2.0f)
         );
+
+        buttonTexture.render(texturePosition, buttonScale, Color.WHITE);
     }
 
     public void setButtonScale(float scale) {

@@ -3,6 +3,8 @@ package tt2.world.tile;
 import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
+import com.raylib.java.shapes.Rectangle;
+import com.raylib.java.textures.rTextures;
 import tt2.Tartar2;
 import tt2.common.VisibilityLevel;
 import tt2.common.camera.Camera;
@@ -27,10 +29,10 @@ public class DefaultTile extends Tile {
             tintColor = getTintColor();
 
         Vector2 texturePos = new Vector2(
-                tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
+                tilePosition.x * cameraZoom * 32.0f + cameraPosition.x - cameraZoom * 16,
                 tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
         );
 
-        Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.BASE_TILE_TEXTURE, texturePos, 0, cameraZoom, tintColor);
+        TextureAssetManager.tileTextures.getSubTexture(0).render(texturePos, cameraZoom, tintColor);
     }
 }

@@ -7,11 +7,13 @@ import com.raylib.java.textures.Texture2D;
 import org.lwjgl.system.CallbackI;
 import tt2.Tartar2;
 import tt2.common.GameController;
+import tt2.common.ITexture;
 import tt2.common.camera.Camera;
 import tt2.common.camera.CameraController;
 import tt2.entity.ArrowEntity;
 import tt2.entity.Player;
 import tt2.entity.PlayerArrowEntity;
+import tt2.textures.SubTexture;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 import tt2.world.tile.Tile;
@@ -225,7 +227,7 @@ public class BowAttackAbility extends Ability {
     }
 
     @Override
-    public Texture2D getIconTexture() {
-        return TextureAssetManager.BOW_ATTACK_ABILITY_ICON;
+    public ITexture getIconTexture() {
+        return TextureAssetManager.uiTexture.getSubTexture(6);
     }
 }

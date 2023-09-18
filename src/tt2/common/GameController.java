@@ -46,7 +46,7 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
         for(int i = 0; i < abilityCount; ++i) {
             Ability ability = abilities.get(i);
 
-            Texture2D icon = ability.getIconTexture();
+            ITexture icon = ability.getIconTexture();
             if(icon == null)
                 continue;
 
@@ -57,16 +57,18 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
                 16.0f + (i * (32.0f * iconScale + + 6.0f)) // 4.0f is just y offset
             );
 
-            Tartar2.raylib.textures.DrawTextureEx(icon, iconPosition,0, iconScale, Color.WHITE);
+            icon.render(iconPosition, iconScale, Color.WHITE);
 
             // if ability is selected lets draw selection frame
             if(i == selectedAbility) {
                 Vector2 frameIconPosition = iconPosition;
 
-                frameIconPosition.x -= 16.0f * (iconScale * 1.1f - iconScale);
-                frameIconPosition.y -= 16.0f * (iconScale * 1.1f - iconScale);
+                float rate = 1.1f;
 
-                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.SELECTION_FRAME_ICON, frameIconPosition,0, iconScale * 1.1f, Color.WHITE);
+                frameIconPosition.x -= 16.0f * (iconScale * rate - iconScale);
+                frameIconPosition.y -= 16.0f * (iconScale * rate - iconScale);
+
+                TextureAssetManager.uiTexture.getSubTexture(3).render(frameIconPosition, iconScale * rate, Color.WHITE);
             }
         }
 
@@ -88,9 +90,9 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
             heartPosition.y -= i * 8.0f * heartSpriteScale + 4.0f; // 4.0f is just an offset
 
             if(i <= health) {
-                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.HEART_FULL, heartPosition,0, heartSpriteScale, Color.WHITE);
+                TextureAssetManager.uiTexture.getSubTexture(9).render(heartPosition, heartSpriteScale, Color.WHITE);
             } else {
-                Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.HEART_EMPTY, heartPosition,0, heartSpriteScale, Color.WHITE);
+                TextureAssetManager.uiTexture.getSubTexture(8).render(heartPosition, heartSpriteScale, Color.WHITE);
             }
         }
     }

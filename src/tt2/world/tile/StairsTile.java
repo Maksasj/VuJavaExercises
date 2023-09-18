@@ -11,6 +11,7 @@ import tt2.common.VisibilityLevel;
 import tt2.common.camera.Camera;
 import tt2.entity.Player;
 import tt2.scene.GameScene;
+import tt2.textures.SubTexture;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 
@@ -117,14 +118,14 @@ public class StairsTile extends RotatableTile {
         }
     }
 
-    private Texture2D getTexture() {
+    private SubTexture getSubTexture() {
         IsometricRotation rotation = getIsometricRotation();
 
         return switch (rotation) {
-            case LEFT_UP -> TextureAssetManager.STAIRS_TILE1_TEXTURE;
-            case RIGHT_UP -> TextureAssetManager.STAIRS_TILE0_TEXTURE;
-            case RIGHT_DOWN -> TextureAssetManager.STAIRS_TILE2_TEXTURE;
-            case LEFT_DOWN -> TextureAssetManager.STAIRS_TILE3_TEXTURE;
+            case LEFT_UP -> TextureAssetManager.tileTextures.getSubTexture(4);
+            case RIGHT_UP -> TextureAssetManager.tileTextures.getSubTexture(5);
+            case RIGHT_DOWN -> TextureAssetManager.tileTextures.getSubTexture(6);
+            case LEFT_DOWN -> TextureAssetManager.tileTextures.getSubTexture(7);
         };
     }
 
@@ -146,6 +147,6 @@ public class StairsTile extends RotatableTile {
                 tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
         );
 
-        Tartar2.raylib.textures.DrawTextureEx(getTexture(), texturePos, 0, cameraZoom, tintColor);
+        getSubTexture().render(texturePos, cameraZoom, tintColor);
     }
 }

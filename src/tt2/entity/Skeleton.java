@@ -87,15 +87,11 @@ public class Skeleton extends GroundMob {
         Vector3 cameraPosition = Tartar2.activeScene.getActiveCamera().getPosition();
         float cameraZoom = activeCamera.getZoom();
 
-        Tartar2.raylib.textures.DrawTextureEx(
-                TextureAssetManager.SKELETON_TEXTURE,
-                new Vector2(
-                        tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
-                        tilePosition.y * cameraZoom * 32.0f + cameraPosition.z
-                ),
-                0,
-                cameraZoom,
-                Color.WHITE
+        Vector2 texturePos = new Vector2(
+                tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
+                tilePosition.y * cameraZoom * 32.0f + cameraPosition.z
         );
+
+        TextureAssetManager.mobsTexture.getSubTexture(1).render(texturePos, cameraZoom, Color.WHITE);
     }
 }

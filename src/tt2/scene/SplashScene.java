@@ -31,13 +31,9 @@ public class SplashScene extends Scene {
         screenCenter.x -= 96.0f * ufoEnjoersLogoScale * 0.5f;
         screenCenter.y -= 96.0f * ufoEnjoersLogoScale * 0.5f;
 
-        Tartar2.raylib.textures.DrawTextureEx(
-            TextureAssetManager.UFO_ENJOYERS_LOGO,
-            screenCenter,
-            0,
-            ufoEnjoersLogoScale,
-            new Color(255, 255, 255, (int) (255 * ufoEnjoersLogoTransparency))
-        );
+        Color ufoEnjoersLogoTintColor = new Color(255, 255, 255, (int) (255 * ufoEnjoersLogoTransparency));
+
+        TextureAssetManager.uiTexture.getSubTexture(7).render(screenCenter, ufoEnjoersLogoScale, ufoEnjoersLogoTintColor);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.raylib.java.raymath.Vector3;
 import com.raylib.java.textures.Texture2D;
 import tt2.Tartar2;
 import tt2.common.GameController;
+import tt2.common.ITexture;
 import tt2.common.camera.Camera;
 import tt2.common.camera.CameraController;
 import tt2.entity.Player;
@@ -149,7 +150,7 @@ public class MoveAbility extends Ability {
     }
 
     @Override
-    public Texture2D getIconTexture() {
-        return TextureAssetManager.MOVE_ABILITY_ICON;
+    public ITexture getIconTexture() {
+        return TextureAssetManager.uiTexture.getSubTexture(4);
     }
 }

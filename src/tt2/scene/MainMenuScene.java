@@ -18,7 +18,7 @@ public class MainMenuScene extends Scene {
         playButton = new Button(
                 new Vector3(290.0f, 225.0f, 0.0f),
                 new Vector2(48, 16),
-                TextureAssetManager.PLAY_BUTTON,
+                TextureAssetManager.uiTexture.getSubTexture(1),
                 new ButtonActionSwitchScene(Tartar2.gameScene),
                 new ButtonActionHoveringScale(3.1f)
         );
@@ -26,7 +26,7 @@ public class MainMenuScene extends Scene {
         quitButton = new Button(
                 new Vector3(290.0f, 300.0f, 0.0f),
                 new Vector2(48, 16),
-                TextureAssetManager.QUIT_BUTTON,
+                TextureAssetManager.uiTexture.getSubTexture(2),
                 new ButtonActionQuitGame(),
                 new ButtonActionHoveringScale(3.1f)
         );
@@ -39,7 +39,7 @@ public class MainMenuScene extends Scene {
         playButton.render();
         quitButton.render();
 
-        Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.TARTAR2_LOGO, new Vector2(45, 45), 0, 2, Color.WHITE);
+        TextureAssetManager.uiTexture.getSubTexture(0).render(new Vector2(45, 45), 2, Color.WHITE);
     }
 
     @Override

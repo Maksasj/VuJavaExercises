@@ -29,15 +29,11 @@ public class Player extends Mob {
         Vector3 cameraPosition = activeCamera.getPosition();
         float cameraZoom = activeCamera.getZoom();
 
-        Tartar2.raylib.textures.DrawTextureEx(
-                TextureAssetManager.PLAYER_TEXTURE,
-                new Vector2(
-                        tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
-                        tilePosition.y * cameraZoom * 32.0f + cameraPosition.z
-                ),
-                0,
-                cameraZoom,
-                Color.WHITE
+        Vector2 texturePos = new Vector2(
+                tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
+                tilePosition.y * cameraZoom * 32.0f + cameraPosition.z
         );
+
+        TextureAssetManager.mobsTexture.getSubTexture(0).render(texturePos, cameraZoom, Color.WHITE);
     }
 }

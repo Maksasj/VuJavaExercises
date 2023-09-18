@@ -1,5 +1,6 @@
 package tt2.textures;
 
+import com.raylib.java.shapes.Rectangle;
 import com.raylib.java.textures.*;
 import tt2.Tartar2;
 import tt2.common.IAssetManager;
@@ -8,71 +9,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextureAssetManager implements IAssetManager {
-    public static Texture2D BASE_TILE_TEXTURE;
-    public static Texture2D PORTAL_TILE_TEXTURE;
-    public static Texture2D STAIRS_TILE0_TEXTURE;
-    public static Texture2D STAIRS_TILE1_TEXTURE;
-    public static Texture2D STAIRS_TILE2_TEXTURE;
-    public static Texture2D STAIRS_TILE3_TEXTURE;
-    public static Texture2D PLAYER_TEXTURE;
-    public static Texture2D SKELETON_TEXTURE;
-    public static Texture2D ARROW_TEXTURE;
+    public static List<Texture> allTextures;
 
-    public static Texture2D SELECTION_FRAME_ICON;
-    public static Texture2D MOVE_ABILITY_ICON;
-    public static Texture2D SWORD_ATTACK_ABILITY_ICON;
-    public static Texture2D BOW_ATTACK_ABILITY_ICON;
+    public static Texture tileTextures;
+    public static Texture mobsTexture;
+    public static Texture uiTexture;
 
-    public static Texture2D UFO_ENJOYERS_LOGO;
-    public static Texture2D TARTAR2_LOGO;
-
-    public static Texture2D PLAY_BUTTON;
-    public static Texture2D QUIT_BUTTON;
-
-    public static Texture2D HEART_FULL;
-    public static Texture2D HEART_EMPTY;
-
-    public static List<Texture2D> allTextures;
 
     public void load() {
         allTextures = new ArrayList<>();
 
-        BASE_TILE_TEXTURE = addTexture("assets/textures/baseTile.png");
-        PORTAL_TILE_TEXTURE = addTexture("assets/textures/portalTile.png");
+        tileTextures = addTexture(new Texture(
+            "assets/textures/tilesTexture.png",
+            new Rectangle[]{
+                new Rectangle(0, 0, 32, 32),    // 0 Default tile (Red)
+                new Rectangle(32, 0, 32, 32),   // 1 Default tile (Blue)
+                new Rectangle(64, 0, 32, 32),   // 2 Default tile (Yellow)
+                new Rectangle(0, 64, 32, 32),   // 3 Portal
+                new Rectangle(0, 32, 32, 32),   // 4 Stairs left-up
+                new Rectangle(32, 32, 32, 32),  // 5 Stairs right-up
+                new Rectangle(64, 32, 32, 32),  // 6 Stairs right-down
+                new Rectangle(96, 32, 32, 32),  // 7 Stairs left-down
+            }
+        ));
 
-        PLAYER_TEXTURE = addTexture("assets/textures/player.png");
-        SKELETON_TEXTURE = addTexture("assets/textures/skeleton.png");
-        ARROW_TEXTURE = addTexture("assets/textures/arrow.png");
+        mobsTexture = addTexture(new Texture(
+            "assets/textures/mobsTexture.png",
+            new Rectangle[]{
+                new Rectangle(0, 0, 32, 32),    // 0 Player
+                new Rectangle(32, 0, 32, 32),   // 1 Skeleton
+                new Rectangle(64, 0, 32, 32)    // 2 Bullet
+            }
+        ));
 
-        SELECTION_FRAME_ICON = addTexture("assets/textures/selectionFrameIcon.png");
-        MOVE_ABILITY_ICON = addTexture("assets/textures/moveAbilityIcon.png");
-        SWORD_ATTACK_ABILITY_ICON = addTexture("assets/textures/swordAttackAbilityIcon.png");
-        BOW_ATTACK_ABILITY_ICON = addTexture("assets/textures/bowAttackAbilityIcon.png");
-
-        // Todo group all these tiles into tile atlas
-        STAIRS_TILE0_TEXTURE = addTexture("assets/textures/stairsTile0.png");
-        STAIRS_TILE1_TEXTURE = addTexture("assets/textures/stairsTile1.png");
-        STAIRS_TILE2_TEXTURE = addTexture("assets/textures/stairsTile2.png");
-        STAIRS_TILE3_TEXTURE = addTexture("assets/textures/stairsTile3.png");
-
-        UFO_ENJOYERS_LOGO = addTexture("assets/textures/ufoEnjoyersLogo.png");
-        TARTAR2_LOGO = addTexture("assets/textures/tartar2Logo.png");
-
-        HEART_FULL = addTexture("assets/textures/heartFull.png");
-        HEART_EMPTY = addTexture("assets/textures/heartEmpty.png");
-
-        PLAY_BUTTON = addTexture("assets/textures/playButton.png");
-        QUIT_BUTTON = addTexture("assets/textures/quitButton.png");
+        uiTexture = addTexture(new Texture(
+            "assets/textures/uiTexture.png",
+            new Rectangle[]{
+                new Rectangle(0, 0, 256, 64),   // 0 Tartar 2 logo
+                new Rectangle(0, 64, 48, 16),   // 1 Play button
+                new Rectangle(48, 64, 48, 16),  // 2 Quit button
+                new Rectangle(0, 80, 32, 32),   // 3 Selection frame icon
+                new Rectangle(32, 80, 32, 32),  // 4 Walk ability icon
+                new Rectangle(64, 80, 32, 32),  // 5 Melee Attack ability icon
+                new Rectangle(96, 80, 32, 32),  // 6 Ranged Attack ability icon
+                new Rectangle(256, 0, 96, 96),  // 7 Ufo enjoyers logo
+                new Rectangle(352, 0, 8, 8),    // 8 Empty heart icon
+                new Rectangle(352, 8, 8, 8),    // 9 Full heart icon
+            }
+        ));
     }
 
-    public Texture2D addTexture(String path) {
-        Texture2D texture = rTextures.LoadTexture(path);
+    public Texture addTexture(Texture texture) {
         allTextures.add(texture);
         return texture;
     }
 
     public void unload() {
-        for(Texture2D texture : allTextures)
-            Tartar2.raylib.textures.UnloadTexture(texture);
+        for(Texture texture : allTextures)
+            texture.unload();
     }
 }

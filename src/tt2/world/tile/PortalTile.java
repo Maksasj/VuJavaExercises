@@ -55,6 +55,6 @@ public class PortalTile extends Tile {
                 tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
         );
 
-        Tartar2.raylib.textures.DrawTextureEx(TextureAssetManager.PORTAL_TILE_TEXTURE, texturePos, 0, cameraZoom, tintColor);
+        TextureAssetManager.tileTextures.getSubTexture(1).render(texturePos, cameraZoom, tintColor);
     }
 }
