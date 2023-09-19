@@ -14,10 +14,19 @@ public class TextureAssetManager implements IAssetManager {
     public static Texture tileTextures;
     public static Texture mobsTexture;
     public static Texture uiTexture;
-
+    public static Texture backGroundTexture;
 
     public void load() {
         allTextures = new ArrayList<>();
+
+        backGroundTexture = addTexture(new Texture(
+            "assets/textures/backgroundTexture.png",
+            new Rectangle[]{
+                new Rectangle(0, 0, 432, 240),
+                new Rectangle(0, 240, 432, 240),
+                new Rectangle(0, 480, 432, 240)
+            }
+        ));
 
         tileTextures = addTexture(new Texture(
             "assets/textures/tilesTexture.png",

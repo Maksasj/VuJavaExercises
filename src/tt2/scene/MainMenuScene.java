@@ -4,6 +4,7 @@ import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.Tartar2;
+import tt2.common.Settings;
 import tt2.common.camera.Camera;
 import tt2.scene.button.*;
 import tt2.textures.TextureAssetManager;
@@ -35,11 +36,10 @@ public class MainMenuScene extends Scene {
     @Override
     public void render() {
         Tartar2.raylib.core.ClearBackground(Color.DARKGRAY);
+        TextureAssetManager.backGroundTexture.getSubTexture(2).render(new Vector2(0.0f, 0.0f), Settings.DEFAULT_SPRITE_SCALE, Color.WHITE);
 
         playButton.render();
         quitButton.render();
-
-        TextureAssetManager.uiTexture.getSubTexture(0).render(new Vector2(45, 45), 2, Color.WHITE);
     }
 
     @Override

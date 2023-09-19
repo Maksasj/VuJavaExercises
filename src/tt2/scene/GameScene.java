@@ -5,8 +5,10 @@ import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.Tartar2;
 import tt2.common.GameController;
+import tt2.common.Settings;
 import tt2.common.camera.Camera;
 import tt2.common.camera.CameraController;
+import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 
 public class GameScene extends Scene {
@@ -32,6 +34,7 @@ public class GameScene extends Scene {
     @Override
     public void render() {
         Tartar2.raylib.core.ClearBackground(Color.DARKGRAY);
+        TextureAssetManager.backGroundTexture.getSubTexture(0).render(new Vector2(0.0f, 0.0f), Settings.DEFAULT_SPRITE_SCALE, Color.WHITE);
 
         gameController.doRenderingPreProcessing();
         gameWorld.doRenderingPreProcessing();
