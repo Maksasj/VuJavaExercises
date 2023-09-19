@@ -3,19 +3,40 @@ package tt2.entity;
 import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
+import org.lwjgl.system.CallbackI;
 import tt2.Tartar2;
+import tt2.common.ITexture;
+import tt2.common.IsometricRotation;
 import tt2.common.VisibilityLevel;
 import tt2.common.camera.Camera;
+import tt2.textures.SubTexture;
 import tt2.textures.TextureAssetManager;
 
 public class Player extends Mob {
+    private IsometricRotation rotation;
+
     public Player(Vector3 pos) {
         super(pos, new Statblock(4, 1, 1, 1));
+
+        rotation = IsometricRotation.LEFT_UP;
     }
 
     @Override
     public void tick() {
         super.tick();
+    }
+
+    public void setRotation(IsometricRotation rotation) {
+        this.rotation = rotation;
+    }
+
+    private ITexture getTexture() {
+        return switch (rotation) {
+            case LEFT_UP -> TextureAssetManager.mobsTexture.getSubTexture(0);
+            case RIGHT_UP -> TextureAssetManager.mobsTexture.getSubTexture(1);
+            case RIGHT_DOWN -> TextureAssetManager.mobsTexture.getSubTexture(2);
+            case LEFT_DOWN -> TextureAssetManager.mobsTexture.getSubTexture(3);
+        };
     }
 
     @Override
@@ -34,6 +55,6 @@ public class Player extends Mob {
                 tilePosition.y * cameraZoom * 32.0f + cameraPosition.z
         );
 
-        TextureAssetManager.mobsTexture.getSubTexture(0).render(texturePos, cameraZoom, Color.WHITE);
+        getTexture().render(texturePos, cameraZoom, Color.WHITE);
     }
 }

@@ -53,7 +53,7 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
             }
         }
 
-        for(int z = 0; z < 16; ++z) {
+        for(int z = 0; z < 9; ++z) {
             tiles[5][1][z] = new DefaultTile(new Vector3(5.0f, 1.0f, z));
         }
 

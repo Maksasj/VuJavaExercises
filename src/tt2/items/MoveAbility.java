@@ -7,6 +7,7 @@ import com.raylib.java.textures.Texture2D;
 import tt2.Tartar2;
 import tt2.common.GameController;
 import tt2.common.ITexture;
+import tt2.common.IsometricRotation;
 import tt2.common.camera.Camera;
 import tt2.common.camera.CameraController;
 import tt2.entity.Player;
@@ -123,12 +124,16 @@ public class MoveAbility extends Ability {
 
             if(checkDirection(hoveringTile, groundTiles[0], wallTiles[0])) {
                 player.movePosition(new Vector3(-1.0f, 0.0f, 0.0f));
+                player.setRotation(IsometricRotation.LEFT_UP);
             } else if (checkDirection(hoveringTile, groundTiles[1], wallTiles[1])) {
                 player.movePosition(new Vector3(1.0f, 0.0f, 0.0f));
+                player.setRotation(IsometricRotation.RIGHT_DOWN);
             } else if (checkDirection(hoveringTile, groundTiles[2], wallTiles[2])) {
                 player.movePosition(new Vector3(0.0f, 0.0f, -1.0f));
+                player.setRotation(IsometricRotation.RIGHT_UP);
             } else if (checkDirection(hoveringTile, groundTiles[3], wallTiles[3])) {
                 player.movePosition(new Vector3(0.0f, 0.0f, 1.0f));
+                player.setRotation(IsometricRotation.LEFT_DOWN);
             } else {
                 invokeStep = false;
             }

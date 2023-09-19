@@ -6,11 +6,15 @@ import com.raylib.java.raymath.Vector3;
 import tt2.Tartar2;
 import tt2.common.GameController;
 import tt2.common.IStatable;
+import tt2.common.ITexture;
+import tt2.common.IsometricRotation;
 import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 
 public class ArrowEntity extends Entity {
+    private IsometricRotation rotation;
+
     private Vector3 direction;
     private float arrowSpeed;
     private float travelDistance;
@@ -35,6 +39,18 @@ public class ArrowEntity extends Entity {
         prevX = Math.round(pos.x);
         prevY = Math.round(pos.y);
         prevZ = Math.round(pos.z);
+
+        if(direction.x < 0) {
+            rotation = IsometricRotation.LEFT_UP;
+        } else if(direction.x > 0) {
+            rotation = IsometricRotation.RIGHT_DOWN;
+        }
+
+        if(direction.z < 0) {
+            rotation = IsometricRotation.RIGHT_UP;
+        } else if(direction.z > 0) {
+            rotation = IsometricRotation.LEFT_DOWN;
+        }
     }
 
     @Override
@@ -44,6 +60,19 @@ public class ArrowEntity extends Entity {
 
     public DamageDealerType getDealerType() {
         return DamageDealerType.NONE;
+    }
+
+    public void setRotation(IsometricRotation rotation) {
+        this.rotation = rotation;
+    }
+
+    private ITexture getTexture() {
+        return switch (rotation) {
+            case LEFT_UP -> TextureAssetManager.mobsTexture.getSubTexture(8);
+            case RIGHT_UP -> TextureAssetManager.mobsTexture.getSubTexture(9);
+            case RIGHT_DOWN -> TextureAssetManager.mobsTexture.getSubTexture(10);
+            case LEFT_DOWN -> TextureAssetManager.mobsTexture.getSubTexture(11);
+        };
     }
 
     @Override
@@ -103,6 +132,6 @@ public class ArrowEntity extends Entity {
                 pos.y * cameraZoom * 32.0f + cameraPosition.z
         );
 
-        TextureAssetManager.mobsTexture.getSubTexture(2).render(texturePos, cameraZoom, Color.WHITE);
+        getTexture().render(texturePos, cameraZoom, Color.WHITE);
     }
 }

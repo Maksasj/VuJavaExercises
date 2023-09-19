@@ -51,10 +51,10 @@ public class PortalTile extends Tile {
             tintColor = getTintColor();
 
         Vector2 texturePos = new Vector2(
-                tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
-                tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
+            tilePosition.x * cameraZoom * 32.0f - cameraZoom * 16 + cameraPosition.x,
+            tilePosition.y * cameraZoom * 32.0f + cameraPosition.z - getYOffset()
         );
 
-        TextureAssetManager.tileTextures.getSubTexture(1).render(texturePos, cameraZoom, tintColor);
+        TextureAssetManager.tileTextures.getSubTexture(3).render(texturePos, cameraZoom, tintColor);
     }
 }

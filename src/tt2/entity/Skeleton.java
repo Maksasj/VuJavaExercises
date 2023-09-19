@@ -4,17 +4,22 @@ import com.raylib.java.core.Color;
 import com.raylib.java.raymath.Vector2;
 import com.raylib.java.raymath.Vector3;
 import tt2.Tartar2;
-import tt2.common.GameController;
-import tt2.common.IsometricDirection;
-import tt2.common.Utils;
+import tt2.common.*;
 import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
 import tt2.world.tile.Tile;
 
 public class Skeleton extends GroundMob {
+    private IsometricRotation rotation;
+
     public Skeleton(Vector3 pos) {
         super(pos, new Statblock(2, 1, 1, 1));
+
+        rotation = IsometricRotation.LEFT_UP;
+    }
+    public void setRotation(IsometricRotation rotation) {
+        this.rotation = rotation;
     }
 
     @Override
@@ -33,10 +38,11 @@ public class Skeleton extends GroundMob {
         int posZ = Math.round(position.z);
 
         IsometricDirection directionToGo = world.getPathCalculator().getFlatDirectionAt(posX, posY, posZ);
+        setRotation(directionToGo.toIsometricRotation());
 
         switch (directionToGo) {
             case LEFT_UP -> movePosition(new Vector3(-1.0f, 0.0f, 0.0f));
-            case RIGHT_UP ->  movePosition(new Vector3(0.0f, 0.0f, -1.0f));
+            case RIGHT_UP -> movePosition(new Vector3(0.0f, 0.0f, -1.0f));
             case RIGHT_DOWN -> movePosition(new Vector3(1.0f, 0.0f, 0.0f));
             case LEFT_DOWN -> movePosition(new Vector3(0.0f, 0.0f, 1.0f));
             default -> {}
@@ -76,6 +82,15 @@ public class Skeleton extends GroundMob {
         }
     }
 
+    private ITexture getTexture() {
+        return switch (rotation) {
+            case LEFT_UP -> TextureAssetManager.mobsTexture.getSubTexture(4);
+            case RIGHT_UP -> TextureAssetManager.mobsTexture.getSubTexture(5);
+            case RIGHT_DOWN -> TextureAssetManager.mobsTexture.getSubTexture(6);
+            case LEFT_DOWN -> TextureAssetManager.mobsTexture.getSubTexture(7);
+        };
+    }
+
     @Override
     public void render() {
         if(isDeleted())
@@ -92,6 +107,6 @@ public class Skeleton extends GroundMob {
                 tilePosition.y * cameraZoom * 32.0f + cameraPosition.z
         );
 
-        TextureAssetManager.mobsTexture.getSubTexture(1).render(texturePos, cameraZoom, Color.WHITE);
+        getTexture().render(texturePos, cameraZoom, Color.WHITE);
     }
 }

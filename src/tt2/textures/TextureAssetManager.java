@@ -36,9 +36,20 @@ public class TextureAssetManager implements IAssetManager {
         mobsTexture = addTexture(new Texture(
             "assets/textures/mobsTexture.png",
             new Rectangle[]{
-                new Rectangle(0, 0, 32, 32),    // 0 Player
-                new Rectangle(32, 0, 32, 32),   // 1 Skeleton
-                new Rectangle(64, 0, 32, 32)    // 2 Bullet
+                new Rectangle(0, 0, 32, 32),    // 0 Player left up
+                new Rectangle(0, 32, 32, 32),   // 1 Player right up
+                new Rectangle(0, 64, 32, 32),   // 2 Player right down
+                new Rectangle(0, 96, 32, 32),   // 3 Player left down
+
+                new Rectangle(32, 0, 32, 32),   // 4 Skeleton left up
+                new Rectangle(32, 32, 32, 32),  // 5 Skeleton right up
+                new Rectangle(32, 64, 32, 32),  // 6 Skeleton right down
+                new Rectangle(32, 96, 32, 32),  // 7 Skeleton left down
+
+                new Rectangle(64, 0, 16, 16),     // 8 Bullet left up
+                new Rectangle(64, 16, 16, 16),    // 9 Bullet right up
+                new Rectangle(64, 32, 16, 16),    // 10 Bullet right down
+                new Rectangle(64, 48, 16, 16),    // 11 Bullet left down
             }
         ));
 
