@@ -45,7 +45,7 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         addTileAt(tile, posX, posY, posZ);
     }
 
-    private void addTileAt(Tile tile, int x, int y, int z) {
+    public void addTileAt(Tile tile, int x, int y, int z) {
         tiles[x][y][z] = tile;
     }
 

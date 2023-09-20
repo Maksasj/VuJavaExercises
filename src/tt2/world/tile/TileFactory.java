@@ -25,6 +25,8 @@ public class TileFactory extends CommonFactory {
             tile = new StairsTile(position, tileRotation);
         } else if(type.contentEquals("PortalTile")) {
             tile = new PortalTile(position);
+        } else if(type.contentEquals("null")) {
+            tile = null;
         }
 
         return tile;

@@ -71,9 +71,7 @@ public class LevelAssetManager extends CommonFactory implements IAssetManager {
                     for(int y = yStart; y < yEnd; ++y) {
                         for(int z = zStart; z < zEnd; ++z) {
                             Tile tile = TileFactory.createTile(tmpJson, new Vector3(x, y, z));
-
-                            if(tile != null)
-                                world.addTile(tile);
+                            world.addTileAt(tile, x, y, z);
                         }
                     }
                 }

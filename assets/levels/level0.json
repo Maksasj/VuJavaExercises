@@ -2,11 +2,14 @@
   "name": "Awesome level",
   "tiles": [
     {
-      "type": "fill",
-      "tile": "DefaultTile",
-      "startPos": { "x": 0.0,  "y": 0.0,  "z": 0.0 },
-      "endPos": { "x": 16.0,  "y": 1.0,  "z": 16.0 }
+      "type": "fill","tile": "DefaultTile",
+      "startPos": { "x": 0.0,  "y": 0.0,  "z": 0.0 }, "endPos": { "x": 16.0,  "y": 16.0,  "z": 16.0 }
     },
+    {
+      "type": "fill","tile": "null",
+      "startPos": { "x": 1.0,  "y": 1.0,  "z": 1.0 }, "endPos": { "x": 15.0,  "y": 16.0,  "z": 15.0 }
+    },
+
     { "type": "tile","tile": "DefaultTile", "pos": { "x": 0.0,  "y": 0.0,  "z": 0.0 } },
     { "type": "tile","tile": "StairsTile", "rot": "RIGHT_UP", "pos": { "x": 1.0,  "y": 0.0,  "z": 0.0 } }
   ],
