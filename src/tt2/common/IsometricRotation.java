@@ -10,4 +10,19 @@ public enum IsometricRotation {
     public String toString() {
         return super.toString();
     }
+
+    public static IsometricRotation fromString(String str) {
+        if(str.contentEquals("LEFT_UP")) {
+            return IsometricRotation.LEFT_UP;
+        } else if(str.contentEquals("RIGHT_UP")) {
+            return IsometricRotation.RIGHT_UP;
+        } else if(str.contentEquals("RIGHT_DOWN")) {
+            return IsometricRotation.RIGHT_DOWN;
+        } else if(str.contentEquals("LEFT_DOWN")) {
+            return IsometricRotation.LEFT_DOWN;
+        }
+
+        // Default value
+        return IsometricRotation.LEFT_UP;
+    }
 }

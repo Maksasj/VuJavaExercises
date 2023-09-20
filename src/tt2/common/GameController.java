@@ -28,6 +28,7 @@ public class GameController extends CommonRenderingMaster implements ITickable, 
 
     public GameController() {
         player = new Player(new Vector3(8, 1, 8));
+        // player = new Player(new Vector3(8, 3, 8));
 
         selectedAbility = 0;
         abilities = new ArrayList<Ability>();

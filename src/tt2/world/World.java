@@ -13,7 +13,7 @@ import javax.sound.sampled.Port;
 import java.util.*;
 
 public class World extends CommonRenderingMaster implements IRenderable, ITickable, IStepable {
-    private final Tile[][][] tiles;
+    protected final Tile[][][] tiles;
     private final List<Entity> entities;
     private final Stack<Entity> entitiesToAdd; // Array used for storing all entities that are waiting to be spawned
     private ArrayList<GameObject> renderables;
@@ -31,6 +31,25 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
 
         pathCalculator = new PathCalculator();
 
+        addEntity(player);
+        this.player = player;
+    }
+
+    public void addTile(Tile tile) {
+        Vector3 position = tile.getPosition();
+
+        int posX = Math.round(position.x);
+        int posY = Math.round(position.y);
+        int posZ = Math.round(position.z);
+
+        addTileAt(tile, posX, posY, posZ);
+    }
+
+    private void addTileAt(Tile tile, int x, int y, int z) {
+        tiles[x][y][z] = tile;
+    }
+
+    protected void createDefaultWalls() {
         for(int x = 0; x < 16; ++x) {
             for(int z = 0; z < 16; ++z) {
                 tiles[x][0][z] = new DefaultTile(new Vector3(x, 0.0f, z));
@@ -52,33 +71,6 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
                 tiles[z][y][0] = new DefaultTile(new Vector3(z, y,0.0f));
             }
         }
-
-        for(int z = 0; z < 9; ++z) {
-            tiles[5][1][z] = new DefaultTile(new Vector3(5.0f, 1.0f, z));
-        }
-
-        tiles[1][1][1] = new DefaultTile(new Vector3(1.0f, 1.0f, 1.0f));
-        tiles[1][1][2] = new DefaultTile(new Vector3(1.0f, 1.0f, 2.0f));
-        tiles[1][1][3] = new StairsTile(new Vector3(1.0f, 1.0f, 3.0f), IsometricRotation.RIGHT_UP);
-
-        tiles[1][2][1] = new DefaultTile(new Vector3(1.0f, 2.0f, 1.0f));
-        tiles[1][2][2] = new StairsTile(new Vector3(1.0f, 2.0f, 2.0f), IsometricRotation.RIGHT_UP);
-        tiles[1][2][3] = null;
-
-        tiles[1][1][1] = new DefaultTile(new Vector3(1.0f, 1.0f, 1.0f));
-        tiles[2][1][1] = new DefaultTile(new Vector3(2.0f, 1.0f, 1.0f));
-        tiles[3][1][1] = new StairsTile(new Vector3(3.0f, 1.0f, 1.0f), IsometricRotation.LEFT_UP);
-
-        tiles[1][2][1] = new DefaultTile(new Vector3(1.0f, 2.0f, 1.0f));
-        tiles[2][2][1] = new StairsTile(new Vector3(2.0f, 2.0f, 1.0f), IsometricRotation.LEFT_UP);
-        tiles[3][2][1] = null;
-
-        tiles[14][0][14] = new PortalTile(new Vector3(14.0f, 0.0f, 14.0f));
-
-        addEntity(player);
-        this.player = player;
-
-        addEntity(new Skeleton(new Vector3(12.0f, 1.0f, 8.0f)));
     }
 
     public void dealDamageToEntitiesAt(int x, int y, int z, int damageValue, Mob damageDealer) {
@@ -264,7 +256,19 @@ public class World extends CommonRenderingMaster implements IRenderable, ITickab
         setAllUpperTilesTransparent(playerX, playerY, playerZ);
 
         // Adding all regular entities to renderables list
-        renderables.addAll(entities);
+
+        // Todo we need to filter entities that needs to be not rendered
+        for(Entity entity : entities) {
+            if(entity instanceof TextPopupEntity) {
+                renderables.add(entity);
+            } else {
+                if(entity.getIntermediatePosition().y <= playerY) {
+                    renderables.add(entity);
+                }
+            }
+        }
+
+        // renderables.addAll(entities);
 
         // Now we do visibility post-processing
         for(GameObject object : renderables)

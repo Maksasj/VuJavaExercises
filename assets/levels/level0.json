@@ -1,0 +1,10 @@
+{
+  "name": "Awesome level",
+  "tiles": [
+    { "type": "DefaultTile", "pos": { "x": 0.0,  "y": 0.0,  "z": 0.0 } },
+    { "type": "StairsTile", "rot": "RIGHT_UP", "pos": { "x": 1.0,  "y": 0.0,  "z": 0.0 } }
+  ],
+  "entities": [
+    { "type": "Goblin",  "pos": { "x": 0.0,  "y": 0.0,  "z": 0.0 } }
+  ]
+}

@@ -8,12 +8,11 @@ import tt2.common.*;
 import tt2.common.camera.Camera;
 import tt2.textures.TextureAssetManager;
 import tt2.world.World;
-import tt2.world.tile.Tile;
 
-public class Skeleton extends GroundMob {
+public class Goblin extends GroundMob {
     private IsometricRotation rotation;
 
-    public Skeleton(Vector3 pos) {
+    public Goblin(Vector3 pos) {
         super(pos, new Statblock(2, 1, 1, 1));
 
         rotation = IsometricRotation.LEFT_UP;
