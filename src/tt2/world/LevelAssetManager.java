@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.raylib.java.raymath.Vector3;
+import tt2.common.CommonFactory;
 import tt2.common.IAssetManager;
 import tt2.entity.Entity;
 import tt2.entity.EntityFactory;
@@ -15,7 +17,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LevelAssetManager implements IAssetManager {
+public class LevelAssetManager extends CommonFactory implements IAssetManager {
     private Gson gson;
 
     public JsonObject LEVELS[];
@@ -45,12 +47,37 @@ public class LevelAssetManager implements IAssetManager {
         JsonArray entities = levelJson.get("entities").getAsJsonArray();
 
         for(JsonElement tileElement : tiles) {
-            JsonObject tileJson = tileElement.getAsJsonObject();
+            JsonObject tmpJson = tileElement.getAsJsonObject();
 
-            Tile tile = TileFactory.createTile(tileJson);
+            String type = tmpJson.get("type").getAsString();
+            if(type.contentEquals("tile")) {
+                Tile tile = TileFactory.createTile(tmpJson, new Vector3(0.0f, 0.0f, 0.0f));
 
-            if(tile != null)
-                world.addTile(tile);
+                if(tile != null)
+                    world.addTile(tile);
+            } else if(type.contentEquals("fill")) {
+                Vector3 startPos = getVector3(tmpJson.get("startPos").getAsJsonObject());
+                Vector3 endPos = getVector3(tmpJson.get("endPos").getAsJsonObject());
+
+                int xStart = Math.round(startPos.x);
+                int yStart = Math.round(startPos.y);
+                int zStart = Math.round(startPos.z);
+
+                int xEnd = Math.round(endPos.x);
+                int yEnd = Math.round(endPos.y);
+                int zEnd = Math.round(endPos.z);
+
+                for(int x = xStart; x < xEnd; ++x) {
+                    for(int y = yStart; y < yEnd; ++y) {
+                        for(int z = zStart; z < zEnd; ++z) {
+                            Tile tile = TileFactory.createTile(tmpJson, new Vector3(x, y, z));
+
+                            if(tile != null)
+                                world.addTile(tile);
+                        }
+                    }
+                }
+            }
         }
 
         for(JsonElement entityElement : entities) {

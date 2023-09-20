@@ -107,7 +107,7 @@ public class PathCalculator {
                 Tile dirTile = world.getTileAt(tilePosX - 1, tilePosY, tilePosZ);
                 Tile dirTileGround = world.getTileAt(tilePosX - 1, tilePosY - 1, tilePosZ);
 
-                if(!visisted[tilePosX - 1][tilePosZ] && dirTileGround != null && dirTile == null) {
+                if(dirTileGround != null && dirTile == null && !visisted[tilePosX - 1][tilePosZ]) {
                     queue.add(dirTileGround);
                     pathToPlayerFlat[tilePosX - 1][tilePosY][tilePosZ] = IsometricDirection.RIGHT_DOWN;
                     visisted[tilePosX - 1][tilePosZ] = true;
@@ -118,7 +118,7 @@ public class PathCalculator {
                 Tile dirTile = world.getTileAt(tilePosX, tilePosY, tilePosZ - 1);
                 Tile dirTileGround = world.getTileAt(tilePosX, tilePosY - 1, tilePosZ  - 1);
 
-                if(!visisted[tilePosX][tilePosZ  - 1] && dirTileGround != null && dirTile == null) {
+                if(dirTileGround != null && dirTile == null && !visisted[tilePosX][tilePosZ  - 1]) {
                     queue.add(dirTileGround);
                     pathToPlayerFlat[tilePosX][tilePosY][tilePosZ  - 1] = IsometricDirection.LEFT_DOWN;
                     visisted[tilePosX][tilePosZ  - 1] = true;
@@ -129,7 +129,7 @@ public class PathCalculator {
                 Tile dirTile = world.getTileAt(tilePosX + 1, tilePosY, tilePosZ);
                 Tile dirTileGround = world.getTileAt(tilePosX + 1, tilePosY - 1, tilePosZ);
 
-                if(!visisted[tilePosX + 1][tilePosZ] && dirTileGround != null && dirTile == null) {
+                if(dirTileGround != null && dirTile == null && !visisted[tilePosX + 1][tilePosZ]) {
                     queue.add(dirTileGround);
                     pathToPlayerFlat[tilePosX + 1][tilePosY][tilePosZ] = IsometricDirection.LEFT_UP;
                     visisted[tilePosX + 1][tilePosZ] = true;
@@ -140,7 +140,7 @@ public class PathCalculator {
                 Tile dirTile = world.getTileAt(tilePosX, tilePosY, tilePosZ + 1);
                 Tile dirTileGround = world.getTileAt(tilePosX, tilePosY - 1, tilePosZ + 1);
 
-                if(!visisted[tilePosX][tilePosZ + 1] && dirTileGround != null && dirTile == null) {
+                if(dirTileGround != null && dirTile == null && !visisted[tilePosX][tilePosZ + 1]) {
                     queue.add(dirTileGround);
                     pathToPlayerFlat[tilePosX][tilePosY][tilePosZ + 1] = IsometricDirection.RIGHT_UP;
                     visisted[tilePosX][tilePosZ + 1] = true;
