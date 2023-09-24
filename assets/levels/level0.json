@@ -14,6 +14,7 @@
     { "type": "tile","tile": "StairsTile", "rot": "RIGHT_UP", "pos": { "x": 1.0,  "y": 0.0,  "z": 0.0 } }
   ],
   "entities": [
+    { "type": "Goblin",  "pos": { "x": 4.0,  "y": 1.0,  "z": 4.0 } },
     { "type": "Goblin",  "pos": { "x": 4.0,  "y": 1.0,  "z": 4.0 } }
   ]
 }
