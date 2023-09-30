@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreditCalculator extends Application {
@@ -18,6 +19,8 @@ public class CreditCalculator extends Application {
         stage.setTitle("Paskolos skaičiuoklė");
         stage.setScene(scene);
         stage.show();
+
+        creditList = new ArrayList<>();
     }
 
     public static void main(String[] args) {

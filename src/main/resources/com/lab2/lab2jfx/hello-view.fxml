@@ -29,14 +29,14 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <Button alignment="TOP_LEFT" layoutX="14.0" layoutY="531.0" onAction="#onKreditAdd" text="Pridėti kreditą" />
-                                    <TextField fx:id="creditNameTextField" layoutX="15.0" layoutY="39.0" promptText="N" text="Credito pavadinimas" />
-                                    <TextField fx:id="amountTextField" layoutX="15.0" layoutY="71.0" promptText="N" text="Paskolos suma" />
-                                    <TextField fx:id="rateTextField" layoutX="15.0" layoutY="102.0" promptText="N" text="Metinis procentas" />
+                                    <Button alignment="TOP_LEFT" layoutX="14.0" layoutY="531.0" onAction="#onCreditAdd" text="Pridėti kreditą" />
+                                    <TextField fx:id="creditNameTextField" layoutX="15.0" layoutY="39.0" promptText="Credito pavadinimas" />
+                                    <TextField fx:id="creditAmountTextField" layoutX="15.0" layoutY="71.0" promptText="Paskolos suma" />
+                                    <TextField fx:id="creditRateTextField" layoutX="15.0" layoutY="102.0" promptText="Metinis procentas" />
                                     <Text fx:id="hugeText1" layoutX="15.0" layoutY="27.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Bendra Informacija" wrappingWidth="230.13671875" />
                                     <Text fx:id="hugeText11" layoutX="15.0" layoutY="152.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Paskolos terminas" wrappingWidth="230.13671875" />
-                                    <Spinner editable="true" layoutX="15.0" layoutY="161.0" />
-                                    <Spinner editable="true" layoutX="15.0" layoutY="193.0" />
+                                    <Spinner fx:id="periodYearSpinner" editable="true" layoutX="15.0" layoutY="161.0" />
+                                    <Spinner fx:id="periodMonthSpinner" editable="true" layoutX="15.0" layoutY="193.0" />
                                     <Text fx:id="hugeText111" layoutX="15.0" layoutY="240.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Paskolos grąžinimo grafikas" wrappingWidth="230.13671875" />
                                     <Text layoutX="170.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Metai" />
                                     <Text layoutX="170.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mėnesiai" />
@@ -45,7 +45,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="585.0" prefWidth="397.0">
                                  <children>
-                                    <ListView layoutX="14.0" layoutY="14.0" prefHeight="510.0" prefWidth="366.0" />
+                                    <ListView fx:id="creditListView" layoutX="14.0" layoutY="14.0" prefHeight="510.0" prefWidth="366.0" />
                                     <Button alignment="TOP_LEFT" layoutX="256.0" layoutY="530.0" prefHeight="26.0" prefWidth="126.0" text="Ištrinti visus kreditus" />
                                     <Button alignment="TOP_LEFT" layoutX="102.0" layoutY="530.0" prefHeight="26.0" prefWidth="144.0" text="Ištrinti pasirinktą kreditą" />
                                  </children></AnchorPane>
