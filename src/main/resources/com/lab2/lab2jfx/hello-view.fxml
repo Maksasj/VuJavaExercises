@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
@@ -46,8 +45,8 @@
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="585.0" prefWidth="397.0">
                                  <children>
                                     <ListView fx:id="creditListView" layoutX="14.0" layoutY="14.0" prefHeight="510.0" prefWidth="366.0" />
-                                    <Button alignment="TOP_LEFT" layoutX="256.0" layoutY="530.0" prefHeight="26.0" prefWidth="126.0" text="Ištrinti visus kreditus" />
-                                    <Button alignment="TOP_LEFT" layoutX="102.0" layoutY="530.0" prefHeight="26.0" prefWidth="144.0" text="Ištrinti pasirinktą kreditą" />
+                                    <Button alignment="TOP_LEFT" layoutX="256.0" layoutY="530.0" onAction="#onClearAllCredits" prefHeight="26.0" prefWidth="126.0" text="Ištrinti visus kreditus" />
+                                    <Button alignment="TOP_LEFT" layoutX="102.0" layoutY="530.0" onAction="#onClearSelectedCredit" prefHeight="26.0" prefWidth="144.0" text="Ištrinti pasirinktą kreditą" />
                                  </children></AnchorPane>
                           </items>
                         </SplitPane>
@@ -58,40 +57,49 @@
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <LineChart layoutX="14.0" layoutY="14.0" prefHeight="476.0" prefWidth="761.0">
+                        <LineChart fx:id="creditGraphLineChart" layoutX="14.0" layoutY="14.0" prefHeight="462.0" prefWidth="761.0">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                            <NumberAxis animated="false" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                            <NumberAxis animated="false" side="LEFT" />
                           </yAxis>
                         </LineChart>
-                        <Spinner layoutX="33.0" layoutY="499.0" />
+                        <Spinner fx:id="graphStartMonthSpinner" editable="true" layoutX="33.0" layoutY="499.0" prefHeight="25.0" prefWidth="81.0" />
                         <Text layoutX="33.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laiko intervalas (menesiais)" wrappingWidth="155.3453369140625" />
-                        <Spinner layoutX="33.0" layoutY="532.0" />
-                        <Text layoutX="188.0" layoutY="516.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pradžia" wrappingWidth="52.9453125" />
-                        <Text layoutX="188.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pabaiga" wrappingWidth="52.9453125" />
+                        <Spinner fx:id="graphEndMonthSpinner" editable="true" layoutX="33.0" layoutY="532.0" prefHeight="25.0" prefWidth="81.0" />
+                        <Text layoutX="121.0" layoutY="516.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pradžia" wrappingWidth="52.9453125" />
+                        <Text layoutX="121.0" layoutY="549.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pabaiga" wrappingWidth="52.9453125" />
+                        <ChoiceBox fx:id="selectedCreditGraphChoiceBox" layoutX="350.0" layoutY="496.0" prefWidth="150.0" />
+                        <Text layoutX="350.0" layoutY="485.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasirinktas kreditas" />
+                        <Button layoutX="350.0" layoutY="532.0" mnemonicParsing="false" onAction="#onRecalculateGraphs" text="Pavaizduoti grafika" />
+                        <Button layoutX="174.0" layoutY="499.0" mnemonicParsing="false" onAction="#onClearGraphs" prefHeight="25.0" prefWidth="153.0" text="Pašalinti visus grafikus" />
+                        <Button layoutX="174.0" layoutY="532.0" mnemonicParsing="false" onAction="#onFilterGraph" text="Filtruoti" />
                      </children></Pane>
                </content></Tab>
             <Tab text="Lentelė">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutX="7.0" layoutY="93.0" prefHeight="474.0" prefWidth="787.0">
+                        <TableView fx:id="creditTableTableView" layoutX="7.0" layoutY="93.0" prefHeight="474.0" prefWidth="787.0">
                           <columns>
-                            <TableColumn prefWidth="108.79998779296875" text="Laikas" />
-                            <TableColumn prefWidth="154.4000244140625" text="Mokėtina suma" />
-                              <TableColumn prefWidth="248.79998779296875" text="Mokėtini procentai" />
-                              <TableColumn prefWidth="274.39996337890625" text="Liko sumokėti" />
+                            <TableColumn fx:id="mounthTableCollum" prefWidth="77.60003662109375" text="Laikas" />
+                            <TableColumn fx:id="mounthPayTableCollum" prefWidth="165.5999755859375" text="Mėnesinė įmoka" />
+                              <TableColumn fx:id="interestTableCollum" prefWidth="221.60003662109375" text="Palūkanos" />
+                              <TableColumn fx:id="creditTableCollum" prefWidth="163.99993896484375" text="Kreditas" />
+                              <TableColumn fx:id="leftAmountTableCollum" prefWidth="158.4000244140625" text="Liko sumokėti" />
                           </columns>
                         </TableView>
-                        <Spinner layoutX="7.0" layoutY="22.0" />
                         <Text layoutX="7.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasirinktas kreditas" wrappingWidth="134.13671875" />
-                        <Spinner layoutX="179.0" layoutY="22.0" />
+                        <Spinner fx:id="tableStartMonthSpinner" layoutX="179.0" layoutY="22.0" prefHeight="26.0" prefWidth="62.0" />
                         <Text layoutX="179.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laiko intervalas (menesiais)" wrappingWidth="155.3453369140625" />
-                        <Spinner layoutX="179.0" layoutY="54.0" />
-                        <Text layoutX="334.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pradžia" wrappingWidth="52.9453125" />
-                        <Text layoutX="334.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pabaiga" wrappingWidth="52.9453125" />
+                        <Spinner fx:id="tableEndMonthSpinner" layoutX="179.0" layoutY="54.0" prefHeight="26.0" prefWidth="62.0" />
+                        <Text layoutX="249.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pradžia" wrappingWidth="52.9453125" />
+                        <Text layoutX="249.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pabaiga" wrappingWidth="52.9453125" />
+                        <ChoiceBox fx:id="selectedCreditTableBox" layoutX="7.0" layoutY="22.0" prefWidth="150.0" />
+                        <Button layoutX="306.0" layoutY="54.0" mnemonicParsing="false" onAction="#onFilterTable" text="Filtruoti" />
+                        <Button layoutX="306.0" layoutY="23.0" mnemonicParsing="false" onAction="#onClearTable" text="Nuvalyti lenelė" />
+                        <Button layoutX="7.0" layoutY="54.0" mnemonicParsing="false" onAction="#onShowCreditTableData" text="Rodyti lentelė" />
                      </children>
                   </AnchorPane>
               </content>
