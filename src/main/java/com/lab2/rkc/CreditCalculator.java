@@ -1,5 +1,6 @@
-package com.lab2.lab2jfx;
+package com.lab2.rkc;
 
+import com.lab2.rkc.credit.Credit;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +15,7 @@ public class CreditCalculator extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CreditCalculator.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(CreditCalculator.class.getResource("mainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("Paskolos skaičiuoklė");
         stage.setScene(scene);

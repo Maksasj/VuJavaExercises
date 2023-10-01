@@ -1,18 +1,20 @@
-package com.lab2.lab2jfx;
+package com.lab2.rkc;
 
+import com.lab2.rkc.credit.AnnuityCredit;
+import com.lab2.rkc.credit.Credit;
+import com.lab2.rkc.credit.LinearCredit;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,17 +44,17 @@ public class CreditController implements Initializable {
     private Spinner<Integer> graphEndMonthSpinner;
 
     @FXML
-    private TableView<SinglePayData> creditTableTableView;
+    private TableView<PayDataTable> creditTableTableView;
     @FXML
-    private TableColumn<SinglePayData, Integer> mounthTableCollum;
+    private TableColumn<PayDataTable, Integer> mounthTableCollum;
     @FXML
-    private TableColumn<SinglePayData, Double> mounthPayTableCollum;
+    private TableColumn<PayDataTable, Double> mounthPayTableCollum;
     @FXML
-    private TableColumn<SinglePayData, Double> interestTableCollum;
+    private TableColumn<PayDataTable, Double> interestTableCollum;
     @FXML
-    private TableColumn<SinglePayData, Double> creditTableCollum;
+    private TableColumn<PayDataTable, Double> creditTableCollum;
     @FXML
-    private TableColumn<SinglePayData, Double> leftAmountTableCollum;
+    private TableColumn<PayDataTable, Double> leftAmountTableCollum;
 
     @FXML
     private ChoiceBox<Credit> selectedCreditTableBox;
@@ -61,8 +63,14 @@ public class CreditController implements Initializable {
     @FXML
     private Spinner<Integer> tableEndMonthSpinner;
 
+    @FXML private Text errorTextInput;
+    @FXML private Text errorTextGraphs;
+    @FXML private Text errorTextTable;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        clearErrorLog();
+
         scheduleTypeChoiceBox.getItems().addAll(
                 ReplaymentScheduleType.ANNUITY,
                 ReplaymentScheduleType.LINEAR
@@ -104,15 +112,25 @@ public class CreditController implements Initializable {
             tableEndMonthSpinner.setValueFactory(valueFactory);
         }
 
-        mounthTableCollum.setCellValueFactory(cellData -> {
-            int index = creditTableTableView.getItems().indexOf(cellData.getValue());
-            System.out.println(index);
-            return new SimpleIntegerProperty(index).asObject();
-        });
+        mounthTableCollum.setCellValueFactory(new PropertyValueFactory<>("month"));
         mounthPayTableCollum.setCellValueFactory(new PropertyValueFactory<>("monthPay"));
         interestTableCollum.setCellValueFactory(new PropertyValueFactory<>("interest"));
         creditTableCollum.setCellValueFactory(new PropertyValueFactory<>("credit"));
         leftAmountTableCollum.setCellValueFactory(new PropertyValueFactory<>("leftToPay"));
+    }
+
+    private void clearErrorLog() {
+        errorTextInput.setText("");
+        errorTextGraphs.setText("");
+        errorTextTable.setText("");
+    }
+
+    private void notifyError(SubScene targetScene, String message) {
+        switch (targetScene) {
+            case INPUT -> errorTextInput.setText(message);
+            case GRAPHS -> errorTextGraphs.setText(message);
+            case TABLE -> errorTextTable.setText(message);
+        }
     }
 
     private void updateCreditUILists() {
@@ -130,25 +148,62 @@ public class CreditController implements Initializable {
 
     @FXML
     protected void onClearTable() {
+        clearErrorLog();
+
         creditTableTableView.getItems().clear();
     }
 
     @FXML
     protected void onFilterTable() {
+        clearErrorLog();
 
+        int lowerBound = tableStartMonthSpinner.getValue();
+        int upperBound = tableEndMonthSpinner.getValue();
+
+        var seletedCredit = selectedCreditTableBox.getValue();
+
+        if(lowerBound + 1 < upperBound) {
+            if(seletedCredit == null) {
+                notifyError(SubScene.TABLE, "Table: No credit selected");
+                return;
+            }
+
+            var simulatedData = seletedCredit.simulate();
+            fillTableWithData(lowerBound, upperBound, simulatedData);
+        } else {
+            notifyError(SubScene.TABLE, "Error: Provided range is invalid");
+        }
+    }
+
+    private void fillTableWithData(int startRange, int endRange, List<PayData> simulatedData) {
+        List<PayDataTable> tableData = new ArrayList<>();
+
+        for(int i = startRange; i < endRange; ++i)
+            tableData.add(new PayDataTable(i, simulatedData.get(i)));
+
+        creditTableTableView.getItems().clear();
+        creditTableTableView.getItems().addAll(tableData);
     }
 
     @FXML
     protected void onShowCreditTableData() {
-        var seletedCredit = selectedCreditTableBox.getValue();
-        var simulatedData = seletedCredit.simulate();
+        clearErrorLog();
 
-        creditTableTableView.getItems().clear();
-        creditTableTableView.getItems().addAll(simulatedData);
+        var seletedCredit = selectedCreditTableBox.getValue();
+
+        if(seletedCredit == null) {
+            notifyError(SubScene.TABLE, "Table: No credit selected");
+            return;
+        }
+
+        var simulatedData = seletedCredit.simulate();
+        fillTableWithData(0, simulatedData.size(), simulatedData);
     }
 
     @FXML
     protected void onFilterGraph() {
+        clearErrorLog();
+
         NumberAxis xAxis = (NumberAxis) creditGraphLineChart.getXAxis();
 
         int lowerBound = graphStartMonthSpinner.getValue();
@@ -160,13 +215,20 @@ public class CreditController implements Initializable {
             xAxis.setLowerBound(lowerBound);
             xAxis.setUpperBound(upperBound);
         } else {
-            // Todo lets user know that this is an invalid range
+            notifyError(SubScene.GRAPHS, "Error: Provided range is invalid");
         }
     }
 
     @FXML
     protected void onRecalculateGraphs() {
+        clearErrorLog();
+
         var seletedCredit = selectedCreditGraphChoiceBox.getValue();
+
+        if(seletedCredit == null) {
+            notifyError(SubScene.GRAPHS, "Table: No credit selected");
+            return;
+        }
 
         var simulatedData = seletedCredit.simulate();
         var series = new XYChart.Series<Number, Number>();
@@ -186,20 +248,31 @@ public class CreditController implements Initializable {
 
     @FXML
     protected void onClearGraphs() {
+        clearErrorLog();
+
         creditGraphLineChart.getData().clear();
     }
 
     @FXML
     protected void onClearSelectedCredit() {
-        var creditList = CreditCalculator.creditList;
+        clearErrorLog();
 
-        Credit selectedItem = creditListView.getSelectionModel().getSelectedItem();
+        var creditList = CreditCalculator.creditList;
+        var selectedItem = creditListView.getSelectionModel().getSelectedItem();
+
+        if(selectedItem == null) {
+            notifyError(SubScene.INPUT, "Error: No credit selected");
+            return;
+        }
+
         creditList.remove(selectedItem);
         updateCreditUILists();
     }
 
     @FXML
     protected void onClearAllCredits() {
+        clearErrorLog();
+
         var creditList = CreditCalculator.creditList;
         creditList.clear();
         updateCreditUILists();
@@ -207,35 +280,67 @@ public class CreditController implements Initializable {
 
     @FXML
     protected void onCreditAdd() {
-        var creditList = CreditCalculator.creditList;
+        clearErrorLog();
 
-        String creditName = null;
-        Double creditAmount = null;
-        Double creditRate = null;
+        String creditName;
+        Double creditAmount, creditRate;
+        Integer year, month;
+        ReplaymentScheduleType scheduleType;
 
-        Integer year = null;
-        Integer month = null;
-
-        ReplaymentScheduleType scheduleType = null;
-
-        boolean valid = false;
         try {
             creditName = new String(creditNameTextField.getText());
-            creditAmount = Double.parseDouble(creditAmountTextField.getText());
-            creditRate = Double.parseDouble(creditRateTextField.getText());
-
-            year = periodYearSpinner.getValue();
-            month = periodMonthSpinner.getValue();
-
-            scheduleType = scheduleTypeChoiceBox.getValue();
-
-            valid = true;
         } catch (Exception exception) {
-            System.out.println(exception.toString());
+            notifyError(SubScene.INPUT, "Error: Failed to parse credit name");
+            return;
         }
 
-        if(!valid)
+        if(creditName.contentEquals("")) {
+            notifyError(SubScene.INPUT, "Error: Empty name is now allowed");
             return;
+        }
+
+        try {
+            creditAmount = Double.parseDouble(creditAmountTextField.getText());
+        } catch (Exception exception) {
+            notifyError(SubScene.INPUT, "Error: Failed to parse credit amount, expected numeric value");
+            return;
+        }
+
+        try {
+            creditRate = Double.parseDouble(creditRateTextField.getText());
+        } catch (Exception exception) {
+            notifyError(SubScene.INPUT, "Error: Failed to parse credit rate, expected numeric value");
+            return;
+        }
+
+        try {
+            year = periodYearSpinner.getValue();
+        } catch (Exception exception) {
+            notifyError(SubScene.INPUT, "Error: Failed to get period year");
+            return;
+        }
+
+        try {
+            month = periodMonthSpinner.getValue();
+        } catch (Exception exception) {
+            notifyError(SubScene.INPUT, "Error: Failed to get period month");
+            return;
+        }
+
+        int time = year * 12 + month;
+        if(time == 0) {
+            notifyError(SubScene.INPUT, "Error: time period is equal to 0");
+            return;
+        }
+
+        try {
+            scheduleType = scheduleTypeChoiceBox.getValue();
+        } catch (Exception exception) {
+            notifyError(SubScene.INPUT, "Error: Failed to get period schedule type");
+            return;
+        }
+
+        var creditList = CreditCalculator.creditList;
 
         switch (scheduleType) {
             case ANNUITY -> creditList.add(
