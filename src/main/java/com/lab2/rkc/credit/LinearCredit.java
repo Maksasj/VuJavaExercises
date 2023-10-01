@@ -1,7 +1,7 @@
 package com.lab2.rkc.credit;
 
-import com.lab2.rkc.ReplaymentScheduleType;
 import com.lab2.rkc.PayData;
+import com.lab2.rkc.ReplaymentScheduleType;
 
 import java.util.List;
 
