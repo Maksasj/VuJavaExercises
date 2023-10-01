@@ -4,6 +4,7 @@ import com.lab2.rkc.CreditCalculator;
 import com.lab2.rkc.ReplaymentScheduleType;
 import com.lab2.rkc.credit.AnnuityCredit;
 import com.lab2.rkc.credit.Credit;
+import com.lab2.rkc.credit.Deferral;
 import com.lab2.rkc.credit.LinearCredit;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class InputController extends CommonController implements Initializable {
@@ -31,6 +34,19 @@ public class InputController extends CommonController implements Initializable {
     @FXML
     private Text errorTextInput;
 
+    @FXML
+    private ListView<Deferral> deferralListView;
+    @FXML
+    private TextField deferralNameTextField;
+    @FXML
+    private TextField deferralRateTextField;
+    @FXML
+    private Spinner<Integer> deferralPeriodStartSpinner;
+    @FXML
+    private Spinner<Integer> deferralPeriodLengthSpinner;
+
+    private List<Deferral> activeDeferralList;
+
     @Override
     public void clearErrorLog() {
         errorTextInput.setText("");
@@ -47,11 +63,16 @@ public class InputController extends CommonController implements Initializable {
 
         creditListView.getItems().clear();
         creditListView.getItems().addAll(creditList);
+
+        deferralListView.getItems().clear();
+        deferralListView.getItems().addAll(activeDeferralList);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
+
+        activeDeferralList = new ArrayList<>();
 
         scheduleTypeChoiceBox.getItems().addAll(
                 ReplaymentScheduleType.ANNUITY,
@@ -69,6 +90,90 @@ public class InputController extends CommonController implements Initializable {
             valueFactory.setValue(0);
             periodMonthSpinner.setValueFactory(valueFactory);
         }
+
+        {
+            var valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE);
+            valueFactory.setValue(0);
+            deferralPeriodStartSpinner.setValueFactory(valueFactory);
+        }
+
+        {
+            var valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE);
+            valueFactory.setValue(0);
+            deferralPeriodLengthSpinner.setValueFactory(valueFactory);
+        }
+    }
+
+    @FXML
+    protected void onClearSelectedDeferral() {
+        clearErrorLog();
+
+        var selectedItem = deferralListView.getSelectionModel().getSelectedItem();
+
+        if(selectedItem == null) {
+            notifyError("Error: No deferral selected");
+            return;
+        }
+
+        activeDeferralList.remove(selectedItem);
+        CreditCalculator.updateCreditUILists();
+    }
+
+    @FXML
+    protected void onClearAllDeferrals() {
+        activeDeferralList.clear();
+        CreditCalculator.updateCreditUILists();
+    }
+
+    @FXML
+    protected void onAddDeferral() {
+        clearErrorLog();
+
+        String deferralName;
+        Double deferralRate;
+        Integer deferralStart, deferralDuration;
+
+        try {
+            deferralName = new String(deferralNameTextField.getText());
+        } catch (Exception exception) {
+            notifyError("Error: Failed to parse deferral name");
+            return;
+        }
+
+        if(deferralName.contentEquals("")) {
+            notifyError("Error: Empty deferral name is now allowed");
+            return;
+        }
+
+        try {
+            deferralRate = Double.parseDouble(deferralRateTextField.getText());
+        } catch (Exception exception) {
+            notifyError("Error: Failed to parse deferral rate, expected numeric value");
+            return;
+        }
+
+        try {
+            deferralStart = deferralPeriodStartSpinner.getValue();
+        } catch (Exception exception) {
+            notifyError("Error: Failed to get deferral period start");
+            return;
+        }
+
+        try {
+            deferralDuration = deferralPeriodLengthSpinner.getValue();
+        } catch (Exception exception) {
+            notifyError("Error: Failed to get deferral period duration");
+            return;
+        }
+
+        if(deferralDuration == 0) {
+            notifyError("Error: 0 deferral duration is not valid");
+            return;
+        }
+
+        activeDeferralList.add(new Deferral(deferralName, deferralRate, deferralStart, deferralDuration));
+
+        CreditCalculator.updateCreditUILists();
     }
 
     @FXML
@@ -151,9 +256,8 @@ public class InputController extends CommonController implements Initializable {
             return;
         }
 
-        try {
-            scheduleType = scheduleTypeChoiceBox.getValue();
-        } catch (Exception exception) {
+        scheduleType = scheduleTypeChoiceBox.getValue();
+        if(scheduleType == null) {
             notifyError("Error: Failed to get period schedule type");
             return;
         }
@@ -166,7 +270,8 @@ public class InputController extends CommonController implements Initializable {
                             creditName,
                             creditAmount,
                             creditRate,
-                            year * 12 + month
+                            year * 12 + month,
+                            activeDeferralList
                     )
             );
             case LINEAR -> creditList.add(
@@ -174,10 +279,13 @@ public class InputController extends CommonController implements Initializable {
                             creditName,
                             creditAmount,
                             creditRate,
-                            year * 12 + month
+                            year * 12 + month,
+                            activeDeferralList
                     )
             );
         }
+
+        activeDeferralList = new ArrayList<>(activeDeferralList);
 
         CreditCalculator.updateCreditUILists();
     }

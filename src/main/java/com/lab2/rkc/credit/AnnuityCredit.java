@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnnuityCredit extends Credit {
-    public AnnuityCredit(String creditName, Double creditAmount, Double creditRate, Integer monthsToLast) {
-        super(creditName, creditAmount, creditRate, monthsToLast);
+    public AnnuityCredit(String creditName, Double creditAmount, Double creditRate, Integer monthsToLast, List<Deferral> deferrals) {
+        super(creditName, creditAmount, creditRate, monthsToLast, deferrals);
     }
 
     public List<PayData> simulate() {
@@ -19,7 +19,28 @@ public class AnnuityCredit extends Credit {
         double tmp = Math.pow(monthInterest + 1, getMonthsToLast());
         double balance = getCreditAmount();
 
-        for (int i = 0; i < getMonthsToLast(); ++i) {
+        int monthsToLast = getMonthsToLast();
+
+        for (int i = 0; i < monthsToLast; ++i) {
+            for(var deferral : getDeferrals()) {
+                if(i == deferral.getStart()) {
+                    List<PayData> deferrals = new ArrayList<>();
+
+                    double fixedInterest = deferral.getRate();
+
+                    for(int j = 0; j < deferral.getDuration(); ++j) {
+                        double interest = Math.round(balance * fixedInterest);
+                        PayData payData = new PayData(balance, interest, interest, 0);
+                        deferrals.add(payData);
+                    }
+
+                    paymentDataList.addAll(deferrals);
+
+                    monthsToLast += deferral.getDuration();
+                    i += deferral.getDuration();
+                }
+            }
+
             double monthPayment = getCreditAmount() * monthInterest * tmp / (tmp - 1);
             monthPayment = Math.round(monthPayment * 100) / 100.0;
 
