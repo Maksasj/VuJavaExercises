@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class InputController implements Initializable {
+public class InputController extends CommonController implements Initializable {
     @FXML
     private TextField creditNameTextField;
     @FXML
@@ -32,8 +32,26 @@ public class InputController implements Initializable {
     private Text errorTextInput;
 
     @Override
+    public void clearErrorLog() {
+        errorTextInput.setText("");
+    }
+
+    @Override
+    public void notifyError(String message) {
+        errorTextInput.setText(message);
+    }
+
+    @Override
+    public void updateCreditUILists() {
+        var creditList = CreditCalculator.creditList;
+
+        creditListView.getItems().clear();
+        creditListView.getItems().addAll(creditList);
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        clearErrorLog();
+        super.initialize(location, resources);
 
         scheduleTypeChoiceBox.getItems().addAll(
                 ReplaymentScheduleType.ANNUITY,
@@ -53,21 +71,6 @@ public class InputController implements Initializable {
         }
     }
 
-    private void clearErrorLog() {
-        errorTextInput.setText("");
-    }
-
-    private void notifyError(String message) {
-        errorTextInput.setText(message);
-    }
-
-    private void updateCreditUILists() {
-        var creditList = CreditCalculator.creditList;
-
-        creditListView.getItems().clear();
-        creditListView.getItems().addAll(creditList);
-    }
-
     @FXML
     protected void onClearSelectedCredit() {
         clearErrorLog();
@@ -81,7 +84,7 @@ public class InputController implements Initializable {
         }
 
         creditList.remove(selectedItem);
-        updateCreditUILists();
+        CreditCalculator.updateCreditUILists();
     }
 
     @FXML
@@ -90,7 +93,7 @@ public class InputController implements Initializable {
 
         var creditList = CreditCalculator.creditList;
         creditList.clear();
-        updateCreditUILists();
+        CreditCalculator.updateCreditUILists();
     }
 
     @FXML
@@ -176,6 +179,6 @@ public class InputController implements Initializable {
             );
         }
 
-        updateCreditUILists();
+        CreditCalculator.updateCreditUILists();
     }
 }

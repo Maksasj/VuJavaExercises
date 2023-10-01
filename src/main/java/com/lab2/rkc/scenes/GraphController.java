@@ -3,7 +3,6 @@ package com.lab2.rkc.scenes;
 import com.lab2.rkc.CreditCalculator;
 import com.lab2.rkc.credit.Credit;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -15,7 +14,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GraphController implements Initializable {
+public class GraphController extends CommonController {
     @FXML
     private LineChart<Number, Number> creditGraphLineChart;
     @FXML
@@ -28,8 +27,27 @@ public class GraphController implements Initializable {
     @FXML private Text errorTextGraphs;
 
     @Override
+    public void clearErrorLog() {
+        errorTextGraphs.setText("");
+    }
+
+    @Override
+    public void notifyError(String message) {
+        errorTextGraphs.setText(message);
+    }
+
+    @Override
+    public void updateCreditUILists() {
+        var creditList = CreditCalculator.creditList;
+
+        selectedCreditGraphChoiceBox.getItems().clear();
+        selectedCreditGraphChoiceBox.getItems().addAll(creditList);
+        creditGraphLineChart.getData().clear();
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        clearErrorLog();
+        super.initialize(location, resources);
 
         {
             var valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE);
@@ -42,21 +60,6 @@ public class GraphController implements Initializable {
             valueFactory.setValue(0);
             graphEndMonthSpinner.setValueFactory(valueFactory);
         }
-    }
-
-    private void clearErrorLog() {
-        errorTextGraphs.setText("");
-    }
-
-    private void notifyError(String message) {
-        errorTextGraphs.setText(message);
-    }
-
-    private void updateCreditUILists() {
-        var creditList = CreditCalculator.creditList;
-
-        selectedCreditGraphChoiceBox.getItems().clear();
-        selectedCreditGraphChoiceBox.getItems().addAll(creditList);
     }
 
     @FXML

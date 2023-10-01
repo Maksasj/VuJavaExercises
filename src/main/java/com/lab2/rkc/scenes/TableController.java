@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class TableController implements Initializable {
+public class TableController extends CommonController implements Initializable {
     @FXML
     private TableView<PayDataTable> creditTableTableView;
     @FXML
@@ -39,8 +39,27 @@ public class TableController implements Initializable {
     @FXML private Text errorTextTable;
 
     @Override
+    public void clearErrorLog() {
+        errorTextTable.setText("");
+    }
+
+    @Override
+    public void notifyError(String message) {
+        errorTextTable.setText(message);
+    }
+
+    @Override
+    public void updateCreditUILists() {
+        var creditList = CreditCalculator.creditList;
+
+        selectedCreditTableBox.getItems().clear();
+        selectedCreditTableBox.getItems().addAll(creditList);
+        creditTableTableView.getItems().clear();
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        clearErrorLog();
+        super.initialize(location, resources);
 
         {
             var valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, Integer.MAX_VALUE);
@@ -59,21 +78,6 @@ public class TableController implements Initializable {
         interestTableCollum.setCellValueFactory(new PropertyValueFactory<>("interest"));
         creditTableCollum.setCellValueFactory(new PropertyValueFactory<>("credit"));
         leftAmountTableCollum.setCellValueFactory(new PropertyValueFactory<>("leftToPay"));
-    }
-
-    private void clearErrorLog() {
-        errorTextTable.setText("");
-    }
-
-    private void notifyError(String message) {
-        errorTextTable.setText(message);
-    }
-
-    private void updateCreditUILists() {
-        var creditList = CreditCalculator.creditList;
-
-        selectedCreditTableBox.getItems().clear();
-        selectedCreditTableBox.getItems().addAll(creditList);
     }
 
     @FXML

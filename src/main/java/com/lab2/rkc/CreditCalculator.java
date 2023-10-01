@@ -1,6 +1,7 @@
 package com.lab2.rkc;
 
 import com.lab2.rkc.credit.Credit;
+import com.lab2.rkc.scenes.CommonController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public class CreditCalculator extends Application {
     public static List<Credit> creditList;
+    private static List<CommonController> controllers;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -25,6 +27,18 @@ public class CreditCalculator extends Application {
     }
 
     public static void main(String[] args) {
+        controllers = new ArrayList<>();
+
         launch();
+    }
+
+    public static void addActiveController(CommonController controller) {
+        controllers.add(controller);
+    }
+
+    public static void updateCreditUILists() {
+        for(var controller : controllers) {
+            controller.updateCreditUILists();
+        }
     }
 }
