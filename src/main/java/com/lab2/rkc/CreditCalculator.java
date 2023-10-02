@@ -14,6 +14,7 @@ import java.util.List;
 public class CreditCalculator extends Application {
     public static List<Credit> creditList;
     private static List<CommonController> controllers;
+    public static Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -22,6 +23,8 @@ public class CreditCalculator extends Application {
         stage.setTitle("Paskolos skaičiuoklė");
         stage.setScene(scene);
         stage.show();
+
+        primaryStage = stage;
 
         creditList = new ArrayList<>();
     }

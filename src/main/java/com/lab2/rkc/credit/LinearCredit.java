@@ -19,9 +19,30 @@ public class LinearCredit extends Credit {
         double monthInterest = getCreditRate() / 12.0;
         double balance = getCreditAmount();
 
-        for (int i = 0; i < getMonthsToLast(); ++i) {
+        int monthsToLast = getMonthsToLast();
+
+        for (int i = 0; i < monthsToLast; ++i) {
+            for(var deferral : getDeferrals()) {
+                if(i == deferral.getStart()) {
+                    List<PayData> deferrals = new ArrayList<>();
+
+                    double fixedInterest = deferral.getRate();
+
+                    for(int j = 0; j < deferral.getDuration(); ++j) {
+                        double interest = Math.round(balance * fixedInterest);
+                        PayData payData = new PayData(balance, interest, interest, 0);
+                        deferrals.add(payData);
+                    }
+
+                    paymentDataList.addAll(deferrals);
+
+                    monthsToLast += deferral.getDuration();
+                    i += deferral.getDuration();
+                }
+            }
+
             int daysInMonth = Utils.DAYS_IN_MONTH[i % 12];
-            double monthPayment = balance / (getMonthsToLast() - i) + balance * getCreditRate() * daysInMonth / Utils.DAYS_IN_YEAR;
+            double monthPayment = balance / (monthsToLast - i) + balance * getCreditRate() * daysInMonth / Utils.DAYS_IN_YEAR;
             monthPayment = Math.round(monthPayment * 100) / 100.0;
 
             double interest = balance * monthInterest;
