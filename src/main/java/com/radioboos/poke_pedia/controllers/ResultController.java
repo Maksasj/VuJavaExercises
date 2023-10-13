@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class ResultController implements Initializable {
     @FXML protected ImageView pokemonIconImageView;
-    @FXML protected Text pokemonNameTextl;
+    @FXML protected Text pokemonNameText;
 
 
 
