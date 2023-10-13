@@ -3,11 +3,15 @@ package com.radioboos.poke_pedia.controllers;
 import com.radioboos.poke_pedia.PokePedia;
 import com.radioboos.poke_pedia.Pokedex;
 import com.radioboos.poke_pedia.common.PokemonListCell;
+import com.radioboos.poke_pedia.filter.BaseFilter;
+import com.radioboos.poke_pedia.filter.GenerationFilter;
+import com.radioboos.poke_pedia.filter.PokemonFilter;
+import com.radioboos.poke_pedia.filter.StatusFilter;
 import com.radioboos.poke_pedia.pokemon.Pokemon;
+import com.radioboos.poke_pedia.pokemon.PokemonStatus;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,6 +26,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ResultController implements Initializable {
@@ -79,15 +84,31 @@ public class ResultController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         foundPokemonListView.setCellFactory(param -> new PokemonListCell());
 
-        ObservableList<Pokemon> items = FXCollections.observableArrayList (Pokedex.getInstance().getPokemons());
-        foundPokemonListView.setItems(items);
-
         foundPokemonListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pokemon>() {
             @Override
             public void changed(ObservableValue<? extends Pokemon> observable, Pokemon oldValue, Pokemon newValue) {
                 updateSelectedPokemonInfo(newValue);
             }
         });
+
+        var filter = new PokemonFilter();
+        filter = new GenerationFilter(filter, 4);
+        filter = new StatusFilter(filter, PokemonStatus.LEGENDARY);
+
+        fillListView(filter);
+    }
+
+    public void fillListView(BaseFilter<Pokemon> filter) {
+        var pokemons = new ArrayList<Pokemon>();
+
+        for(var pokemon : Pokedex.getInstance().getPokemons()) {
+            if(filter.filter(pokemon)) {
+                pokemons.add(pokemon);
+            }
+        }
+
+        var items = FXCollections.observableArrayList(pokemons);
+        foundPokemonListView.setItems(items);
     }
 
     private void updateSelectedPokemonInfo(Pokemon pokemon) {

@@ -3,9 +3,9 @@ package com.radioboos.poke_pedia.filter;
 import com.radioboos.poke_pedia.common.Utils;
 import com.radioboos.poke_pedia.pokemon.Pokemon;
 
-public class GenerationFilter extends BaseFilter<Pokemon> {
+public class GenerationFilter extends PokemonFilter {
     private final int generation;
-    GenerationFilter(BaseFilter<Pokemon> base, int generation) {
+    public GenerationFilter(PokemonFilter base, int generation) {
         super(base);
 
         this.generation = generation;

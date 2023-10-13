@@ -3,10 +3,10 @@ package com.radioboos.poke_pedia.filter;
 import com.radioboos.poke_pedia.pokemon.Pokemon;
 import com.radioboos.poke_pedia.pokemon.PokemonType;
 
-public class TypeFilter extends BaseFilter<Pokemon> {
+public class TypeFilter extends PokemonFilter {
     private final PokemonType type;
 
-    TypeFilter(BaseFilter<Pokemon> base, PokemonType type) {
+    public TypeFilter(PokemonFilter base, PokemonType type) {
         super(base);
 
         this.type = type;
