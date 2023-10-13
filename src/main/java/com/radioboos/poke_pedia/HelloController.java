@@ -1,46 +1,35 @@
 package com.radioboos.poke_pedia;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
     @FXML
-    private Label welcomeText;
-
-    @FXML
     private ListView<Pokemon> pokemonListView;
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        ObservableList<Pokemon> items =FXCollections.observableArrayList (Pokedex.getInstance().getPokemons());
+        pokemonListView.setItems(items);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<Pokemon> items =FXCollections.observableArrayList (new Pokemon());
-        pokemonListView.setItems(items);
 
-        System.out.println("Poggers !");
 
         pokemonListView.setCellFactory(param -> new ListCell<Pokemon>() {
-            private ImageView imageView = new ImageView();
+            private final ImageView imageView = new ImageView();
+
             @Override
             public void updateItem(Pokemon pokemon, boolean empty) {
                 super.updateItem(pokemon, empty);
@@ -49,10 +38,16 @@ public class HelloController implements Initializable {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    imageView.setImage(pokemon.image);
+                    var image = pokemon.getImage();
 
-                    setText("Pokemon");
-                    setGraphic(imageView);
+                    setText(pokemon.getEngName());
+
+                    if(image != null) {
+                        imageView.setImage(image);
+                        setGraphic(imageView);
+                    } else {
+                        setGraphic(null);
+                    }
                 }
             }
         });

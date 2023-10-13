@@ -17,6 +17,8 @@ public class PokePedia extends Application {
         stage.setTitle("PokePedia");
         stage.setScene(scene);
         stage.show();
+
+        Pokedex.getInstance().loadPokedexFromFile("C:\\Programming\\java\\poke_pedia\\src\\main\\resources\\com\\radioboos\\poke_pedia\\database.csv");
     }
 
     public static void main(String[] args) {
