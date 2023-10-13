@@ -22,7 +22,6 @@ public class SpeciesFilter extends PokemonFilter {
         boolean found = false;
         var pTypes = pokemon.getType();
 
-
         for (PokemonType pType : pTypes) {
             if (species.contains(pType)) {
                 found = true;
@@ -30,6 +29,6 @@ public class SpeciesFilter extends PokemonFilter {
             }
         }
 
-        return prev.filter(pokemon) && found;
+        return prev.filter(pokemon) && (found || species.isEmpty());
     }
 }

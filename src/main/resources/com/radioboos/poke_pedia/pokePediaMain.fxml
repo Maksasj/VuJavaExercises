@@ -18,7 +18,7 @@
 
 <Pane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.radioboos.poke_pedia.controllers.MainController">
    <children>
-      <Text layoutX="394.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently available all 1010 pokemons !" textAlignment="RIGHT" wrappingWidth="392.0">
+      <Text layoutX="394.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently available all 1028 pokemons !" textAlignment="RIGHT" wrappingWidth="392.0">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
@@ -52,7 +52,7 @@
                                     <CheckBox fx:id="statusCheckBox" layoutX="289.0" layoutY="23.0" mnemonicParsing="false" onAction="#onEnableStatusFilter" text="Status" />
                                     <TextField fx:id="nameFilterTextField" disable="true" layoutX="12.0" layoutY="44.0" prefHeight="26.0" prefWidth="77.0" promptText="Bulbasaur" />
                                     <CheckBox fx:id="nameFilterCheckBox" layoutX="12.0" layoutY="23.0" mnemonicParsing="false" onAction="#onEnableNameFilter" text="Name filter" />
-                                    <Button fx:id="nameFilterClearButton" disable="true" layoutX="94.0" layoutY="44.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="Clear" />
+                                    <Button fx:id="nameFilterClearButton" disable="true" layoutX="94.0" layoutY="44.0" mnemonicParsing="false" onAction="#onClearName" prefHeight="26.0" prefWidth="48.0" text="Clear" />
                                     <CheckBox fx:id="generationCheckBox" layoutX="151.0" layoutY="23.0" mnemonicParsing="false" onAction="#onEnableGenerationFilter" text="Generation" />
                                     <ChoiceBox fx:id="statusChoiceBox" disable="true" layoutX="289.0" layoutY="44.0" prefHeight="26.0" prefWidth="128.0" />
                                     <ChoiceBox fx:id="nameLocalizationChoiceBox" layoutX="659.0" layoutY="44.0" prefHeight="26.0" prefWidth="128.0" />
@@ -79,30 +79,30 @@
                                     <ChoiceBox fx:id="typeChoiceBox" disable="true" layoutX="207.0" layoutY="190.0" prefHeight="26.0" prefWidth="123.0" />
                                     <CheckBox fx:id="typeFilterCheckBox" layoutX="206.0" layoutY="30.0" mnemonicParsing="false" onAction="#onEnableTypeFilter" text="Type filter" />
                                     <ListView fx:id="typeListView" disable="true" layoutX="206.0" layoutY="56.0" prefHeight="126.0" prefWidth="241.0" />
-                                    <Button fx:id="addTypeButton" disable="true" layoutX="337.0" layoutY="190.0" mnemonicParsing="false" text="Add type" />
-                                    <Button fx:id="clearTypeButton" disable="true" layoutX="404.0" layoutY="190.0" mnemonicParsing="false" text="Clear" />
+                                    <Button fx:id="addTypeButton" disable="true" layoutX="337.0" layoutY="190.0" mnemonicParsing="false" onAction="#onAddType" text="Add type" />
+                                    <Button fx:id="clearTypeButton" disable="true" layoutX="404.0" layoutY="190.0" mnemonicParsing="false" onAction="#onClearType" text="Clear" />
                                     <CheckBox fx:id="abilityCountFilterCheckBox" layoutX="10.0" layoutY="223.0" mnemonicParsing="false" onAction="#onEnableAbilityCountFilter" prefHeight="18.0" prefWidth="108.0" text="Ability count" />
                                     <Spinner fx:id="abilityCountSpinner" disable="true" editable="true" layoutX="10.0" layoutY="246.0" prefHeight="25.0" prefWidth="104.0" />
                                     <CheckBox fx:id="statsFilterCheckBox" layoutX="459.0" layoutY="33.0" mnemonicParsing="false" onAction="#onEnableStatsFilter" text="Stats filter" />
-                                    <Slider fx:id="minAttackSlider" disable="true" layoutX="553.0" layoutY="82.0" prefWidth="222.0" />
+                                    <Slider fx:id="minAttackSlider" blockIncrement="0.01" disable="true" layoutX="553.0" layoutY="82.0" max="1.0" prefWidth="222.0" />
                                     <Text layoutX="459.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Hp" />
                                     <Text layoutX="459.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Attack" />
                                     <Text layoutX="459.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Defense" />
                                     <Text layoutX="459.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Attack" />
                                     <Text layoutX="459.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Defense" wrappingWidth="96.3570556640625" />
                                     <Text layoutX="459.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Speed" />
-                                    <Slider fx:id="minHpSlider" disable="true" layoutX="553.0" layoutY="58.0" prefHeight="14.0" prefWidth="222.0" />
-                                    <Slider fx:id="minDefenseSlider" disable="true" layoutX="553.0" layoutY="106.0" prefWidth="222.0" />
-                                    <Slider fx:id="minSpAttackSlider" disable="true" layoutX="553.0" layoutY="130.0" prefWidth="222.0" />
-                                    <Slider fx:id="minSpDefenseSlider" disable="true" layoutX="553.0" layoutY="154.0" prefWidth="222.0" />
-                                    <Slider fx:id="minSpeedSlider" disable="true" layoutX="553.0" layoutY="178.0" prefWidth="222.0" />
-                                    <Text layoutX="775.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="78" AnchorPane.leftAnchor="775.0" />
-                                    <Text layoutX="775.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" AnchorPane.leftAnchor="775.0" />
-                                    <Text layoutX="775.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" AnchorPane.leftAnchor="775.0" />
-                                    <Text layoutX="775.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" AnchorPane.leftAnchor="775.0" />
-                                    <Text layoutX="775.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" AnchorPane.leftAnchor="775.0" />
-                                    <Text layoutX="775.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="45" AnchorPane.leftAnchor="775.0" />
-                                    <Button fx:id="pointsResetButton" disable="true" layoutX="742.0" layoutY="198.0" mnemonicParsing="false" text="Reset" />
+                                    <Slider fx:id="minHpSlider" blockIncrement="0.01" disable="true" layoutX="553.0" layoutY="58.0" max="1.0" prefHeight="14.0" prefWidth="222.0" />
+                                    <Slider fx:id="minDefenseSlider" blockIncrement="0.01" disable="true" layoutX="553.0" layoutY="106.0" max="1.0" prefWidth="222.0" />
+                                    <Slider fx:id="minSpAttackSlider" blockIncrement="0.01" disable="true" layoutX="553.0" layoutY="130.0" max="1.0" prefWidth="222.0" />
+                                    <Slider fx:id="minSpDefenseSlider" blockIncrement="0.01" disable="true" layoutX="553.0" layoutY="154.0" max="1.0" prefWidth="222.0" />
+                                    <Slider fx:id="minSpeedSlider" blockIncrement="0.01" disable="true" layoutX="553.0" layoutY="178.0" max="1.0" prefWidth="222.0" />
+                                    <Text fx:id="minHpText" layoutX="775.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.leftAnchor="775.0" />
+                                    <Text fx:id="minAttackText" layoutX="775.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.leftAnchor="775.0" />
+                                    <Text fx:id="minDefenseText" layoutX="775.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.leftAnchor="775.0" />
+                                    <Text fx:id="minSpAttackText" layoutX="775.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.leftAnchor="775.0" />
+                                    <Text fx:id="minSpDefenseText" layoutX="775.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.leftAnchor="775.0" />
+                                    <Text fx:id="minSpeedText" layoutX="775.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.leftAnchor="775.0" />
+                                    <Button fx:id="pointsResetButton" disable="true" layoutX="742.0" layoutY="198.0" mnemonicParsing="false" onAction="#onClearStats" text="Reset" />
                                     <Text fx:id="totalPointsText" fill="#797979" layoutX="590.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total points: 318" textAlignment="RIGHT" wrappingWidth="146.31994700431824" AnchorPane.rightAnchor="62.88005299568181">
                                        <font>
                                           <Font name="System Italic" size="12.0" />
@@ -113,11 +113,11 @@
                                     <Separator layoutX="453.0" layoutY="25.0" orientation="VERTICAL" prefHeight="600.0" />
                                     <Spinner fx:id="statScatterSpinner" disable="true" editable="true" layoutX="461.0" layoutY="230.0" prefHeight="26.0" prefWidth="101.0" />
                                     <Text layoutX="460.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stat value scatter" />
-                                    <Button fx:id="scatterResetButton" disable="true" layoutX="567.0" layoutY="230.0" mnemonicParsing="false" text="Reset" />
+                                    <Button fx:id="scatterResetButton" disable="true" layoutX="567.0" layoutY="230.0" mnemonicParsing="false" onAction="#onClearScatter" text="Reset" />
                                     <CheckBox fx:id="speciesFilterCheckBox" layoutX="206.0" layoutY="223.0" mnemonicParsing="false" onAction="#onEnableSpeciesFilter" text="Species filter" />
                                     <ListView fx:id="speciesListView" disable="true" layoutX="206.0" layoutY="246.0" prefHeight="106.0" prefWidth="240.0" />
-                                    <Button fx:id="clearSpeciesButton" disable="true" layoutX="404.0" layoutY="360.0" mnemonicParsing="false" text="Clear" />
-                                    <Button fx:id="addSpeciesButton" disable="true" layoutX="320.0" layoutY="360.0" mnemonicParsing="false" text="Add species" />
+                                    <Button fx:id="clearSpeciesButton" disable="true" layoutX="404.0" layoutY="360.0" mnemonicParsing="false" onAction="#onClearSpecies" text="Clear" />
+                                    <Button fx:id="addSpeciesButton" disable="true" layoutX="320.0" layoutY="360.0" mnemonicParsing="false" onAction="#onAddSpecies" text="Add species" />
                                     <TextField fx:id="speciesTextField" disable="true" layoutX="205.0" layoutY="359.0" prefHeight="26.0" prefWidth="108.0" promptText="Seed Pokemon" />
                                  </children>
                               </AnchorPane>

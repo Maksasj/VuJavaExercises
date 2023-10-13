@@ -20,18 +20,22 @@ public class StatsFilter extends PokemonFilter {
         this.scatter = scatter;
     }
 
+    private boolean inScatterRange(float value, float scat, float testedValue) {
+        return Utils.inRange(value - scatter, Float.MAX_VALUE, testedValue) && Utils.inRange(value + scatter, Float.MAX_VALUE, testedValue);
+    }
+
     @Override
     public boolean filter(Pokemon pokemon) {
         boolean inRange = true;
 
         var pStats = pokemon.getStats();
 
-        inRange &= Utils.inRange(stats.getHp() - scatter, stats.getHp() + scatter, pStats.getHp());
-        inRange &= Utils.inRange(stats.getAttack() - scatter, stats.getAttack() + scatter, pStats.getAttack());
-        inRange &= Utils.inRange(stats.getDefense() - scatter, stats.getDefense() + scatter, pStats.getDefense());
-        inRange &= Utils.inRange(stats.getSpAttack() - scatter, stats.getSpAttack() + scatter, pStats.getSpAttack());
-        inRange &= Utils.inRange(stats.getSpDefense() - scatter, stats.getSpDefense() + scatter, pStats.getSpDefense());
-        inRange &= Utils.inRange(stats.getSpeed() - scatter, stats.getSpeed() + scatter, pStats.getSpeed());
+        inRange &= inScatterRange(stats.getHp(), scatter, pStats.getHp());
+        inRange &= inScatterRange(stats.getAttack(), scatter, pStats.getAttack());
+        inRange &= inScatterRange(stats.getDefense(), scatter, pStats.getDefense());
+        inRange &= inScatterRange(stats.getSpAttack(), scatter, pStats.getSpAttack());
+        inRange &= inScatterRange(stats.getSpDefense(), scatter, pStats.getSpDefense());
+        inRange &= inScatterRange(stats.getSpeed(), scatter, pStats.getSpeed());
 
         return prev.filter(pokemon) && inRange;
     }

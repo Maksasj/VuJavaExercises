@@ -10,6 +10,7 @@ import com.radioboos.poke_pedia.pokemon.PokemonStatus;
 import com.radioboos.poke_pedia.pokemon.PokemonType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -76,6 +77,12 @@ public class MainController implements Initializable {
     @FXML protected Slider minSpAttackSlider;
     @FXML protected Slider minSpDefenseSlider;
     @FXML protected Slider minSpeedSlider;
+    @FXML protected Text minHpText;
+    @FXML protected Text minAttackText;
+    @FXML protected Text minDefenseText;
+    @FXML protected Text minSpAttackText;
+    @FXML protected Text minSpDefenseText;
+    @FXML protected Text minSpeedText;
     @FXML protected Spinner<Integer> statScatterSpinner;
     @FXML protected Text totalPointsText;
     @FXML protected Button pointsResetButton;
@@ -85,38 +92,132 @@ public class MainController implements Initializable {
     @FXML private Button resetToDefaultsButton;
     @FXML private Text pokemonPassFiltersText;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        /*
-        pokemonListView.setCellFactory(param -> new ListCell<Pokemon>() {
-            private final ImageView imageView = new ImageView();
+    private void setIntegerValueFactory(Spinner<Integer> spinner, int min, int max) {
+        var valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max);
+        valueFactory.setValue(min);
+        spinner.setValueFactory(valueFactory);
 
-            @Override
-            public void updateItem(Pokemon pokemon, boolean empty) {
-                super.updateItem(pokemon, empty);
-
-                if (empty) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    var image = pokemon.getImage();
-
-                    setText(pokemon.getName());
-
-                    if(image != null) {
-                        imageView.setImage(image);
-                        setGraphic(imageView);
-                    } else {
-                        setGraphic(null);
-                    }
-                }
-            }
+        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+            spinner.getValueFactory().setValue(newValue);
+            updateOnAnyAction();
         });
-
-        */
     }
 
-    private void onAnyAction() {
+    private void setDoubleValueFactory(Spinner<Double> spinner, double min, double max) {
+        var valueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(min, max);
+        valueFactory.setValue(min);
+        spinner.setValueFactory(valueFactory);
+
+        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+            spinner.getValueFactory().setValue(newValue);
+            updateOnAnyAction();
+        });
+    }
+
+    private void onStatChangeAddToSlider(Slider slider) {
+        slider.valueChangingProperty().addListener((source, oldValue, newValue) -> onStatsSliderChange());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setIntegerValueFactory(generationSpinner, 1, 8);
+        setIntegerValueFactory(abilityCountSpinner, 1, 3);
+        setIntegerValueFactory(statScatterSpinner, 0, 255);
+
+        setDoubleValueFactory(minTotalStatPointsSpinner, 0.0, 1530.0);
+        setDoubleValueFactory(maxTotalStatPointsSpinner, 0.0, 1530.0);
+
+        setDoubleValueFactory(minWeightSpinner, 0.0, Double.MAX_VALUE);
+        setDoubleValueFactory(minHeightSpinner, 0.0, Double.MAX_VALUE);
+
+        nameFilterTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            nameFilterTextField.setText(newValue);
+            updateOnAnyAction();
+        });
+
+        statusChoiceBox.getItems().addAll(PokemonStatus.NORMAL, PokemonStatus.SUB_LEGENDARY, PokemonStatus.LEGENDARY, PokemonStatus.MYTHICAL);
+        statusChoiceBox.getSelectionModel().select(0);
+        statusChoiceBox.getSelectionModel().selectedIndexProperty().addListener((observableValue, oldValue, newValue) -> {
+            statusChoiceBox.getSelectionModel().select(newValue.intValue());
+            updateOnAnyAction();
+        });
+
+        nameLocalizationChoiceBox.getItems().addAll(NameLocalization.ENGLISH, NameLocalization.GERMAN, NameLocalization.JAPANESE);
+        nameLocalizationChoiceBox.getSelectionModel().select(0);
+
+        typeChoiceBox.getItems().addAll(
+            PokemonType.WATER, PokemonType.FIGHTING, PokemonType.ROCK, PokemonType.GROUND,
+            PokemonType.ELECTRIC, PokemonType.ICE, PokemonType.GRASS, PokemonType.NORMAL, PokemonType.STEEL,
+            PokemonType.DRAGON, PokemonType.FLYING, PokemonType.PSYCHIC, PokemonType.BUG, PokemonType.DARK,
+            PokemonType.GHOST, PokemonType.FIRE, PokemonType.POISON, PokemonType.FAIRY
+        );
+        typeChoiceBox.getSelectionModel().select(0);
+
+        onStatChangeAddToSlider(minHpSlider);
+        onStatChangeAddToSlider(minAttackSlider);
+        onStatChangeAddToSlider(minDefenseSlider);
+        onStatChangeAddToSlider(minSpAttackSlider);
+        onStatChangeAddToSlider(minSpDefenseSlider);
+        onStatChangeAddToSlider(minSpeedSlider);
+
+        updateOnAnyAction();
+    }
+
+    @FXML
+    protected void onClearName() {
+        nameFilterTextField.setText("");
+        updateOnAnyAction();
+    }
+
+    @FXML
+    protected void onClearType() {
+        typeListView.getItems().clear();
+        updateOnAnyAction();
+    }
+
+    @FXML
+    protected void onClearSpecies() {
+        speciesListView.getItems().clear();
+        updateOnAnyAction();
+    }
+
+    @FXML
+    protected void onAddType() {
+        var selectedType = typeChoiceBox.getSelectionModel().getSelectedItem();
+        typeListView.getItems().add(selectedType);
+
+        updateOnAnyAction();
+    }
+
+    @FXML
+    protected void onAddSpecies() {
+        var species = speciesTextField.getText();
+        speciesListView.getItems().add(species);
+
+        updateOnAnyAction();
+    }
+
+
+    @FXML
+    protected void onClearStats() {
+        minHpSlider.setValue(0.0);
+        minAttackSlider.setValue(0.0);
+        minDefenseSlider.setValue(0.0);
+        minSpAttackSlider.setValue(0.0);
+        minSpDefenseSlider.setValue(0.0);
+        minSpeedSlider.setValue(0.0);
+
+        // This thing calls updateOnAnyAction()
+        onStatsSliderChange();
+    }
+
+    @FXML
+    protected void onClearScatter() {
+        statScatterSpinner.getValueFactory().setValue(0);
+        updateOnAnyAction();
+    }
+
+    private void updateOnAnyAction() {
         var filter = assembleFilter();
 
         updatePokemonPassFilterText(filter);
@@ -176,13 +277,13 @@ public class MainController implements Initializable {
         }
 
         if(typeFilterCheckBox.isSelected()) {
-            var types = typeListView.getSelectionModel().getSelectedItems();
+            var types = typeListView.getItems();
 
             filter = new TypeFilter(filter, types);
         }
 
         if(speciesFilterCheckBox.isSelected()) {
-            var species = speciesListView.getSelectionModel().getSelectedItems();
+            var species = speciesListView.getItems();
 
             filter = new SpeciesFilter(filter, species);
         }
@@ -205,6 +306,28 @@ public class MainController implements Initializable {
         return filter;
     }
 
+    private void onStatsSliderChange() {
+        int hp = (int) (minHpSlider.getValue() * 255.0f);
+        int attack = (int) (minAttackSlider.getValue() * 255.0f);
+        int defense = (int) (minDefenseSlider.getValue() * 255.0f);
+        int spAttack = (int) (minSpAttackSlider.getValue() * 255.0f);
+        int spDefense = (int) (minSpDefenseSlider.getValue() * 255.0f);
+        int speed = (int) (minSpeedSlider.getValue() * 255.0f);
+
+        minHpText.setText(String.valueOf(hp));
+        minAttackText.setText(String.valueOf(attack));
+        minDefenseText.setText(String.valueOf(defense));
+        minSpAttackText.setText(String.valueOf(spAttack));
+        minSpDefenseText.setText(String.valueOf(spDefense));
+        minSpeedText.setText(String.valueOf(speed));
+
+        int total = hp + attack+ defense + spAttack + spDefense + speed;
+
+        totalPointsText.setText("Total points: " + total);
+
+        updateOnAnyAction();
+    }
+
     @FXML
     protected void onEnableNameFilter() {
         boolean value = !nameFilterCheckBox.isSelected();
@@ -212,7 +335,7 @@ public class MainController implements Initializable {
         nameFilterTextField.setDisable(value);
         nameFilterClearButton.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -221,7 +344,7 @@ public class MainController implements Initializable {
 
         generationSpinner.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -230,7 +353,7 @@ public class MainController implements Initializable {
 
         statusChoiceBox.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -240,7 +363,7 @@ public class MainController implements Initializable {
         minTotalStatPointsSpinner.setDisable(value);
         maxTotalStatPointsSpinner.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -250,7 +373,7 @@ public class MainController implements Initializable {
         minWeightSpinner.setDisable(value);
         minHeightSpinner.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -259,7 +382,7 @@ public class MainController implements Initializable {
 
         abilityCountSpinner.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -271,7 +394,7 @@ public class MainController implements Initializable {
         addTypeButton.setDisable(value);
         clearTypeButton.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -283,7 +406,7 @@ public class MainController implements Initializable {
         speciesTextField.setDisable(value);
         clearSpeciesButton.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -301,7 +424,7 @@ public class MainController implements Initializable {
         pointsResetButton.setDisable(value);
         scatterResetButton.setDisable(value);
 
-        onAnyAction();
+        updateOnAnyAction();
     }
 
     @FXML
@@ -311,11 +434,11 @@ public class MainController implements Initializable {
 
         Stage stage = new Stage();
 
-        // OutputController outputController = fxmlLoader.getController();
+        ResultController resultController = fxmlLoader.getController();
 
         //1. UserData
-        //stage.setUserData(gameName.getText());
-        //outputController.initialize(stage);
+        stage.setUserData(assembleFilter());
+        resultController.initialize(stage);
 
         //2. Controller -> Controller
         //outputController.initialize(gameName.getText());

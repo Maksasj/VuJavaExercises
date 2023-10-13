@@ -19,7 +19,6 @@ public class TypeFilter extends PokemonFilter {
         boolean found = false;
         var pTypes = pokemon.getType();
 
-
         for (PokemonType pType : pTypes) {
             if (types.contains(pType)) {
                 found = true;
@@ -27,6 +26,6 @@ public class TypeFilter extends PokemonFilter {
             }
         }
 
-        return prev.filter(pokemon) && found;
+        return prev.filter(pokemon) && (found || types.isEmpty());
     }
 }

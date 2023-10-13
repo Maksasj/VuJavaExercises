@@ -81,20 +81,9 @@ public class ResultController implements Initializable {
     @FXML
     protected ListView<Pokemon> foundPokemonListView;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private void defaultInitialize(PokemonFilter filter) {
         foundPokemonListView.setCellFactory(param -> new PokemonListCell());
-
-        foundPokemonListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pokemon>() {
-            @Override
-            public void changed(ObservableValue<? extends Pokemon> observable, Pokemon oldValue, Pokemon newValue) {
-                updateSelectedPokemonInfo(newValue);
-            }
-        });
-
-        var filter = new PokemonFilter();
-        filter = new GenerationFilter(filter, 4);
-        filter = new StatusFilter(filter, PokemonStatus.LEGENDARY);
+        foundPokemonListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateSelectedPokemonInfo(newValue));
 
         var listedPokemons = fillListView(filter);
         if(listedPokemons.size() > 1) {
@@ -102,6 +91,19 @@ public class ResultController implements Initializable {
         } else {
             unableToFindPokemon();
         }
+    }
+
+    public void initialize(Stage stage) {
+        defaultInitialize((PokemonFilter) stage.getUserData());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        var filter = new PokemonFilter();
+        filter = new GenerationFilter(filter, 4);
+        filter = new StatusFilter(filter, PokemonStatus.LEGENDARY);
+
+        defaultInitialize(filter);
     }
 
     public List<Pokemon> fillListView(BaseFilter<Pokemon> filter) {
