@@ -3,10 +3,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -37,34 +40,76 @@
                      <children>
                         <Button fx:id="findDesiredPokemonButton" layoutX="4.0" layoutY="493.0" mnemonicParsing="false" onAction="#onFindDesiredPokemon" text="Find desired pokemon" />
                         <Button layoutX="143.0" layoutY="493.0" mnemonicParsing="false" text="Reset to defaults" />
-                        <SplitPane dividerPositions="0.19918032786885245" orientation="VERTICAL" prefHeight="489.0" prefWidth="800.0">
+                        <SplitPane dividerPositions="0.1807377049180328" orientation="VERTICAL" prefHeight="489.0" prefWidth="800.0">
                           <items>
-                            <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="0.0" minWidth="0.0" prefHeight="94.0" prefWidth="799.0">
+                            <AnchorPane prefHeight="111.0" prefWidth="799.0">
                                  <children>
-                                    <Text layoutX="13.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="General information" />
-                                    <ChoiceBox layoutX="13.0" layoutY="22.0" prefHeight="25.0" prefWidth="128.0" />
-                                    <Text layoutX="147.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generation" />
-                                    <ChoiceBox layoutX="13.0" layoutY="56.0" prefHeight="25.0" prefWidth="128.0" />
-                                    <Text layoutX="147.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type" />
-                                    <ChoiceBox layoutX="226.0" layoutY="21.0" prefHeight="26.0" prefWidth="127.0" />
-                                    <Text layoutX="360.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Species" />
-                                    <ChoiceBox layoutX="226.0" layoutY="55.0" prefHeight="26.0" prefWidth="127.0" />
-                                    <Text layoutX="360.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+                                    <Text layoutX="13.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="General information">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Text>
+                                    <ChoiceBox layoutX="152.0" layoutY="44.0" prefHeight="26.0" prefWidth="127.0" />
+                                    <CheckBox layoutX="289.0" layoutY="21.0" mnemonicParsing="false" text="Status" />
+                                    <TextField layoutX="12.0" layoutY="44.0" prefHeight="26.0" prefWidth="77.0" promptText="Bulbasaur" />
+                                    <CheckBox layoutX="12.0" layoutY="23.0" mnemonicParsing="false" text="Name filter" />
+                                    <Button layoutX="94.0" layoutY="44.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="Clear" />
+                                    <CheckBox layoutX="151.0" layoutY="23.0" mnemonicParsing="false" text="Generation" />
+                                    <ChoiceBox layoutX="289.0" layoutY="42.0" prefHeight="25.0" prefWidth="128.0" />
                                  </children>
                               </AnchorPane>
-                            <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="0.0" minWidth="0.0">
+                            <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="799.0">
                                  <children>
-                                    <Text layoutX="14.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra information" />
+                                    <Text layoutX="14.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Extra information">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Text>
                                     <Spinner layoutX="13.0" layoutY="57.0" prefHeight="25.0" prefWidth="104.0" />
-                                    <Text layoutX="123.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" wrappingWidth="25.423828125" />
-                                    <CheckBox layoutX="13.0" layoutY="33.0" mnemonicParsing="false" text="Stat point range filter" />
+                                    <Text layoutX="122.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max points" wrappingWidth="51.8238525390625" />
+                                    <CheckBox layoutX="13.0" layoutY="33.0" mnemonicParsing="false" text="Total stat point filter" />
                                     <Spinner layoutX="13.0" layoutY="91.0" prefHeight="25.0" prefWidth="104.0" />
-                                    <Text layoutX="123.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" wrappingWidth="25.423828125" />
+                                    <Text layoutX="123.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min points" wrappingWidth="39.68713378906244" />
                                     <CheckBox layoutX="10.0" layoutY="132.0" mnemonicParsing="false" text="Pokemon metrics" />
                                     <Spinner layoutX="10.0" layoutY="158.0" prefHeight="25.0" prefWidth="104.0" />
                                     <Spinner layoutX="10.0" layoutY="190.0" prefHeight="25.0" prefWidth="104.0" />
                                     <Text layoutX="122.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min weight" />
                                     <Text layoutX="122.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min height" />
+                                    <ChoiceBox layoutX="207.0" layoutY="186.0" prefHeight="26.0" prefWidth="94.0" />
+                                    <CheckBox layoutX="207.0" layoutY="29.0" mnemonicParsing="false" text="Type filter" />
+                                    <ListView layoutX="206.0" layoutY="52.0" prefHeight="126.0" prefWidth="207.0" />
+                                    <Button layoutX="304.0" layoutY="186.0" mnemonicParsing="false" text="Add type" />
+                                    <Button layoutX="371.0" layoutY="186.0" mnemonicParsing="false" text="Clear" />
+                                    <CheckBox layoutX="10.0" layoutY="223.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Ability count" />
+                                    <Spinner layoutX="10.0" layoutY="246.0" prefHeight="25.0" prefWidth="104.0" />
+                                    <Text fill="#8c8c8c" layoutX="505.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Only 27 Pokemons pass these filters" textAlignment="RIGHT" wrappingWidth="287.693359375" AnchorPane.rightAnchor="6.5066406250000455">
+                                       <font>
+                                          <Font name="System Italic" size="14.0" />
+                                       </font>
+                                    </Text>
+                                    <CheckBox layoutX="422.0" layoutY="29.0" mnemonicParsing="false" text="Stats filter" />
+                                    <Slider layoutX="516.0" layoutY="74.0" prefWidth="174.0" />
+                                    <Text layoutX="422.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Hp" />
+                                    <Text layoutX="422.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Attack" />
+                                    <Text layoutX="422.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Defense" />
+                                    <Text layoutX="422.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Attack" />
+                                    <Text layoutX="422.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Defense" wrappingWidth="96.3570556640625" />
+                                    <Text layoutX="422.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Speed" />
+                                    <Slider layoutX="516.0" layoutY="50.0" prefWidth="174.0" />
+                                    <Slider layoutX="516.0" layoutY="98.0" prefWidth="174.0" />
+                                    <Slider layoutX="516.0" layoutY="122.0" prefWidth="174.0" />
+                                    <Slider layoutX="516.0" layoutY="146.0" prefWidth="174.0" />
+                                    <Slider layoutX="516.0" layoutY="170.0" prefWidth="174.0" />
+                                    <Text layoutX="691.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="78" />
+                                    <Text layoutX="691.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" />
+                                    <Text layoutX="691.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" />
+                                    <Text layoutX="691.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" />
+                                    <Text layoutX="691.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" />
+                                    <Text layoutX="691.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="45" />
+                                    <Button layoutX="657.0" layoutY="190.0" mnemonicParsing="false" text="Reset" />
+                                    <Text fill="#797979" layoutX="505.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total points: 318" textAlignment="RIGHT" wrappingWidth="146.31994700431824" AnchorPane.rightAnchor="147.8800529956818">
+                                       <font>
+                                          <Font name="System Italic" size="12.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </AnchorPane>
                           </items>

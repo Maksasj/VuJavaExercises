@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ResultController implements Initializable {
@@ -95,10 +96,15 @@ public class ResultController implements Initializable {
         filter = new GenerationFilter(filter, 4);
         filter = new StatusFilter(filter, PokemonStatus.LEGENDARY);
 
-        fillListView(filter);
+        var listedPokemons = fillListView(filter);
+        if(listedPokemons.size() > 1) {
+            updateSelectedPokemonInfo(listedPokemons.get(0));
+        } else {
+            unableToFindPokemon();
+        }
     }
 
-    public void fillListView(BaseFilter<Pokemon> filter) {
+    public List<Pokemon> fillListView(BaseFilter<Pokemon> filter) {
         var pokemons = new ArrayList<Pokemon>();
 
         for(var pokemon : Pokedex.getInstance().getPokemons()) {
@@ -109,6 +115,12 @@ public class ResultController implements Initializable {
 
         var items = FXCollections.observableArrayList(pokemons);
         foundPokemonListView.setItems(items);
+
+        return pokemons;
+    }
+
+    public void unableToFindPokemon() {
+        System.out.println("Unable to find pokemon");
     }
 
     private void updateSelectedPokemonInfo(Pokemon pokemon) {
@@ -118,13 +130,14 @@ public class ResultController implements Initializable {
         pokemonStatusText.setText("Status: " + pokemon.getStatus().toString());
         pokemonGenerationText.setText("Generation: " + String.valueOf(pokemon.getGeneration()));
 
-        String typeString = new String("Type: ");
+        var typeString = new StringBuilder("Type: ");
         var pokemonType = pokemon.getType();
-        for(var i = 0; i < pokemonType.length; ++i) {
-            typeString += pokemonType[i].toString() + " ";
+
+        for (com.radioboos.poke_pedia.pokemon.PokemonType type : pokemonType) {
+            typeString.append(type.toString()).append(" ");
         }
 
-        pokemonTypeText.setText(typeString);
+        pokemonTypeText.setText(typeString.toString());
         pokemonSpeciesText.setText("Species: Seed Pokemon");
 
         // Localization
