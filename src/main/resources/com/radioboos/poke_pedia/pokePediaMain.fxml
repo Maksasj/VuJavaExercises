@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
@@ -39,8 +40,8 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="487.0" prefWidth="763.0">
                      <children>
                         <Button fx:id="findDesiredPokemonButton" layoutX="4.0" layoutY="493.0" mnemonicParsing="false" onAction="#onFindDesiredPokemon" text="Find desired pokemon" />
-                        <Button layoutX="143.0" layoutY="493.0" mnemonicParsing="false" text="Reset to defaults" />
-                        <SplitPane dividerPositions="0.1807377049180328" orientation="VERTICAL" prefHeight="489.0" prefWidth="800.0">
+                        <Button fx:id="resetToDefaultsButton" layoutX="143.0" layoutY="493.0" mnemonicParsing="false" text="Reset to defaults" />
+                        <SplitPane dividerPositions="0.16639344262295083" orientation="VERTICAL" prefHeight="489.0" prefWidth="800.0">
                           <items>
                             <AnchorPane prefHeight="111.0" prefWidth="799.0">
                                  <children>
@@ -48,13 +49,15 @@
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Text>
-                                    <ChoiceBox layoutX="152.0" layoutY="44.0" prefHeight="26.0" prefWidth="127.0" />
-                                    <CheckBox layoutX="289.0" layoutY="21.0" mnemonicParsing="false" text="Status" />
-                                    <TextField layoutX="12.0" layoutY="44.0" prefHeight="26.0" prefWidth="77.0" promptText="Bulbasaur" />
-                                    <CheckBox layoutX="12.0" layoutY="23.0" mnemonicParsing="false" text="Name filter" />
-                                    <Button layoutX="94.0" layoutY="44.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="Clear" />
-                                    <CheckBox layoutX="151.0" layoutY="23.0" mnemonicParsing="false" text="Generation" />
-                                    <ChoiceBox layoutX="289.0" layoutY="42.0" prefHeight="25.0" prefWidth="128.0" />
+                                    <CheckBox fx:id="statusCheckBox" layoutX="289.0" layoutY="23.0" mnemonicParsing="false" onAction="#onEnableStatusFilter" text="Status" />
+                                    <TextField fx:id="nameFilterTextField" disable="true" layoutX="12.0" layoutY="44.0" prefHeight="26.0" prefWidth="77.0" promptText="Bulbasaur" />
+                                    <CheckBox fx:id="nameFilterCheckBox" layoutX="12.0" layoutY="23.0" mnemonicParsing="false" onAction="#onEnableNameFilter" text="Name filter" />
+                                    <Button fx:id="nameFilterClearButton" disable="true" layoutX="94.0" layoutY="44.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="Clear" />
+                                    <CheckBox fx:id="generationCheckBox" layoutX="151.0" layoutY="23.0" mnemonicParsing="false" onAction="#onEnableGenerationFilter" text="Generation" />
+                                    <ChoiceBox fx:id="statusChoiceBox" disable="true" layoutX="289.0" layoutY="44.0" prefHeight="26.0" prefWidth="128.0" />
+                                    <ChoiceBox fx:id="nameLocalizationChoiceBox" layoutX="659.0" layoutY="44.0" prefHeight="26.0" prefWidth="128.0" />
+                                    <Text fill="#717171" layoutX="610.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Default name localization" textAlignment="RIGHT" wrappingWidth="174.92114114761353" AnchorPane.rightAnchor="14.27885885238652" />
+                                    <Spinner fx:id="generationSpinner" disable="true" editable="true" layoutX="152.0" layoutY="44.0" prefHeight="26.0" prefWidth="127.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="799.0">
@@ -63,57 +66,68 @@
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font></Text>
-                                    <Spinner layoutX="13.0" layoutY="57.0" prefHeight="25.0" prefWidth="104.0" />
-                                    <Text layoutX="122.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max points" wrappingWidth="51.8238525390625" />
-                                    <CheckBox layoutX="13.0" layoutY="33.0" mnemonicParsing="false" text="Total stat point filter" />
-                                    <Spinner layoutX="13.0" layoutY="91.0" prefHeight="25.0" prefWidth="104.0" />
-                                    <Text layoutX="123.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min points" wrappingWidth="39.68713378906244" />
-                                    <CheckBox layoutX="10.0" layoutY="132.0" mnemonicParsing="false" text="Pokemon metrics" />
-                                    <Spinner layoutX="10.0" layoutY="158.0" prefHeight="25.0" prefWidth="104.0" />
-                                    <Spinner layoutX="10.0" layoutY="190.0" prefHeight="25.0" prefWidth="104.0" />
-                                    <Text layoutX="122.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min weight" />
-                                    <Text layoutX="122.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min height" />
-                                    <ChoiceBox layoutX="207.0" layoutY="186.0" prefHeight="26.0" prefWidth="94.0" />
-                                    <CheckBox layoutX="207.0" layoutY="29.0" mnemonicParsing="false" text="Type filter" />
-                                    <ListView layoutX="206.0" layoutY="52.0" prefHeight="126.0" prefWidth="207.0" />
-                                    <Button layoutX="304.0" layoutY="186.0" mnemonicParsing="false" text="Add type" />
-                                    <Button layoutX="371.0" layoutY="186.0" mnemonicParsing="false" text="Clear" />
-                                    <CheckBox layoutX="10.0" layoutY="223.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="108.0" text="Ability count" />
-                                    <Spinner layoutX="10.0" layoutY="246.0" prefHeight="25.0" prefWidth="104.0" />
-                                    <Text fill="#8c8c8c" layoutX="505.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Only 27 Pokemons pass these filters" textAlignment="RIGHT" wrappingWidth="287.693359375" AnchorPane.rightAnchor="6.5066406250000455">
-                                       <font>
-                                          <Font name="System Italic" size="14.0" />
-                                       </font>
-                                    </Text>
-                                    <CheckBox layoutX="422.0" layoutY="29.0" mnemonicParsing="false" text="Stats filter" />
-                                    <Slider layoutX="516.0" layoutY="74.0" prefWidth="174.0" />
-                                    <Text layoutX="422.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Hp" />
-                                    <Text layoutX="422.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Attack" />
-                                    <Text layoutX="422.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Defense" />
-                                    <Text layoutX="422.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Attack" />
-                                    <Text layoutX="422.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Defense" wrappingWidth="96.3570556640625" />
-                                    <Text layoutX="422.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Speed" />
-                                    <Slider layoutX="516.0" layoutY="50.0" prefWidth="174.0" />
-                                    <Slider layoutX="516.0" layoutY="98.0" prefWidth="174.0" />
-                                    <Slider layoutX="516.0" layoutY="122.0" prefWidth="174.0" />
-                                    <Slider layoutX="516.0" layoutY="146.0" prefWidth="174.0" />
-                                    <Slider layoutX="516.0" layoutY="170.0" prefWidth="174.0" />
-                                    <Text layoutX="691.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="78" />
-                                    <Text layoutX="691.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" />
-                                    <Text layoutX="691.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" />
-                                    <Text layoutX="691.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" />
-                                    <Text layoutX="691.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" />
-                                    <Text layoutX="691.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="45" />
-                                    <Button layoutX="657.0" layoutY="190.0" mnemonicParsing="false" text="Reset" />
-                                    <Text fill="#797979" layoutX="505.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total points: 318" textAlignment="RIGHT" wrappingWidth="146.31994700431824" AnchorPane.rightAnchor="147.8800529956818">
+                                    <Spinner fx:id="minTotalStatPointsSpinner" disable="true" editable="true" layoutX="13.0" layoutY="57.0" prefHeight="25.0" prefWidth="104.0" />
+                                    <Text disable="true" layoutX="122.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max points" wrappingWidth="71.02386474609375" />
+                                    <CheckBox fx:id="totalStatPointFilterCheckBox" layoutX="13.0" layoutY="33.0" mnemonicParsing="false" onAction="#onEnableTotalPointsFilter" text="Total stat point filter" />
+                                    <Spinner fx:id="maxTotalStatPointsSpinner" disable="true" editable="true" layoutX="13.0" layoutY="91.0" prefHeight="25.0" prefWidth="104.0" />
+                                    <Text disable="true" layoutX="122.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min points" wrappingWidth="67.68713378906244" />
+                                    <CheckBox fx:id="pokemonMetricsFilterCheckBox" layoutX="10.0" layoutY="132.0" mnemonicParsing="false" onAction="#onEnablePokemonMetricsFilter" text="Pokemon metrics" />
+                                    <Spinner fx:id="minWeightSpinner" disable="true" editable="true" layoutX="10.0" layoutY="158.0" prefHeight="25.0" prefWidth="104.0" />
+                                    <Spinner fx:id="minHeightSpinner" disable="true" editable="true" layoutX="10.0" layoutY="190.0" prefHeight="25.0" prefWidth="104.0" />
+                                    <Text disable="true" layoutX="122.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min weight" />
+                                    <Text disable="true" layoutX="122.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min height" />
+                                    <ChoiceBox fx:id="typeChoiceBox" disable="true" layoutX="207.0" layoutY="190.0" prefHeight="26.0" prefWidth="123.0" />
+                                    <CheckBox fx:id="typeFilterCheckBox" layoutX="206.0" layoutY="30.0" mnemonicParsing="false" onAction="#onEnableTypeFilter" text="Type filter" />
+                                    <ListView fx:id="typeListView" disable="true" layoutX="206.0" layoutY="56.0" prefHeight="126.0" prefWidth="241.0" />
+                                    <Button fx:id="addTypeButton" disable="true" layoutX="337.0" layoutY="190.0" mnemonicParsing="false" text="Add type" />
+                                    <Button fx:id="clearTypeButton" disable="true" layoutX="404.0" layoutY="190.0" mnemonicParsing="false" text="Clear" />
+                                    <CheckBox fx:id="abilityCountFilterCheckBox" layoutX="10.0" layoutY="223.0" mnemonicParsing="false" onAction="#onEnableAbilityCountFilter" prefHeight="18.0" prefWidth="108.0" text="Ability count" />
+                                    <Spinner fx:id="abilityCountSpinner" disable="true" editable="true" layoutX="10.0" layoutY="246.0" prefHeight="25.0" prefWidth="104.0" />
+                                    <CheckBox fx:id="statsFilterCheckBox" layoutX="459.0" layoutY="33.0" mnemonicParsing="false" onAction="#onEnableStatsFilter" text="Stats filter" />
+                                    <Slider fx:id="minAttackSlider" disable="true" layoutX="553.0" layoutY="82.0" prefWidth="222.0" />
+                                    <Text layoutX="459.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Hp" />
+                                    <Text layoutX="459.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Attack" />
+                                    <Text layoutX="459.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Defense" />
+                                    <Text layoutX="459.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Attack" />
+                                    <Text layoutX="459.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Sp. Defense" wrappingWidth="96.3570556640625" />
+                                    <Text layoutX="459.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Min Speed" />
+                                    <Slider fx:id="minHpSlider" disable="true" layoutX="553.0" layoutY="58.0" prefHeight="14.0" prefWidth="222.0" />
+                                    <Slider fx:id="minDefenseSlider" disable="true" layoutX="553.0" layoutY="106.0" prefWidth="222.0" />
+                                    <Slider fx:id="minSpAttackSlider" disable="true" layoutX="553.0" layoutY="130.0" prefWidth="222.0" />
+                                    <Slider fx:id="minSpDefenseSlider" disable="true" layoutX="553.0" layoutY="154.0" prefWidth="222.0" />
+                                    <Slider fx:id="minSpeedSlider" disable="true" layoutX="553.0" layoutY="178.0" prefWidth="222.0" />
+                                    <Text layoutX="775.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="78" AnchorPane.leftAnchor="775.0" />
+                                    <Text layoutX="775.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" AnchorPane.leftAnchor="775.0" />
+                                    <Text layoutX="775.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" AnchorPane.leftAnchor="775.0" />
+                                    <Text layoutX="775.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" AnchorPane.leftAnchor="775.0" />
+                                    <Text layoutX="775.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" AnchorPane.leftAnchor="775.0" />
+                                    <Text layoutX="775.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="45" AnchorPane.leftAnchor="775.0" />
+                                    <Button fx:id="pointsResetButton" disable="true" layoutX="742.0" layoutY="198.0" mnemonicParsing="false" text="Reset" />
+                                    <Text fx:id="totalPointsText" fill="#797979" layoutX="590.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total points: 318" textAlignment="RIGHT" wrappingWidth="146.31994700431824" AnchorPane.rightAnchor="62.88005299568181">
                                        <font>
                                           <Font name="System Italic" size="12.0" />
                                        </font>
                                     </Text>
+                                    <Separator layoutY="25.0" prefWidth="800.0" />
+                                    <Separator layoutX="199.0" layoutY="25.0" orientation="VERTICAL" prefHeight="600.0" />
+                                    <Separator layoutX="453.0" layoutY="25.0" orientation="VERTICAL" prefHeight="600.0" />
+                                    <Spinner fx:id="statScatterSpinner" disable="true" editable="true" layoutX="461.0" layoutY="230.0" prefHeight="26.0" prefWidth="101.0" />
+                                    <Text layoutX="460.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stat value scatter" />
+                                    <Button fx:id="scatterResetButton" disable="true" layoutX="567.0" layoutY="230.0" mnemonicParsing="false" text="Reset" />
+                                    <CheckBox fx:id="speciesFilterCheckBox" layoutX="206.0" layoutY="223.0" mnemonicParsing="false" onAction="#onEnableSpeciesFilter" text="Species filter" />
+                                    <ListView fx:id="speciesListView" disable="true" layoutX="206.0" layoutY="246.0" prefHeight="106.0" prefWidth="240.0" />
+                                    <Button fx:id="clearSpeciesButton" disable="true" layoutX="404.0" layoutY="360.0" mnemonicParsing="false" text="Clear" />
+                                    <Button fx:id="addSpeciesButton" disable="true" layoutX="320.0" layoutY="360.0" mnemonicParsing="false" text="Add species" />
+                                    <TextField fx:id="speciesTextField" disable="true" layoutX="205.0" layoutY="359.0" prefHeight="26.0" prefWidth="108.0" promptText="Seed Pokemon" />
                                  </children>
                               </AnchorPane>
                           </items>
                         </SplitPane>
+                        <Text fx:id="pokemonPassFiltersText" fill="#8c8c8c" layoutX="505.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Only 27 Pokemons pass these filters" textAlignment="RIGHT" wrappingWidth="287.693359375" AnchorPane.rightAnchor="7.306640625">
+                           <font>
+                              <Font name="System Italic" size="14.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
                </content>

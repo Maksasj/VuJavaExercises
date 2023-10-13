@@ -3,15 +3,18 @@ package com.radioboos.poke_pedia.filter;
 import com.radioboos.poke_pedia.pokemon.Pokemon;
 import com.radioboos.poke_pedia.pokemon.PokemonType;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public class TypeFilter extends PokemonFilter {
-    private final Set<PokemonType> types;
+public class SpeciesFilter extends PokemonFilter {
+    private final Set<String> species;
 
-    public TypeFilter(PokemonFilter base, List<PokemonType> types) {
+    public SpeciesFilter(PokemonFilter base, List<String> species) {
         super(base);
 
-        this.types = new HashSet<>(types);
+        this.species = new HashSet<>(species);
     }
 
     @Override
@@ -21,7 +24,7 @@ public class TypeFilter extends PokemonFilter {
 
 
         for (PokemonType pType : pTypes) {
-            if (types.contains(pType)) {
+            if (species.contains(pType)) {
                 found = true;
                 break;
             }
