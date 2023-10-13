@@ -15,4 +15,14 @@ public class Utils {
             return defaultValue;
         }
     }
+
+    static public boolean inRange(float min, float max, float value) {
+        if(value < min)
+            return false;
+
+        if(value > max)
+            return false;
+
+        return true;
+    }
 }

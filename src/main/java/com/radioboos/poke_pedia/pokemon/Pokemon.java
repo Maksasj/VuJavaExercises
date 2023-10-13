@@ -29,7 +29,19 @@ public class Pokemon extends Iconable {
         this.resistance = resistance;
     }
 
-    public String getName() {
+    public float getHeight() {
+        return height;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public PokemonName getName() {
+        return name;
+    }
+
+    public String getLocName() {
         return name.toString();
     }
 

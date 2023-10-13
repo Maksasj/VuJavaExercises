@@ -53,7 +53,7 @@ public class PokemonListCell extends ListCell<Pokemon> {
                 pokemonIcon.setImage(icon);
             }
 
-            pokemonNameText.setText(pokemon.getName());
+            pokemonNameText.setText(pokemon.getLocName());
             pokemonGenerationText.setText("Generation " + pokemon.getGeneration());
             pokemonStatusText.setText("Status " + pokemon.getStatus().toString());
 

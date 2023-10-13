@@ -33,7 +33,7 @@
         <items>
           <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="0.0" minWidth="0.0">
                <children>
-                  <ImageView fitHeight="118.0" fitWidth="118.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="pokemonIconImageView" fitHeight="118.0" fitWidth="118.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/ivysaur.jpg" />
                      </image>
@@ -43,12 +43,12 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="145.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status: Legendary" />
-                  <Text layoutX="145.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generation: 1" wrappingWidth="71.00390625" />
-                  <Text layoutX="145.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:  Grass" />
-                  <Text layoutX="145.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height: 0.62m" />
-                  <Text layoutX="145.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight: 1.26kg" />
-                  <Text layoutX="145.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Species: Seed Pokemon" />
+                  <Text fx:id="pokemonStatusText" layoutX="145.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status: Legendary" />
+                  <Text fx:id="pokemonGenerationText" layoutX="145.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generation: 1" wrappingWidth="71.00390625" />
+                  <Text fx:id="pokemonTypeText" layoutX="145.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type:  Grass" />
+                  <Text fx:id="pokemonHeightText" layoutX="145.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Height: 0.62m" />
+                  <Text fx:id="pokemonWeightText" layoutX="145.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Weight: 1.26kg" />
+                  <Text fx:id="pokemonSpeciesText" layoutX="145.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Species: Seed Pokemon" />
                   <Text layoutX="145.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Metrics">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -64,17 +64,17 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <Text layoutX="14.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="English: Bulbasaur" />
-                  <Text layoutX="14.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="German: Bisasam" />
-                  <Text layoutX="14.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Japanese: フシギダネ (Fushigidane)" textAlignment="JUSTIFY" wrappingWidth="124.83984375" />
+                  <Text fx:id="pokemonNameEnglishText" layoutX="14.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="English: Bulbasaur" />
+                  <Text fx:id="pokemonNameGermanText" layoutX="14.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="German: Bisasam" />
+                  <Text fx:id="pokemonNameJapaneseText" layoutX="14.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Japanese: フシギダネ (Fushigidane)" textAlignment="JUSTIFY" wrappingWidth="124.83984375" />
                   <Text layoutX="239.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Growth">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <Text layoutX="239.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate: Medium Slow" />
-                  <Text layoutX="239.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Egg: Grass" />
-                  <Text layoutX="239.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Egg time: 20" />
+                  <Text fx:id="pokemonGrowthRateText" layoutX="239.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate: Medium Slow" />
+                  <Text fx:id="pokemonEggTypeText" layoutX="239.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Egg: Grass" />
+                  <Text fx:id="pokemonEggTimeText" layoutX="239.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Egg time: 20" />
                   <Text layoutX="14.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stats">
                      <font>
                         <Font name="System Bold" size="12.0" />
@@ -86,34 +86,34 @@
                   <Text layoutX="14.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sp. Attack" />
                   <Text layoutX="14.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sp. Defense" />
                   <Text layoutX="14.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Speed" />
-                  <Text layoutX="281.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total points: 318">
+                  <Text fx:id="pokemonTotalPointsText" layoutX="281.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total points: 318">
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
                   </Text>
                   <Separator layoutY="136.0" prefWidth="800.0" />
                   <Separator layoutY="225.0" prefWidth="800.0" />
-                  <ProgressBar layoutX="118.0" layoutY="244.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
-                  <Text layoutX="100.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="78" textAlignment="RIGHT" />
-                  <Text layoutX="100.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" textAlignment="RIGHT" />
-                  <Text layoutX="100.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" textAlignment="RIGHT" />
-                  <Text layoutX="100.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" />
-                  <Text layoutX="100.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" textAlignment="RIGHT" />
-                  <Text layoutX="100.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="45" textAlignment="RIGHT" />
-                  <ProgressBar layoutX="118.0" layoutY="263.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
-                  <ProgressBar layoutX="118.0" layoutY="281.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
-                  <ProgressBar layoutX="118.0" layoutY="299.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
-                  <ProgressBar layoutX="118.0" layoutY="316.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
-                  <ProgressBar layoutX="118.0" layoutY="335.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
+                  <ProgressBar fx:id="pokemonStatsHpProgressBar" layoutX="118.0" layoutY="244.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
+                  <Text fx:id="pokemonStatsHpText" layoutX="100.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="78" textAlignment="RIGHT" AnchorPane.rightAnchor="276.0625" />
+                  <Text fx:id="pokemonStatsAttackText" layoutX="100.0" layoutY="275.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" textAlignment="RIGHT" AnchorPane.rightAnchor="276.0625" />
+                  <Text fx:id="pokemonStatsDefenseText" layoutX="100.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="49" textAlignment="RIGHT" AnchorPane.rightAnchor="276.0625" />
+                  <Text fx:id="pokemonStatsSpAttackText" layoutX="100.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" AnchorPane.rightAnchor="276.0625" />
+                  <Text fx:id="pokemonStatsSpDefenseText" layoutX="100.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" textAlignment="RIGHT" AnchorPane.rightAnchor="276.0625" />
+                  <Text fx:id="pokemonStatsSpeedText" layoutX="100.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="45" textAlignment="RIGHT" />
+                  <ProgressBar fx:id="pokemonStatsAttackProgressBar" layoutX="118.0" layoutY="263.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
+                  <ProgressBar fx:id="pokemonStatsDefenseProgressBar" layoutX="118.0" layoutY="281.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
+                  <ProgressBar fx:id="pokemonStatsSpAttackProgressBar" layoutX="118.0" layoutY="299.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
+                  <ProgressBar fx:id="pokemonStatsSpDefenseProgressBar" layoutX="118.0" layoutY="316.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
+                  <ProgressBar fx:id="pokemonStatsSpeedProgressBar" layoutX="118.0" layoutY="335.0" prefHeight="16.0" prefWidth="258.0" progress="0.0" />
                   <Separator layoutY="372.0" prefWidth="800.0" />
                   <Text layoutX="14.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Battle">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <Text layoutX="14.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ability 1: Overgrow" />
-                  <Text layoutX="14.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ability 1: None" />
-                  <Text layoutX="14.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidden Ability: Chlorophyll" />
+                  <Text fx:id="pokemonAbility1Text" layoutX="14.0" layoutY="404.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ability 1: Overgrow" />
+                  <Text fx:id="pokemonAbility2Text" layoutX="14.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ability 2: None" />
+                  <Text fx:id="pokemonHidddenAbilityText" layoutX="14.0" layoutY="446.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hidden Ability: Chlorophyll" />
                </children>
             </AnchorPane>
           <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="0.0" minWidth="0.0" prefHeight="488.0" prefWidth="505.0">
