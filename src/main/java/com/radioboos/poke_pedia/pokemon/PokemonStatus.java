@@ -1,4 +1,4 @@
-package com.radioboos.poke_pedia;
+package com.radioboos.poke_pedia.pokemon;
 
 public enum PokemonStatus {
     LEGENDARY,
@@ -6,7 +6,7 @@ public enum PokemonStatus {
     MYTHICAL,
     SUB_LEGENDARY;
 
-    public PokemonStatus fromString(String input) {
+    static public PokemonStatus fromString(String input) {
         return switch (input) {
             case "Legendary" -> LEGENDARY;
             case "Mythical" -> MYTHICAL;

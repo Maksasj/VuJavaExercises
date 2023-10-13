@@ -7,4 +7,12 @@ public class Utils {
         var file = new File(path);
         return file.exists();
     }
+
+    static public float parseFloat(String string, float defaultValue) {
+        try {
+            return Float.parseFloat(string);
+        } catch (Exception e) {
+            return defaultValue;
+        }
+    }
 }

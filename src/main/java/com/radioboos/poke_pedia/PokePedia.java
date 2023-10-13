@@ -11,7 +11,7 @@ import java.io.IOException;
 public class PokePedia extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(PokePedia.class.getResource("poke_pedia_main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(PokePedia.class.getResource("pokePediaMain.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("PokePedia");

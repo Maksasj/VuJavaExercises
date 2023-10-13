@@ -1,4 +1,6 @@
-package com.radioboos.poke_pedia;
+package com.radioboos.poke_pedia.pokemon;
+
+import com.radioboos.poke_pedia.NameLocalization;
 
 public class PokemonName {
     private final String engName;

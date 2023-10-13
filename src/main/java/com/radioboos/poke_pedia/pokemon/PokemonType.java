@@ -1,4 +1,4 @@
-package com.radioboos.poke_pedia;
+package com.radioboos.poke_pedia.pokemon;
 
 public enum PokemonType {
     WATER,

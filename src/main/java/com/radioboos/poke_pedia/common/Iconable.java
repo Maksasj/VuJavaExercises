@@ -9,7 +9,7 @@ public class Iconable {
         if(Utils.fileExist(path)) {
             this.image  = new Image(path);
         } else {
-            this.image = null;
+            this.image = new Image("C:\\Programming\\java\\poke_pedia\\src\\main\\resources\\com\\radioboos\\poke_pedia\\icons\\unable_to_find_icon.png");
         }
     }
 

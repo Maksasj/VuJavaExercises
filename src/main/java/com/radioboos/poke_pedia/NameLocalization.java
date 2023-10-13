@@ -5,5 +5,5 @@ public enum NameLocalization {
     GERMAN,
     JAPANESE;
 
-    static final NameLocalization DEFAULT_NAME_LOCALIZATION = ENGLISH;
+    static public final NameLocalization DEFAULT_NAME_LOCALIZATION = ENGLISH;
 }
