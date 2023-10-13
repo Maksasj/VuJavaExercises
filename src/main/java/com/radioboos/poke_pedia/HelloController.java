@@ -40,7 +40,7 @@ public class HelloController implements Initializable {
                 } else {
                     var image = pokemon.getImage();
 
-                    setText(pokemon.getEngName());
+                    setText(pokemon.getName());
 
                     if(image != null) {
                         imageView.setImage(image);

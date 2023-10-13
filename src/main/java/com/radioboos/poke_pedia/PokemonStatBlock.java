@@ -1,6 +1,6 @@
 package com.radioboos.poke_pedia;
 
-public class BaseStatBlock {
+public class PokemonStatBlock {
     private final int hp;
     private final int attack;
     private final int defense;
@@ -11,7 +11,7 @@ public class BaseStatBlock {
     private final int baseFriendship;
     private final int baseExperience;
 
-    public BaseStatBlock(int hp, int attack, int defense, int spAttack, int spDefense, int speed, int catch_rate, int baseFriendship, int baseExperience) {
+    public PokemonStatBlock(int hp, int attack, int defense, int spAttack, int spDefense, int speed, int catch_rate, int baseFriendship, int baseExperience) {
         this.hp = hp;
         this.attack = attack;
         this.defense = defense;

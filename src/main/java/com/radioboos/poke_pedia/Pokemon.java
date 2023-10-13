@@ -1,46 +1,26 @@
 package com.radioboos.poke_pedia;
 
-import com.radioboos.poke_pedia.common.Utils;
-import javafx.scene.image.Image;
+import com.radioboos.poke_pedia.common.Iconable;
 
-import java.io.File;
+public class Pokemon extends Iconable {
+    private PokemonName name;
+    private int generation;
+    private PokemonStatus status;
+    private PokemonType[] type;
 
-public class Pokemon {
-    private Image image;
-    private final int id;
-    private final String engName;
-    private final String jpnName;
+    float height;
+    float weight;
+
+    private PokemonStatBlock stats;
+    private ResistanceStatBlock resistance;
 
     public Pokemon(int id, String engName, String jpnName) {
-        this.id = id;
-        this.engName = engName;
-        this.jpnName = jpnName;
-
-        String formatedPath =
-                "C:\\Programming\\java\\poke_pedia\\src\\main\\resources\\com\\radioboos\\poke_pedia\\icons\\"
+        super("C:\\Programming\\java\\poke_pedia\\src\\main\\resources\\com\\radioboos\\poke_pedia\\icons\\"
                 + engName.toLowerCase().replace(' ', '-')
-                + ".jpg";
-
-        System.out.print(engName);
-
-        if(Utils.fileExist(formatedPath)) {
-            this.image  = new Image(formatedPath);
-            System.out.print(" exist ! \n");
-        } else {
-            this.image = null;
-            System.out.print(" does not exist ! \n");
-        }
+                + ".jpg");
     }
 
-    public String getEngName() {
-        return engName;
-    }
-
-    public String getJpnName() {
-        return jpnName;
-    }
-
-    public Image getImage() {
-        return image;
+    public String getName() {
+        return name.toString();
     }
 }
