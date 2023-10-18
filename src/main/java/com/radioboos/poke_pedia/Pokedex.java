@@ -37,14 +37,7 @@ public class Pokedex {
         return INSTANCE;
     }
 
-    public void clearPokedex() {
-        pokemons.clear();
-    }
-
-    // private Set<String> status = new HashSet<String>();
-
     public Pokemon createPokemon(String[] data) {
-
         if(data.length != 51)
             return null;
 
@@ -53,11 +46,18 @@ public class Pokedex {
         PokemonStatus status = PokemonStatus.fromString(data[6]);
 
         PokemonType[] type = {
-          PokemonType.fromString(data[9])
+            PokemonType.fromString(data[9])
         };
 
         float height = Utils.parseFloat(data[11], 0);
         float weight = Utils.parseFloat(data[12], 0);
+
+        String[] abilitiesStr = new String[3];
+        PokemonAbilities abilities;
+
+        System.arraycopy(data, 14, abilitiesStr, 0, 3);
+
+        abilities = new PokemonAbilities(abilitiesStr);
 
         PokemonStatBlock stats = new PokemonStatBlock(
             Utils.parseFloat(data[18], 0),
@@ -91,7 +91,7 @@ public class Pokedex {
                 Utils.parseFloat(data[50], 0)
         );
 
-        return new Pokemon(name, generation, status, type, height, weight, stats, resistance);
+        return new Pokemon(name, generation, status, type, abilities, height, weight, stats, resistance);
     }
 
     public void loadPokedexFromFile(String path) {

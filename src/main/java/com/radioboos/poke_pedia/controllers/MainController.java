@@ -3,6 +3,7 @@ package com.radioboos.poke_pedia.controllers;
 import com.radioboos.poke_pedia.NameLocalization;
 import com.radioboos.poke_pedia.PokePedia;
 import com.radioboos.poke_pedia.Pokedex;
+import com.radioboos.poke_pedia.common.MessageBus;
 import com.radioboos.poke_pedia.filter.*;
 import com.radioboos.poke_pedia.pokemon.Pokemon;
 import com.radioboos.poke_pedia.pokemon.PokemonStatBlock;
@@ -436,17 +437,19 @@ public class MainController implements Initializable {
 
         ResultController resultController = fxmlLoader.getController();
 
-        //1. UserData
-        stage.setUserData(assembleFilter());
-        resultController.initialize(stage);
+        var filter = assembleFilter();
 
-        //2. Controller -> Controller
-        //outputController.initialize(gameName.getText());
+        // a. Singleton
+        MessageBus messageBus = MessageBus.getInstance();
+        // messageBus.pushData(filter);
+        // resultController.initialize();
 
-        //3. Singleton
-        //Singleton singleton = Singleton.getInstance();
-        //singleton.setUserInput(gameName.getText());
-        //outputController.initialize();
+        // b. UserData
+        // stage.setUserData(filter);
+        // resultController.initialize(stage);
+
+        // c. Controller -> Controller
+        resultController.initialize(filter);
 
         Scene scene = new Scene(root);
 

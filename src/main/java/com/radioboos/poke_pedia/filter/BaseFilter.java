@@ -7,5 +7,5 @@ public abstract class BaseFilter<T> {
         this.prev = prev;
     }
 
-    public abstract boolean filter(T pokemon);
+    public abstract boolean filter(T thing);
 }

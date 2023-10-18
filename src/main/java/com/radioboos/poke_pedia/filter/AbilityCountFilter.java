@@ -12,8 +12,14 @@ public class AbilityCountFilter extends PokemonFilter {
 
     @Override
     public boolean filter(Pokemon pokemon) {
-        // Todo
-        System.out.println("Not supported yet");
+        int foundAbilityCount = 0;
+
+        for(var ability : pokemon.getAbilities().getAbilityNames()) {
+            if(!ability.contentEquals("")) {
+                ++foundAbilityCount;
+            }
+        }
+
         return prev.filter(pokemon) && 0 == abilityCount;
     }
 }

@@ -2,6 +2,7 @@ package com.radioboos.poke_pedia.controllers;
 
 import com.radioboos.poke_pedia.PokePedia;
 import com.radioboos.poke_pedia.Pokedex;
+import com.radioboos.poke_pedia.common.MessageBus;
 import com.radioboos.poke_pedia.common.PokemonListCell;
 import com.radioboos.poke_pedia.filter.BaseFilter;
 import com.radioboos.poke_pedia.filter.GenerationFilter;
@@ -93,16 +94,24 @@ public class ResultController implements Initializable {
         }
     }
 
+    public void initialize() {
+        MessageBus messageBus = MessageBus.getInstance();
+        PokemonFilter filter = (PokemonFilter) messageBus.popData();
+
+        defaultInitialize(filter);
+    }
+
     public void initialize(Stage stage) {
         defaultInitialize((PokemonFilter) stage.getUserData());
+    }
+
+    public void initialize(PokemonFilter filter) {
+        defaultInitialize(filter);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         var filter = new PokemonFilter();
-        filter = new GenerationFilter(filter, 4);
-        filter = new StatusFilter(filter, PokemonStatus.LEGENDARY);
-
         defaultInitialize(filter);
     }
 
@@ -173,10 +182,22 @@ public class ResultController implements Initializable {
 
         pokemonTotalPointsText.setText("Total points: " + ((int )pokemon.getStats().getTotalPoints()));
 
-        // Battle
-        pokemonAbility1Text.setText("Ability 1: Overgrow");
-        pokemonAbility2Text.setText("Ability 2: None");
-        pokemonHidddenAbilityText.setText("Hidden Ability: Chlorophyll");
+        var names = pokemon.getAbilities().getAbilityNames();
+
+        if(names[0].contentEquals(""))
+            pokemonAbility1Text.setText("Ability 1: None");
+        else
+            pokemonAbility1Text.setText("Ability 1: " + names[0]);
+
+        if(names[1].contentEquals(""))
+            pokemonAbility1Text.setText("Ability 2: None");
+        else
+            pokemonAbility1Text.setText("Ability 2: " + names[1]);
+
+        if(names[2].contentEquals(""))
+            pokemonAbility1Text.setText("Hidden Ability: None");
+        else
+            pokemonAbility1Text.setText("Hidden Ability: " + names[2]);
     }
 
     @FXML

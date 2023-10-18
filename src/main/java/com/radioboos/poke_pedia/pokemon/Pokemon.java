@@ -7,6 +7,7 @@ public class Pokemon extends Iconable {
     private int generation;
     private PokemonStatus status;
     private PokemonType[] type;
+    private PokemonAbilities abilities;
 
     float height;
     float weight;
@@ -14,7 +15,7 @@ public class Pokemon extends Iconable {
     private PokemonStatBlock stats;
     private ResistanceStatBlock resistance;
 
-    public Pokemon(PokemonName name, int generation, PokemonStatus status, PokemonType[] type, float height, float weight, PokemonStatBlock stats, ResistanceStatBlock resistance) {
+    public Pokemon(PokemonName name, int generation, PokemonStatus status, PokemonType[] type, PokemonAbilities abilities, float height, float weight, PokemonStatBlock stats, ResistanceStatBlock resistance) {
         super("C:\\Programming\\java\\poke_pedia\\src\\main\\resources\\com\\radioboos\\poke_pedia\\icons\\"
                 + name.getEngName().toLowerCase().replace(' ', '-')
                 + ".jpg");
@@ -23,6 +24,8 @@ public class Pokemon extends Iconable {
         this.generation = generation;
         this.status = status;
         this.type = type;
+        this.abilities = abilities;
+
         this.height = height;
         this.weight = weight;
         this.stats = stats;
@@ -55,6 +58,10 @@ public class Pokemon extends Iconable {
 
     public PokemonType[] getType() {
         return type;
+    }
+
+    public PokemonAbilities getAbilities() {
+        return abilities;
     }
 
     public PokemonStatBlock getStats() {
