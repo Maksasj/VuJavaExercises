@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<Tab text="Groups" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.omat.controllers.GroupsTabController">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="800.0">
+            <children>
+                <ListView fx:id="groupsListView" layoutX="401.0" layoutY="6.0" prefHeight="464.0" prefWidth="392.0" />
+                <Button fx:id="onDeleteAllGroups" layoutX="686.0" layoutY="474.0" mnemonicParsing="false" text="Delete all groups" />
+                <Button fx:id="onDeleteSelectedGroup" layoutX="547.0" layoutY="474.0" mnemonicParsing="false" text="Delete selected group" />
+                <TextField fx:id="groupNameTextField" layoutX="14.0" layoutY="22.0" promptText="Math group 1" />
+                <Text layoutX="14.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group name" />
+                <TextArea fx:id="groupDescriptionTextArea" layoutX="14.0" layoutY="71.0" prefHeight="174.0" prefWidth="378.0" />
+                <Text layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group description" />
+                <Button layoutX="10.0" layoutY="474.0" mnemonicParsing="false" onAction="#onAddGroup" text="Add group" />
+                <Button layoutX="171.0" layoutY="22.0" mnemonicParsing="false" onAction="#onClearGroupName" text="Clear" />
+                <Button layoutX="286.0" layoutY="250.0" mnemonicParsing="false" onAction="#onClearGroupDescription" text="Clear description" />
+            </children>
+        </AnchorPane>
+    </content>
+</Tab>
