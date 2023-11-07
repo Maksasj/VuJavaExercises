@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -47,6 +46,8 @@
                         <ChoiceBox fx:id="studentFacultyChoiceBox" layoutX="13.0" layoutY="134.0" prefWidth="150.0" />
                         <Text layoutX="15.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faculty" />
                         <Button layoutX="8.0" layoutY="474.0" mnemonicParsing="false" onAction="#onAddStudent" text="Add student" />
+                        <ChoiceBox fx:id="studentGroupChoiceBox" layoutX="170.0" layoutY="134.0" prefWidth="150.0" />
+                        <Text layoutX="171.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group" />
                      </children>
                   </AnchorPane>
               </content>

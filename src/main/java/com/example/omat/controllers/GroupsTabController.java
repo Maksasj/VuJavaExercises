@@ -2,6 +2,7 @@ package com.example.omat.controllers;
 
 import com.example.omat.Omat;
 import com.example.omat.OmatApplication;
+import com.example.omat.common.CommonController;
 import com.example.omat.students.Faculty;
 import com.example.omat.students.Group;
 import com.example.omat.students.Student;
@@ -14,11 +15,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class GroupsTabController implements Initializable {
+public class GroupsTabController extends CommonController {
     @FXML public TextField groupNameTextField;
     @FXML public TextArea groupDescriptionTextArea;
     @FXML public ListView<Group> groupsListView;
 
+    @Override
     public void onAnyUpdate() {
         fillListView();
     }
@@ -30,10 +32,12 @@ public class GroupsTabController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
 
-        onAnyUpdate();
+        OmatApplication.onAnyUpdate();
     }
 
+    @Override
     public void notifyError(String error) {
         // Todo
     }
@@ -64,16 +68,16 @@ public class GroupsTabController implements Initializable {
 
         Omat.addGroup(new Group(groupName, groupDescription));
 
-        onAnyUpdate();
+        OmatApplication.onAnyUpdate();
     }
 
     @FXML public void onClearGroupName() {
 
-        onAnyUpdate();
+        OmatApplication.onAnyUpdate();
     }
 
     @FXML public void onClearGroupDescription() {
 
-        onAnyUpdate();
+        OmatApplication.onAnyUpdate();
     }
 }

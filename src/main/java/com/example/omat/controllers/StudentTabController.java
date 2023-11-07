@@ -2,7 +2,9 @@ package com.example.omat.controllers;
 
 import com.example.omat.Omat;
 import com.example.omat.OmatApplication;
+import com.example.omat.common.CommonController;
 import com.example.omat.students.Faculty;
+import com.example.omat.students.Group;
 import com.example.omat.students.Student;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -13,37 +15,28 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class StudentTabController implements Initializable {
+public class StudentTabController extends CommonController {
     @FXML private Spinner<Integer> studentIDSpinner;
     @FXML private TextField studentSurnameTextField;
     @FXML private TextField studentNameTextField;
     @FXML private ChoiceBox<Faculty> studentFacultyChoiceBox;
+    @FXML private ChoiceBox<Group> studentGroupChoiceBox;
 
     @FXML private ListView<Student> studentsListView;
 
-    private void setIntegerValueFactory(Spinner<Integer> spinner, int min, int max) {
-        var valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max);
-        valueFactory.setValue(min);
-        spinner.setValueFactory(valueFactory);
-
-        spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-            spinner.getValueFactory().setValue(newValue);
-        });
-
-        onAnyUpdate();
-    }
-
+    @Override
     public void onAnyUpdate() {
-        fillListView();
-    }
+        var studentItems = FXCollections.observableArrayList(Omat.getStudents());
+        studentsListView.setItems(studentItems);
 
-    public void fillListView() {
-        var items = FXCollections.observableArrayList(Omat.getStudents());
-        studentsListView.setItems(items);
+        var groupItems = FXCollections.observableArrayList(Omat.getGroups());
+        studentGroupChoiceBox.setItems(groupItems);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.initialize(location, resources);
+
         setIntegerValueFactory(studentIDSpinner, 0, Integer.MAX_VALUE);
 
         studentFacultyChoiceBox.getItems().addAll(
@@ -60,6 +53,8 @@ public class StudentTabController implements Initializable {
             Faculty.PHYSICS
         );
         studentFacultyChoiceBox.getSelectionModel().select(0);
+
+        OmatApplication.onAnyUpdate();
     }
 
     public void notifyError(String error) {
@@ -71,6 +66,7 @@ public class StudentTabController implements Initializable {
         int studentId = 0;
         String studentName = "";
         String studentSurname = "";
+        Group selectedGroup = null;
         Faculty studentFaculty = Faculty.MATH_INFORMATICS; // As a default
 
         {
@@ -113,21 +109,33 @@ public class StudentTabController implements Initializable {
             }
         }
 
-        Omat.addStudent(new Student(studentId, studentName, studentSurname, studentFaculty));
+        {
+            var value = studentGroupChoiceBox.getValue();
+            if(value != null)
+                selectedGroup = value;
+            else {
+                notifyError("Group is not selected");
+                return;
+            }
+        }
 
-        onAnyUpdate();
+        Student student = new Student(studentId, studentName, studentSurname, studentFaculty);
+        Omat.addStudent(student);
+        selectedGroup.addStudent(student);
+
+        OmatApplication.onAnyUpdate();
     }
 
     @FXML
     protected void onEditSelectedStudent() {
 
-        onAnyUpdate();
+        OmatApplication.onAnyUpdate();
     }
 
     @FXML
     protected void onDeleteSelectedStudent() {
 
-        onAnyUpdate();
+        OmatApplication.onAnyUpdate();
     }
 
 
@@ -135,6 +143,6 @@ public class StudentTabController implements Initializable {
     protected void onDeleteAllStudents() {
         Omat.deleteAllStudents();
 
-        onAnyUpdate();
+        OmatApplication.onAnyUpdate();
     }
 }
