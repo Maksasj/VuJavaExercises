@@ -18,7 +18,20 @@ public class Group {
         students.add(student);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public ArrayList<Student> getStudents() {
         return students;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

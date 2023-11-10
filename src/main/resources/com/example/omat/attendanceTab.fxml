@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Tab text="Attendance" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.omat.controllers.AttendanceTabController">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+                <TableView fx:id="allStudentTableView" editable="true" layoutX="382.0" layoutY="29.0" prefHeight="442.0" prefWidth="414.0">
+                    <columns>
+                        <TableColumn prefWidth="75.0" text="Name" />
+                    </columns>
+                </TableView>
+                <Button layoutX="721.0" layoutY="474.0" mnemonicParsing="false" onAction="#onSaveToFile" text="Save to file" />
+                <ChoiceBox fx:id="monthsChoiceBox" layoutX="171.0" layoutY="21.0" prefWidth="150.0" />
+                <ChoiceBox fx:id="groupChoiceBox" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
+                <Text layoutX="171.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Month" />
+                <Text layoutX="15.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group" />
+                <Text fx:id="monthText" layoutX="382.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Januarry 2023">
+                    <font>
+                        <Font name="System Bold" size="19.0" />
+                    </font>
+                </Text>
+                <ListView fx:id="availableStudentListView" layoutX="15.0" layoutY="57.0" prefHeight="152.0" prefWidth="355.0" />
+                <ListView fx:id="selectedStudentListView" layoutX="13.0" layoutY="266.0" prefHeight="206.0" prefWidth="356.0" />
+                <Button layoutX="14.0" layoutY="218.0" mnemonicParsing="false" onAction="#onAddStudentToSelection" text="Add student to selection" />
+                <Text layoutX="15.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected students" />
+                <Button layoutX="119.0" layoutY="474.0" mnemonicParsing="false" onAction="#onClearSelectedStudents" text="Clear selected students" />
+                <Button layoutX="14.0" layoutY="474.0" mnemonicParsing="false" onAction="#onDeleteStudent" text="Delete student" />
+            </children>
+        </AnchorPane>
+    </content>
+</Tab>

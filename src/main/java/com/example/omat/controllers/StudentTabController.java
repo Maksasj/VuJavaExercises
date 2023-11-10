@@ -3,16 +3,21 @@ package com.example.omat.controllers;
 import com.example.omat.Omat;
 import com.example.omat.OmatApplication;
 import com.example.omat.common.CommonController;
+import com.example.omat.common.Month;
 import com.example.omat.students.Faculty;
 import com.example.omat.students.Group;
 import com.example.omat.students.Student;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class StudentTabController extends CommonController {
@@ -31,28 +36,30 @@ public class StudentTabController extends CommonController {
 
         var groupItems = FXCollections.observableArrayList(Omat.getGroups());
         studentGroupChoiceBox.setItems(groupItems);
+        if(!groupItems.isEmpty())
+            studentGroupChoiceBox.getSelectionModel().select(0);
+
+        setIntegerValueFactory(studentIDSpinner, 0, Integer.MAX_VALUE);
+
+        studentFacultyChoiceBox.getItems().setAll(
+                Faculty.MATH_INFORMATICS,
+                Faculty.BUSINESS_SCHOOL,
+                Faculty.CHEMISTRY_GEOSCIENCES,
+                Faculty.COMMUNICATION,
+                Faculty.ECONOMICS_BUSINESS_ADMINISTRATION,
+                Faculty.HISTORY,
+                Faculty.LAW,
+                Faculty.MEDICINE,
+                Faculty.PHILOLOGY,
+                Faculty.PHILOSOPHY,
+                Faculty.PHYSICS
+        );
+        studentFacultyChoiceBox.getSelectionModel().select(0);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
-
-        setIntegerValueFactory(studentIDSpinner, 0, Integer.MAX_VALUE);
-
-        studentFacultyChoiceBox.getItems().addAll(
-            Faculty.MATH_INFORMATICS,
-            Faculty.BUSINESS_SCHOOL,
-            Faculty.CHEMISTRY_GEOSCIENCES,
-            Faculty.COMMUNICATION,
-            Faculty.ECONOMICS_BUSINESS_ADMINISTRATION,
-            Faculty.HISTORY,
-            Faculty.LAW,
-            Faculty.MEDICINE,
-            Faculty.PHILOLOGY,
-            Faculty.PHILOSOPHY,
-            Faculty.PHYSICS
-        );
-        studentFacultyChoiceBox.getSelectionModel().select(0);
 
         OmatApplication.onAnyUpdate();
     }
@@ -127,7 +134,29 @@ public class StudentTabController extends CommonController {
     }
 
     @FXML
-    protected void onEditSelectedStudent() {
+    protected void onEditSelectedStudent() throws IOException {
+        var selected = studentsListView.getSelectionModel().getSelectedItem();
+        if(selected == null) {
+            notifyError("Student is not selected");
+            return;
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(OmatApplication.class.getResource("studentWindow.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Stage stage = new Stage();
+
+        StudentWindowController controller = fxmlLoader.getController();
+        controller.initialize(selected);
+
+        Scene scene = new Scene(root);
+
+        scene.setUserData(selected);
+
+        stage.setTitle("Omat: " + selected.getName());
+        stage.setScene(scene);
+        stage.show();
+        stage.setResizable(false);
 
         OmatApplication.onAnyUpdate();
     }

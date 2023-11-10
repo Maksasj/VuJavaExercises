@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -52,6 +54,7 @@
                   </AnchorPane>
               </content>
             </Tab>
+            <fx:include source="attendanceTab.fxml" />
         </tabs>
       </TabPane>
    </children>
