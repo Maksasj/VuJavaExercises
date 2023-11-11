@@ -4,6 +4,11 @@ import com.example.omat.Omat;
 import com.example.omat.OmatApplication;
 import com.example.omat.common.CommonController;
 import com.example.omat.common.FileFormat;
+import com.example.omat.common.Month;
+import com.example.omat.files.export.CSVFileExport;
+import com.example.omat.files.export.CommonFileExport;
+import com.example.omat.files.export.EXCELFileExport;
+import com.example.omat.files.export.PDFFileExport;
 import com.example.omat.students.Faculty;
 import com.example.omat.students.Group;
 import com.example.omat.students.Student;
@@ -25,10 +30,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
 public class SaveToFileWindowController extends CommonController {
+    private ArrayList<Student> students;
+    private Month selectedMonth;
+
     private Stage selfStage;
 
     @FXML public TextField fileNameTextField;
@@ -43,6 +52,11 @@ public class SaveToFileWindowController extends CommonController {
 
     public void setStage(Stage stage) {
         selfStage = stage;
+    }
+
+    public void setSaveData(ArrayList<Student> students, Month month) {
+        this.selectedMonth = month;
+        this.students = students;
     }
 
     private void defaultInitialize() {
@@ -117,7 +131,23 @@ public class SaveToFileWindowController extends CommonController {
     }
 
     @FXML protected void onExportToFile() {
+        var format = fileFormatChoiceBox.getValue();
 
+        CommonFileExport exporter = null;
+
+        switch (format) {
+            case CSV -> {
+                exporter = new CSVFileExport();
+            }
+            case EXCEL -> {
+                exporter = new EXCELFileExport();
+            }
+            case PDF -> {
+                exporter = new PDFFileExport();
+            }
+        }
+
+        exporter.export(fileWillBeSavedText.getText(), selectedMonth, students);
     }
 
     @FXML protected void onResetToDefaults() {

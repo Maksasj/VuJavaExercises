@@ -161,6 +161,7 @@ public class AttendanceTabController extends CommonController {
 
         SaveToFileWindowController controller = fxmlLoader.getController();
         controller.setStage(stage);
+        controller.setSaveData(selectedStudents, monthsChoiceBox.getValue());
 
         Scene scene = new Scene(root);
 

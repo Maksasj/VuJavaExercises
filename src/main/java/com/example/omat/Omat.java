@@ -26,7 +26,21 @@ public class Omat {
     }
 
     public static void deleteStudent(Student student) {
-        // TODO
+        students.remove(student);
+    }
+
+    public static void onAnyUpdate() {
+        for(var group : groups) {
+            var toDelete = new ArrayList<>();
+
+            for(var st : group.getStudents()) {
+                if(!students.contains(st)) {
+                    toDelete.add(st);
+                }
+            }
+
+            group.getStudents().removeAll(toDelete);
+        }
     }
 
     public static void deleteAllStudents() {

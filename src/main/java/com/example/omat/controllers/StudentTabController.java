@@ -163,6 +163,9 @@ public class StudentTabController extends CommonController {
 
     @FXML
     protected void onDeleteSelectedStudent() {
+        var selected = studentsListView.getSelectionModel().getSelectedItem();
+        if(selected != null)
+            Omat.getStudents().remove(selected);
 
         OmatApplication.onAnyUpdate();
     }

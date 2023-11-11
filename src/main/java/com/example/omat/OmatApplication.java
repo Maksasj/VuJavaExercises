@@ -36,6 +36,8 @@ public class OmatApplication extends Application {
     }
 
     public static void onAnyUpdate() {
+        Omat.onAnyUpdate();
+
         for(var controller : controllers) {
             controller.onAnyUpdate();
         }
