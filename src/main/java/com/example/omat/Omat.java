@@ -49,4 +49,8 @@ public class Omat {
     public static void deleteAllGroups() {
         groups.clear();
     }
+
+    public static void deleteGroup(Group group) {
+        groups.remove(group);
+    }
 }

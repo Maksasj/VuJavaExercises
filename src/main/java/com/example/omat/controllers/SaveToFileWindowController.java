@@ -5,28 +5,19 @@ import com.example.omat.OmatApplication;
 import com.example.omat.common.CommonController;
 import com.example.omat.common.FileFormat;
 import com.example.omat.common.Month;
-import com.example.omat.files.export.CSVFileExport;
-import com.example.omat.files.export.CommonFileExport;
-import com.example.omat.files.export.EXCELFileExport;
-import com.example.omat.files.export.PDFFileExport;
-import com.example.omat.students.Faculty;
-import com.example.omat.students.Group;
+import com.example.omat.files.exporting.CSVFileExport;
+import com.example.omat.files.exporting.CommonFileExport;
+import com.example.omat.files.exporting.EXCELFileExport;
+import com.example.omat.files.exporting.PDFFileExport;
 import com.example.omat.students.Student;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -132,22 +123,23 @@ public class SaveToFileWindowController extends CommonController {
 
     @FXML protected void onExportToFile() {
         var format = fileFormatChoiceBox.getValue();
+        var targetPath = fileWillBeSavedText.getText();
 
         CommonFileExport exporter = null;
 
         switch (format) {
             case CSV -> {
-                exporter = new CSVFileExport();
+                exporter = new CSVFileExport(targetPath);
             }
             case EXCEL -> {
-                exporter = new EXCELFileExport();
+                exporter = new EXCELFileExport(targetPath);
             }
             case PDF -> {
-                exporter = new PDFFileExport();
+                exporter = new PDFFileExport(targetPath);
             }
         }
 
-        exporter.export(fileWillBeSavedText.getText(), selectedMonth, students);
+        exporter.export(Omat.getGroups(), Omat.getStudents());
     }
 
     @FXML protected void onResetToDefaults() {

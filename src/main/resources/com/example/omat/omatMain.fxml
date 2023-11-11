@@ -6,15 +6,13 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.omat.controllers.StudentTabController">
+<Pane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.omat.controllers.MainController">
    <children>
       <Text layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OMAT">
          <font>
@@ -26,34 +24,14 @@
         <tabs>
           <Tab text="Dashboard">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="698.0" layoutY="474.0" mnemonicParsing="false" onAction="#onLoadFromFile" text="Load from a file" />
+                     </children></AnchorPane>
             </content>
           </Tab>
             <fx:include source="groupsTab.fxml" />
-            <Tab text="Students">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ListView fx:id="studentsListView" layoutX="401.0" layoutY="6.0" prefHeight="464.0" prefWidth="392.0" />
-                        <Button layoutX="678.0" layoutY="474.0" mnemonicParsing="false" onAction="#onDeleteAllStudents" text="Delete all students" />
-                        <Button layoutX="531.0" layoutY="474.0" mnemonicParsing="false" onAction="#onDeleteSelectedStudent" text="Delete selected student" />
-                        <Button layoutX="400.0" layoutY="474.0" mnemonicParsing="false" onAction="#onEditSelectedStudent" text="Edit selected student" />
-                        <Text layoutX="15.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student name" />
-                        <TextField fx:id="studentSurnameTextField" layoutX="171.0" layoutY="83.0" promptText="Jaroslavcevas" />
-                        <Spinner fx:id="studentIDSpinner" layoutX="14.0" layoutY="31.0" prefHeight="26.0" prefWidth="150.0" />
-                        <Text layoutX="15.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student ID" />
-                        <Button fx:id="studentIDResetButton" layoutX="171.0" layoutY="31.0" mnemonicParsing="false" text="Reset" />
-                        <TextField fx:id="studentNameTextField" layoutX="14.0" layoutY="83.0" promptText="Maksim" />
-                        <Text layoutX="171.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student surname" />
-                        <ChoiceBox fx:id="studentFacultyChoiceBox" layoutX="13.0" layoutY="134.0" prefWidth="150.0" />
-                        <Text layoutX="15.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faculty" />
-                        <Button layoutX="8.0" layoutY="474.0" mnemonicParsing="false" onAction="#onAddStudent" text="Add student" />
-                        <ChoiceBox fx:id="studentGroupChoiceBox" layoutX="170.0" layoutY="134.0" prefWidth="150.0" />
-                        <Text layoutX="171.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
+            <fx:include source="studentTab.fxml" />
             <fx:include source="attendanceTab.fxml" />
         </tabs>
       </TabPane>

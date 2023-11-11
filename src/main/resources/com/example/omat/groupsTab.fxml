@@ -13,8 +13,8 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="800.0">
             <children>
                 <ListView fx:id="groupsListView" layoutX="401.0" layoutY="6.0" prefHeight="464.0" prefWidth="392.0" />
-                <Button fx:id="onDeleteAllGroups" layoutX="686.0" layoutY="474.0" mnemonicParsing="false" text="Delete all groups" />
-                <Button fx:id="onDeleteSelectedGroup" layoutX="547.0" layoutY="474.0" mnemonicParsing="false" text="Delete selected group" />
+                <Button onAction="#onDeleteAllGroups" layoutX="686.0" layoutY="474.0" mnemonicParsing="false" text="Delete all groups" />
+                <Button onAction="#onDeleteSelectedGroup" layoutX="547.0" layoutY="474.0" mnemonicParsing="false" text="Delete selected group" />
                 <TextField fx:id="groupNameTextField" layoutX="14.0" layoutY="22.0" promptText="Math group 1" />
                 <Text layoutX="14.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group name" />
                 <TextArea fx:id="groupDescriptionTextArea" layoutX="14.0" layoutY="71.0" prefHeight="174.0" prefWidth="378.0" />

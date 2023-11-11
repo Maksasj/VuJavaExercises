@@ -37,6 +37,22 @@ public class GroupsTabController extends CommonController {
         OmatApplication.onAnyUpdate();
     }
 
+    @FXML public void onDeleteAllGroups() {
+        Omat.deleteAllGroups();
+
+        OmatApplication.onAnyUpdate();
+    }
+
+    @FXML public void onDeleteSelectedGroup() {
+        var selected = groupsListView.getSelectionModel().getSelectedItem();
+
+        if(selected != null) {
+            Omat.deleteGroup(selected);
+        }
+
+        OmatApplication.onAnyUpdate();
+    }
+
     @Override
     public void notifyError(String error) {
         // Todo
