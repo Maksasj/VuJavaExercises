@@ -153,7 +153,7 @@ public class StudentTabController extends CommonController {
 
         scene.setUserData(selected);
 
-        stage.setTitle("Omat: " + selected.getName());
+        stage.setTitle("OMAT " + selected.getName());
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);

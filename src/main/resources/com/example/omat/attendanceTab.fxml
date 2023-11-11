@@ -29,13 +29,10 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
             <children>
                 <TableView fx:id="allStudentTableView" editable="true" layoutX="382.0" layoutY="29.0" prefHeight="442.0" prefWidth="414.0">
-                    <columns>
-                        <TableColumn prefWidth="75.0" text="Name" />
-                    </columns>
                 </TableView>
                 <Button layoutX="721.0" layoutY="474.0" mnemonicParsing="false" onAction="#onSaveToFile" text="Save to file" />
-                <ChoiceBox fx:id="monthsChoiceBox" layoutX="171.0" layoutY="21.0" prefWidth="150.0" />
-                <ChoiceBox fx:id="groupChoiceBox" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
+                <ChoiceBox fx:id="monthsChoiceBox" onAction="#onMonthChange" layoutX="171.0" layoutY="21.0" prefWidth="150.0" />
+                <ChoiceBox fx:id="groupChoiceBox" onAction="#onGroupChange" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
                 <Text layoutX="171.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Month" />
                 <Text layoutX="15.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group" />
                 <Text fx:id="monthText" layoutX="382.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Januarry 2023">

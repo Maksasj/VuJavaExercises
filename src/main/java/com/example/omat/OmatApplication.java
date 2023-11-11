@@ -14,6 +14,7 @@ import java.util.List;
 
 public class OmatApplication extends Application {
     private static List<CommonController> controllers = new ArrayList<>();
+    public static Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -22,6 +23,8 @@ public class OmatApplication extends Application {
         stage.setTitle("OMAT");
         stage.setScene(scene);
         stage.show();
+
+        primaryStage = stage;
     }
 
     public static void main(String[] args) {

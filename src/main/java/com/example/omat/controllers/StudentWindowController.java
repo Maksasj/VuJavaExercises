@@ -48,14 +48,6 @@ public class StudentWindowController extends CommonController {
             for(int i = 0; i < month.getDays(); ++i)
                 monthDaysGridPane.add(new AttendanceCell(student, month, i + 1), i % 7, i / 7);
 
-            studentIdText.setText(String.valueOf(student.getId()));
-            nameText.setText(student.getName());
-            surnameText.setText(student.getSurname());
-            facultyText.setText(student.getFaculty().toString());
-            groupText.setText(studentGroupChoiceBox.getValue().getName());
-            studentSurnameTextField.setText(surnameText.getText());
-            studentNameTextField.setText(nameText.getText());
-
             var groupItems = FXCollections.observableArrayList(Omat.getGroups());
             studentGroupChoiceBox.setItems(groupItems);
 
@@ -66,6 +58,14 @@ public class StudentWindowController extends CommonController {
                     }
                 }
             }
+
+            studentIdText.setText(String.valueOf(student.getId()));
+            nameText.setText(student.getName());
+            surnameText.setText(student.getSurname());
+            facultyText.setText(student.getFaculty().toString());
+            groupText.setText(studentGroupChoiceBox.getValue().getName());
+            studentSurnameTextField.setText(surnameText.getText());
+            studentNameTextField.setText(nameText.getText());
         }
     }
 
