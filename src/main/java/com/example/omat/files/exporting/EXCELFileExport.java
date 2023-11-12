@@ -12,8 +12,8 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class EXCELFileExport extends CommonFileExport {
-    public EXCELFileExport(String exportDirectory) {
-        super(exportDirectory);
+    public EXCELFileExport(String exportDirectory, Object extraData) {
+        super(exportDirectory, extraData);
     }
 
     @Override

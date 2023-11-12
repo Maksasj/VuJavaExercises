@@ -5,9 +5,16 @@ import com.example.omat.students.Group;
 import com.example.omat.students.Student;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public abstract class CommonFileExport {
     private final String exportDirectory;
+    private final Object extraData;
+
+    public CommonFileExport(String exportDirectory, Object extraData) {
+        this.exportDirectory = exportDirectory;
+        this.extraData = extraData;
+    }
 
     protected int getStudentIndex(Student student, ArrayList<Student> students) {
         for(int i = 0; i < students.size(); ++i) {
@@ -30,10 +37,7 @@ public abstract class CommonFileExport {
 
         return i;
     }
-
-    public CommonFileExport(String exportDirectory) {
-        this.exportDirectory = exportDirectory;
-    }
+    protected Object getExtraData() { return extraData; }
 
     protected String getTargetDirectory() {
         return exportDirectory;

@@ -3,6 +3,7 @@ module com.example.omat {
     requires javafx.fxml;
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
+    requires itextpdf;
 
 
     opens com.example.omat to javafx.fxml;

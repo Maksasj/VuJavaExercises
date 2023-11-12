@@ -9,6 +9,7 @@ import com.example.omat.files.exporting.CSVFileExport;
 import com.example.omat.files.exporting.CommonFileExport;
 import com.example.omat.files.exporting.EXCELFileExport;
 import com.example.omat.files.exporting.PDFFileExport;
+import com.example.omat.students.Group;
 import com.example.omat.students.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -127,19 +128,28 @@ public class SaveToFileWindowController extends CommonController {
 
         CommonFileExport exporter = null;
 
+        ArrayList<Group> groupsData = null;
+        ArrayList<Student> studentsData = null;
+
         switch (format) {
             case CSV -> {
-                exporter = new CSVFileExport(targetPath);
+                exporter = new CSVFileExport(targetPath, null);
+                groupsData = Omat.getGroups();
+                studentsData = Omat.getStudents();
             }
             case EXCEL -> {
-                exporter = new EXCELFileExport(targetPath);
+                exporter = new EXCELFileExport(targetPath, null);
+                groupsData = Omat.getGroups();
+                studentsData = Omat.getStudents();
             }
             case PDF -> {
-                exporter = new PDFFileExport(targetPath);
+                exporter = new PDFFileExport(targetPath, selectedMonth);
+                groupsData = Omat.getGroups();
+                studentsData = students;
             }
         }
 
-        exporter.export(Omat.getGroups(), Omat.getStudents());
+        exporter.export(groupsData, studentsData);
     }
 
     @FXML protected void onResetToDefaults() {

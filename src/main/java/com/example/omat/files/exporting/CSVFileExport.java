@@ -7,10 +7,11 @@ import com.example.omat.students.Student;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class CSVFileExport extends CommonFileExport {
-    public CSVFileExport(String exportDirectory) {
-        super(exportDirectory);
+    public CSVFileExport(String exportDirectory, Object extraData) {
+        super(exportDirectory, extraData);
     }
 
     @Override
