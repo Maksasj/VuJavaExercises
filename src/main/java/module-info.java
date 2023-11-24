@@ -5,4 +5,6 @@ module com.example.moody_blues {
 
     opens com.moody_blues.client to javafx.fxml;
     exports com.moody_blues.client;
+    exports com.moody_blues.client.controllers;
+    opens com.moody_blues.client.controllers to javafx.fxml;
 }
