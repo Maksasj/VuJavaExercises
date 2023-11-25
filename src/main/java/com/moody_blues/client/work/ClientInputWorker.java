@@ -3,6 +3,7 @@ package com.moody_blues.client.work;
 import com.moody_blues.client.MoodyBluesClient;
 import com.moody_blues.common.packet.update.UpdateRoomDataPacket;
 import com.moody_blues.common.packet.update.UpdateRoomListPacket;
+import com.moody_blues.server.ClientInstance;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -30,6 +31,18 @@ public class ClientInputWorker implements Runnable {
                     var rooms = packet.getRooms();
 
                     client.addRooms(rooms);
+
+                    MoodyBluesClient.onAnyUpdate();
+                }
+
+                if(dataPacket instanceof UpdateRoomDataPacket) {
+                    var packet = (UpdateRoomDataPacket) dataPacket;
+
+                    var room = client.getRoom(packet.getRoomUUID());
+                    if(room == null)
+                        continue;
+
+                    room.setMessages(packet.getMessages());
 
                     MoodyBluesClient.onAnyUpdate();
                 }

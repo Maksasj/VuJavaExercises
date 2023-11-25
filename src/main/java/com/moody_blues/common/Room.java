@@ -8,12 +8,26 @@ public class Room implements Serializable {
     private final String roomName;
     private final UUID roomUUID;
     private ArrayList<Message> messages;
+    private RoomType type;
 
-    public Room(String roomName) {
+    public RoomType getType() {
+        return type;
+    }
+
+    public Room(String roomName, RoomType type) {
         messages = new ArrayList<>();
 
         this.roomUUID = UUID.randomUUID();
         this.roomName = roomName;
+        this.type = type;
+    }
+
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
+
+    public UUID getRoomUUID() {
+        return roomUUID;
     }
 
     public void addMessage(Message message) {

@@ -42,8 +42,16 @@ public class ChatWindowController extends CommonController {
 
     @FXML
     protected void onJoinSelectedRoom() {
+        var room = roomsListView.getSelectionModel().getSelectedItem();
+        if(room == null)
+            return;
+
         try {
-            Tab tab = (Tab) FXMLLoader.load(MoodyBluesClient.class.getResource("chatTab.fxml"));
+            var loader = new FXMLLoader(MoodyBluesClient.class.getResource("chatTab.fxml"));
+            Tab tab = loader.load();
+
+            ChatTabController controller = loader.getController();
+            controller.setRoom(room);
 
             chatTabPane.getTabs().add(tab);
         } catch (Exception ex) {
@@ -56,8 +64,7 @@ public class ChatWindowController extends CommonController {
         Platform.runLater(() -> {
             var client = MoodyBluesClient.getClientData();
 
-            roomsListView.getItems().clear();
-            roomsListView.getItems().addAll(client.getRooms());
+            roomsListView.getItems().setAll(client.getRooms());
         });
     }
 }

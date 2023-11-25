@@ -13,6 +13,7 @@ public class MoodyBluesClient extends Application {
     private static ClientData clientData = null;
     private static boolean runnning = true;
     private static ArrayList<CommonController> mainControllers = new ArrayList<>();
+    private static ArrayList<CommonController> chatControllers = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -26,6 +27,9 @@ public class MoodyBluesClient extends Application {
 
     public static void addControllerAsMain(CommonController controller) {
         mainControllers.add(controller);
+    }
+    public static void addControllerAsChat(CommonController controller) {
+        chatControllers.add(controller);
     }
 
     public static boolean isRunnning() {
@@ -42,6 +46,9 @@ public class MoodyBluesClient extends Application {
 
     synchronized public static void onAnyUpdate() {
         for(var controller : mainControllers)
+            controller.onAnyUpdate();
+
+        for(var controller : chatControllers)
             controller.onAnyUpdate();
     }
 
