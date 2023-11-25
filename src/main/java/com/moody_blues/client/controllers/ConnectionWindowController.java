@@ -13,8 +13,12 @@ import javafx.stage.Stage;
 
 import java.net.Socket;
 
-public class ConnectionWindowController {
+public class ConnectionWindowController extends CommonController {
     @FXML public TextField usernameTextField;
+
+    public ConnectionWindowController() {
+        super();
+    }
 
     @FXML
     protected void onConnectToServer() {
@@ -45,5 +49,10 @@ public class ConnectionWindowController {
     private void closeWindow() {
         Stage stage = (Stage) usernameTextField.getScene().getWindow();
         stage.close();
+    }
+
+    @Override
+    public void onAnyUpdate() {
+
     }
 }

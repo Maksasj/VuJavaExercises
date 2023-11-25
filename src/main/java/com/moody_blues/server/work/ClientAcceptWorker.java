@@ -1,5 +1,6 @@
 package com.moody_blues.server.work;
 
+import com.moody_blues.common.Logger;
 import com.moody_blues.server.ClientInstance;
 import com.moody_blues.server.MoodyBluesServer;
 import com.moody_blues.server.client.ClientInputHandler;
@@ -20,6 +21,8 @@ public class ClientAcceptWorker implements Runnable {
         while(MoodyBluesServer.isRunnning()) {
             try {
                 Socket socket = serverSocket.accept();
+
+                Logger.log("Accepted new user");
 
                 var clientInstance = new ClientInstance(socket);
 

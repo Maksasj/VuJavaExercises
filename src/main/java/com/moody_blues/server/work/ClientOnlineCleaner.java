@@ -1,5 +1,6 @@
 package com.moody_blues.server.work;
 
+import com.moody_blues.common.Logger;
 import com.moody_blues.server.ClientInstance;
 import com.moody_blues.server.MoodyBluesServer;
 
@@ -11,9 +12,13 @@ public class ClientOnlineCleaner implements Runnable{
         while(MoodyBluesServer.isRunnning()) {
             var toRemove = new ArrayList<ClientInstance>();
 
-            for(var client : MoodyBluesServer.connectedClients)
-                if(!client.online())
+            for(var client : MoodyBluesServer.connectedClients) {
+                if (!client.online()) {
                     toRemove.add(client);
+
+                    Logger.log("Disconnected user");
+                }
+            }
 
             MoodyBluesServer.connectedClients.removeAll(toRemove);
         }

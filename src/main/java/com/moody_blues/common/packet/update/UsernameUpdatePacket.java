@@ -1,4 +1,6 @@
-package com.moody_blues.common.packet;
+package com.moody_blues.common.packet.update;
+
+import com.moody_blues.common.packet.DataPacket;
 
 public class UsernameUpdatePacket extends DataPacket {
     private String username;

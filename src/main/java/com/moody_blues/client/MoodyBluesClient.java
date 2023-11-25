@@ -1,14 +1,18 @@
 package com.moody_blues.client;
 
+import com.moody_blues.client.controllers.CommonController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MoodyBluesClient extends Application {
     private static ClientData clientData = null;
+    private static boolean runnning = true;
+    private static ArrayList<CommonController> mainControllers = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -20,12 +24,25 @@ public class MoodyBluesClient extends Application {
         stage.show();
     }
 
+    public static void addControllerAsMain(CommonController controller) {
+        mainControllers.add(controller);
+    }
+
+    public static boolean isRunnning() {
+        return runnning;
+    }
+
     public static void main(String[] args) {
         launch();
     }
 
     public static ClientData getClientData() {
         return clientData;
+    }
+
+    synchronized public static void onAnyUpdate() {
+        for(var controller : mainControllers)
+            controller.onAnyUpdate();
     }
 
     synchronized public static void setClientData(ClientData clientData) {

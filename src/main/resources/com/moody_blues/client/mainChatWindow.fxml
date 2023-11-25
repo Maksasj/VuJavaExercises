@@ -11,63 +11,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<Pane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.moody_blues.client.controllers.ChatWindowController">
    <children>
-      <TabPane layoutY="61.0" maxHeight="600.0" maxWidth="800.0" minHeight="539.0" minWidth="800.0" prefHeight="539.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="chatTabPane" layoutY="61.0" maxHeight="600.0" maxWidth="800.0" minHeight="539.0" minWidth="800.0" prefHeight="539.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Dashboard">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="468.0" layoutY="24.0" prefHeight="438.0" prefWidth="318.0" />
+                        <ListView fx:id="roomsListView" layoutX="468.0" layoutY="24.0" prefHeight="438.0" prefWidth="318.0" />
                         <Button layoutX="670.0" layoutY="544.0" mnemonicParsing="false" text="Join selected room" />
-                        <Button layoutX="669.0" layoutY="470.0" mnemonicParsing="false" text="Join selected room" />
-                        <Button layoutX="555.0" layoutY="470.0" mnemonicParsing="false" text="Create new room" />
+                        <Button layoutX="669.0" layoutY="470.0" mnemonicParsing="false" onAction="#onJoinSelectedRoom" text="Join selected room" />
+                        <Button layoutX="555.0" layoutY="470.0" mnemonicParsing="false" onAction="#onCreateNewRoom" text="Create new room" />
                         <Text layoutX="468.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rooms">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
                         <Separator layoutX="452.0" orientation="VERTICAL" prefHeight="600.0" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Jojo fan room">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextField layoutX="14.0" layoutY="470.0" prefHeight="26.0" prefWidth="554.0" />
-                        <Button layoutX="585.0" layoutY="470.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="102.0" text="Send message" />
-                        <Button layoutX="693.0" layoutY="470.0" mnemonicParsing="false" text="Clear message" />
-                        <ListView layoutX="14.0" layoutY="23.0" prefHeight="438.0" prefWidth="554.0" />
-                        <Text layoutX="14.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Messages">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <ListView layoutX="585.0" layoutY="264.0" prefHeight="197.0" prefWidth="206.0" />
-                        <Text layoutX="585.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active users">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="584.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room information">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="584.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total messages: 133445" />
-                        <Text layoutX="584.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room type: Public" />
-                        <Text layoutX="584.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room name: Jojo fan room" />
-                        <Text layoutX="584.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active user record: 5" />
-                        <Text layoutX="584.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room statistics">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Text>
-                        <Separator layoutX="576.0" orientation="VERTICAL" prefHeight="600.0" />
                      </children>
                   </AnchorPane>
             </content>

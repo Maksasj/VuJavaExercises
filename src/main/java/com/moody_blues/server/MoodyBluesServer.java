@@ -5,6 +5,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.moody_blues.common.Common;
+import com.moody_blues.common.Logger;
+import com.moody_blues.common.packet.DataPacket;
+import com.moody_blues.common.packet.update.UpdateRoomListPacket;
 import com.moody_blues.server.work.ClientAcceptWorker;
 import com.moody_blues.server.work.ClientOnlineCleaner;
 
@@ -16,12 +19,12 @@ public class MoodyBluesServer {
     public static ArrayList<ClientInstance> connectedClients;
 
     public static void main(String[] args) {
-        System.out.println("Server has started !");
+        Logger.log("Moody Blues server has started");
 
         try {
             serverSocket = new ServerSocket(Common.DEFAULT_PORT);
         } catch (Exception ex) {
-            System.out.println("Failed to initialize server socket");
+            Logger.log("Failed to initialize server socket");
         }
 
         runnning = true;
@@ -41,7 +44,18 @@ public class MoodyBluesServer {
         return runnning;
     }
 
-    static synchronized public void addClientInstance(ClientInstance clientInstance) {
+    synchronized static public void sendPacketToEachClient(DataPacket dataPacket) {
+        Logger.log("Sending packet to each client");
+
+        for(var client : connectedClients) {
+            if(client.online()) {
+                var handler = client.getOutputHandler();
+                handler.queuePacket(dataPacket);
+            }
+        }
+    }
+
+    synchronized static public void addClientInstance(ClientInstance clientInstance) {
         connectedClients.add(clientInstance);
     }
 }

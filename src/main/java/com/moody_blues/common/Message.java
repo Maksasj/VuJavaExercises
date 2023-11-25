@@ -2,9 +2,28 @@ package com.moody_blues.common;
 
 import java.io.Serializable;
 import java.security.Timestamp;
-import java.time.Instant;
 
 public class Message implements Serializable {
-    public String text;
-    public Timestamp timestamp;
+    private String sender;
+    private String text;
+    private long timestamp;
+
+    public Message(String sender, String text) {
+        this.sender = sender;
+        this.text = text;
+
+        this.timestamp = System.currentTimeMillis();
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
 }
