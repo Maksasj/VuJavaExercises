@@ -1,5 +1,6 @@
 package com.moody_blues.server;
 
+import com.moody_blues.common.Logger;
 import com.moody_blues.server.client.ClientInputHandler;
 import com.moody_blues.server.client.ClientOutputHandler;
 
@@ -28,16 +29,20 @@ public class ClientInstance {
         return outputHandler;
     }
 
+    public void closeConnection() {
+        try {
+            clientSocket.close();
+        } catch (Exception ex) {
+            Logger.log("Failed to close client socket");
+        }
+    }
+
     public ClientInstance(Socket clientSocket) {
         this.clientSocket = clientSocket;
     }
 
     public Socket getSocket() {
         return clientSocket;
-    }
-
-    public boolean online() {
-        return clientSocket.isConnected();
     }
 
     synchronized public void setUsername(String username) {

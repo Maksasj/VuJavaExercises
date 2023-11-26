@@ -15,6 +15,14 @@ public class MoodyBluesClient extends Application {
     private static ArrayList<CommonController> mainControllers = new ArrayList<>();
     private static ArrayList<CommonController> chatControllers = new ArrayList<>();
 
+    public static void stopRunning() {
+        runnning = false;
+
+        if(clientData != null) {
+            clientData.closeConnection();
+        }
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MoodyBluesClient.class.getResource("connetionWindow.fxml"));

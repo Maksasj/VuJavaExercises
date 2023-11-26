@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -19,16 +18,31 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="roomsListView" layoutX="468.0" layoutY="24.0" prefHeight="438.0" prefWidth="318.0" />
+                        <ListView fx:id="roomsListView" layoutX="482.0" layoutY="24.0" prefHeight="438.0" prefWidth="304.0" />
                         <Button layoutX="670.0" layoutY="544.0" mnemonicParsing="false" text="Join selected room" />
                         <Button layoutX="669.0" layoutY="470.0" mnemonicParsing="false" onAction="#onJoinSelectedRoom" text="Join selected room" />
                         <Button layoutX="555.0" layoutY="470.0" mnemonicParsing="false" onAction="#onCreateNewRoom" text="Create new room" />
-                        <Text layoutX="468.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rooms">
+                        <Text layoutX="482.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Public rooms">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Text>
-                        <Separator layoutX="452.0" orientation="VERTICAL" prefHeight="600.0" />
+                        <Separator layoutX="468.0" orientation="VERTICAL" prefHeight="600.0" />
+                        <ListView fx:id="onlineUsersListView" layoutX="20.0" layoutY="24.0" prefHeight="437.0" prefWidth="178.0" />
+                        <Text layoutX="20.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Online users">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="21.0" layoutY="470.0" mnemonicParsing="false" onAction="#onCreatePrivateChat" text="Private chat with selected user" />
+                        <Separator layoutX="213.0" orientation="VERTICAL" prefHeight="600.0" />
+                        <ListView fx:id="privateRoomsListView" layoutX="227.0" layoutY="24.0" prefHeight="438.0" prefWidth="232.0" />
+                        <Text layoutX="227.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Private rooms">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="342.0" layoutY="470.0" mnemonicParsing="false" onAction="#onJoinPrivateSelectedRoom" text="Join selected room" />
                      </children>
                   </AnchorPane>
             </content>

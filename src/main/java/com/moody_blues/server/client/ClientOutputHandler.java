@@ -1,6 +1,7 @@
 package com.moody_blues.server.client;
 
 import com.moody_blues.client.MoodyBluesClient;
+import com.moody_blues.common.Logger;
 import com.moody_blues.common.packet.DataPacket;
 import com.moody_blues.server.ClientInstance;
 import com.moody_blues.server.MoodyBluesServer;
@@ -27,22 +28,27 @@ public class ClientOutputHandler implements Runnable {
         packetsToSend.add(packet);
     }
 
+    private ArrayList<DataPacket> getPacketsToSend() {
+        return new ArrayList<>(packetsToSend);
+    }
+
     @Override
     public void run() {
         try {
             while (MoodyBluesServer.isRunnning()) {
-                if(!clientInstance.online())
-                    break;
-
                 var toDelete = new ArrayList<DataPacket>();
 
-                // Wait until any packets needs to be sent
-                while (packetsToSend.isEmpty()) {
-                    Thread.sleep(1);
-                }
+                Thread.sleep(1);
 
-                for (var packet : packetsToSend) {
-                    outputStream.writeObject(packet);
+                for (var packet : getPacketsToSend()) {
+                    try {
+                        outputStream.writeObject(packet);
+                    } catch (Exception ex) {
+                        Logger.log("Failed to send packet to client, closing connection");
+                        clientInstance.closeConnection();
+                        break;
+                    }
+
                     toDelete.add(packet);
                 }
 

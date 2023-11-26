@@ -3,17 +3,19 @@ package com.moody_blues.common.packet.update;
 import com.moody_blues.common.Message;
 import com.moody_blues.common.packet.DataPacket;
 
-public class SendRoomMessagePacket extends DataPacket {
-    private String roomName;
+import java.util.UUID;
+
+public class SendPrivateMessagePacket extends DataPacket {
+    private UUID roomUUID;
     private Message message;
 
-    public SendRoomMessagePacket(String roomName, Message message) {
-        this.roomName = roomName;
+    public SendPrivateMessagePacket(UUID roomUUID, Message message) {
+        this.roomUUID = roomUUID;
         this.message = message;
     }
 
-    public String getRoomName() {
-        return roomName;
+    public UUID getRoomUUID() {
+        return roomUUID;
     }
 
     public Message getMessage() {

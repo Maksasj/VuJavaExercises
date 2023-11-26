@@ -1,6 +1,7 @@
 package com.moody_blues.client.work;
 
 import com.moody_blues.client.MoodyBluesClient;
+import com.moody_blues.common.Logger;
 import com.moody_blues.common.packet.DataPacket;
 import com.moody_blues.common.packet.request.RequestRoomListPacket;
 import com.moody_blues.common.packet.update.UsernameUpdatePacket;
@@ -32,13 +33,15 @@ public class ClientOutputWorker implements Runnable {
             while(MoodyBluesClient.isRunnning()) {
                 var toDelete = new ArrayList<DataPacket>();
 
-                // Wait until any packets needs to be sent
-                while(packetsToSend.isEmpty()) {
-                    Thread.sleep(1);
-                }
+                Thread.sleep(1);
 
                 for(var packet : packetsToSend) {
-                    outputStream.writeObject(packet);
+                    try {
+                        outputStream.writeObject(packet);
+                    } catch (Exception ex) {
+                        Logger.log("Closing output connection");
+                    }
+
                     toDelete.add(packet);
                 }
 

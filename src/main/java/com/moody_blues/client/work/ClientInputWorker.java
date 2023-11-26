@@ -1,9 +1,11 @@
 package com.moody_blues.client.work;
 
 import com.moody_blues.client.MoodyBluesClient;
-import com.moody_blues.common.packet.update.UpdateRoomDataPacket;
-import com.moody_blues.common.packet.update.UpdateRoomListPacket;
+import com.moody_blues.common.Logger;
+import com.moody_blues.common.packet.DataPacket;
+import com.moody_blues.common.packet.update.*;
 import com.moody_blues.server.ClientInstance;
+import com.moody_blues.server.MoodyBluesServer;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -24,13 +26,29 @@ public class ClientInputWorker implements Runnable {
 
         while(MoodyBluesClient.isRunnning()) {
             try {
-                var dataPacket = inputStream.readObject();
+                DataPacket dataPacket = null;
+
+                try {
+                    dataPacket = (DataPacket) inputStream.readObject();
+                } catch (Exception ex) {
+                    Logger.log("Closing input connection");
+                    continue;
+                }
 
                 if(dataPacket instanceof UpdateRoomListPacket) {
                     var packet = (UpdateRoomListPacket) dataPacket;
                     var rooms = packet.getRooms();
 
                     client.addRooms(rooms);
+
+                    MoodyBluesClient.onAnyUpdate();
+                }
+
+                if(dataPacket instanceof UpdatePrivateRoomListPacket) {
+                    var packet = (UpdateRoomListPacket) dataPacket;
+                    var rooms = packet.getRooms();
+
+                    client.addPrivateRooms(rooms);
 
                     MoodyBluesClient.onAnyUpdate();
                 }
@@ -43,6 +61,37 @@ public class ClientInputWorker implements Runnable {
                         continue;
 
                     room.setMessages(packet.getMessages());
+
+                    MoodyBluesClient.onAnyUpdate();
+                }
+
+                if(dataPacket instanceof UpdatePrivateRoomDataPacket) {
+                    var packet = (UpdatePrivateRoomDataPacket) dataPacket;
+
+                    var room = client.getPrivateRoom(packet.getRoomUUID());
+                    if(room == null)
+                        continue;
+
+                    room.setMessages(packet.getMessages());
+
+                    MoodyBluesClient.onAnyUpdate();
+                }
+
+                if(dataPacket instanceof OnlineUsersPacket) {
+                    var packet = (OnlineUsersPacket) dataPacket;
+
+                    var names = packet.getNames();
+
+                    client.setOnlineUserNames(names);
+                    MoodyBluesClient.onAnyUpdate();
+                }
+
+                if(dataPacket instanceof UpdatePrivateRoomPacket) {
+                    var packet = (UpdatePrivateRoomPacket) dataPacket;
+
+                    var room = packet.getRoom();
+
+                    client.addPrivateRoom(room);
 
                     MoodyBluesClient.onAnyUpdate();
                 }

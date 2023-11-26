@@ -3,8 +3,11 @@ package com.moody_blues.client.controllers;
 import com.moody_blues.client.MoodyBluesClient;
 import com.moody_blues.client.work.ClientOutputWorker;
 import com.moody_blues.common.Room;
+import com.moody_blues.common.packet.update.CreatePrivateRoomPacket;
 import com.moody_blues.common.packet.update.CreateRoomPacket;
+import com.moody_blues.common.packet.update.SendMessagePacket;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,8 +16,13 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChatWindowController extends CommonController {
     @FXML private ListView<Room> roomsListView;
+    @FXML private ListView<Room> privateRoomsListView;
+    @FXML private ListView<String> onlineUsersListView;
     @FXML private TabPane chatTabPane;
 
     public ChatWindowController() {
@@ -59,12 +67,48 @@ public class ChatWindowController extends CommonController {
         }
     }
 
+    @FXML
+    public void onCreatePrivateChat() {
+        var selectedUser = onlineUsersListView.getSelectionModel().getSelectedItem();
+        if(selectedUser != null) {
+            var names = new ArrayList<>(List.of(new String[]{selectedUser, MoodyBluesClient.getClientData().getUsername()}));
+
+            ClientOutputWorker.queuePacket(new CreatePrivateRoomPacket(names));
+        }
+    }
+
+    @FXML
+    public void onJoinPrivateSelectedRoom() {
+        var room = privateRoomsListView.getSelectionModel().getSelectedItem();
+        if(room == null)
+            return;
+
+        try {
+            var loader = new FXMLLoader(MoodyBluesClient.class.getResource("chatTab.fxml"));
+            Tab tab = loader.load();
+
+            ChatTabController controller = loader.getController();
+            controller.setRoom(room);
+
+            chatTabPane.getTabs().add(tab);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     @Override
     public void onAnyUpdate() {
         Platform.runLater(() -> {
             var client = MoodyBluesClient.getClientData();
 
             roomsListView.getItems().setAll(client.getRooms());
+            privateRoomsListView.getItems().setAll(client.getPrivateRooms());
+
+            onlineUsersListView.getItems().setAll(client.getOnlineUserNames());
         });
+    }
+
+    public void shutdown() {
+        MoodyBluesClient.stopRunning();
     }
 }

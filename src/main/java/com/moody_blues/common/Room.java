@@ -41,4 +41,9 @@ public class Room implements Serializable {
     public String getRoomName() {
         return roomName;
     }
+
+    @Override
+    public String toString() {
+        return roomName;
+    }
 }

@@ -33,11 +33,16 @@ public class ConnectionWindowController extends CommonController {
             new Thread(new ClientInputWorker()).start();
 
             FXMLLoader fxmlLoader = new FXMLLoader(MoodyBluesClient.class.getResource("mainChatWindow.fxml"));
+
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+
+            var controller = (ChatWindowController) fxmlLoader.getController();
+
             Stage stage = new Stage();
             stage.setTitle("Moody Blues");
             stage.setScene(scene);
             stage.setResizable(false);
+            stage.setOnCloseRequest(e -> controller.shutdown());
             stage.show();
 
             closeWindow();

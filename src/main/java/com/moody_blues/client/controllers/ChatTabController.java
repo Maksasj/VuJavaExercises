@@ -6,7 +6,9 @@ import com.moody_blues.client.common.ChatListCell;
 import com.moody_blues.client.work.ClientOutputWorker;
 import com.moody_blues.common.Message;
 import com.moody_blues.common.Room;
+import com.moody_blues.common.RoomType;
 import com.moody_blues.common.packet.update.SendMessagePacket;
+import com.moody_blues.common.packet.update.SendPrivateMessagePacket;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -49,6 +51,7 @@ public class ChatTabController extends CommonController implements Initializable
         tabTab.setText(room.getRoomName());
 
         updateRoomInfo();
+        updateMessagesList();
     }
 
     private void sendMessage() {
@@ -56,9 +59,30 @@ public class ChatTabController extends CommonController implements Initializable
         if(text != null && !text.isEmpty()) {
             var message = new Message(MoodyBluesClient.getClientData().getUsername(), text);
 
-            ClientOutputWorker.queuePacket(new SendMessagePacket(room.getRoomUUID(), message));
+
+            if(room.getType() == RoomType.PUBLIC) {
+                ClientOutputWorker.queuePacket(new SendMessagePacket(room.getRoomUUID(), message));
+            } else {
+                ClientOutputWorker.queuePacket(new SendPrivateMessagePacket(room.getRoomUUID(), message));
+            }
 
             messageTextField.setText("");
+        }
+    }
+
+    private void updateMessagesList() {
+        if (room == null)
+            return;
+
+
+        if(room.getType() == RoomType.PUBLIC) {
+            var messages = MoodyBluesClient.getClientData().getRoom(room.getRoomUUID()).getMessages();
+            messageListView.getItems().setAll(messages);
+            messageListView.scrollTo(messageListView.getItems().size());
+        } else {
+            var messages = MoodyBluesClient.getClientData().getPrivateRoom(room.getRoomUUID()).getMessages();
+            messageListView.getItems().setAll(messages);
+            messageListView.scrollTo(messageListView.getItems().size());
         }
     }
 
@@ -76,13 +100,7 @@ public class ChatTabController extends CommonController implements Initializable
     @Override
     public void onAnyUpdate() {
         Platform.runLater(() -> {
-            if (room == null)
-                return;
-
-            var messages = MoodyBluesClient.getClientData().getRoom(room.getRoomUUID()).getMessages();
-            messageListView.getItems().setAll(messages);
-            messageListView.scrollTo(messageListView.getItems().size());
-
+            updateMessagesList();
             updateRoomInfo();
         });
     }
