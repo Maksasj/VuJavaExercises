@@ -1,4 +1,4 @@
-package com.tartar.tartar_mouse_edition.idea;
+package com.tartar_mouse_edition.idea;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,8 +1,12 @@
-package com.tartar.tartar_mouse_edition.game;
+package com.tartar_mouse_edition.game;
 
 import static com.raylib.Jaylib.RAYWHITE;
 import static com.raylib.Jaylib.VIOLET;
 import static com.raylib.Raylib.*;
+
+import org.luaj.vm2.*;
+import org.luaj.vm2.lib.jse.*;
+// import org.luaj.vm2.lib.jse.JsePlatform;
 
 public class TartarMEGame implements Runnable {
     public static void main() {
@@ -29,8 +33,19 @@ public class TartarMEGame implements Runnable {
         CloseWindow();
     }
 
+    public static void test() {
+        LuaValue globals = JsePlatform.standardGlobals();
+        Globals gl = JsePlatform.standardGlobals();
+        gl.load("x = 10 \n\t function TestF(v1, v2)\n\t  x = x + 10\n\t print('Test function, v1: ' .. x, 'v2: ' .. v2)\n\treturn v2\nend").call();
+        gl.get("TestF").call( LuaValue.valueOf("ARG1"), LuaValue.valueOf("ARG2"));
+        gl.get("TestF").call( LuaValue.valueOf("ARG1"), LuaValue.valueOf("ARG2"));
+        LuaValue lv = gl.get("TestF").call( LuaValue.valueOf("ARG1"), LuaValue.valueOf("ARG2"));
+        System.out.println(lv.toString());
+    }
+
     @Override
     public void run() {
+        test();
         main();
     }
 }
