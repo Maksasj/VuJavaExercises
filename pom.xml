@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>uk.co.electronstudio.jaylib</groupId>
+            <artifactId>jaylib</artifactId>
+            <version>[4.5.0,4.6)</version>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>20.0.1</version>
@@ -61,7 +66,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.tartar_mouse_edition/com.tartar.tartar_mouse_edition.HelloApplication
+                                com.example.tartar_mouse_edition/com.tartar.tartar_mouse_edition.idea.TartarMEIDEA
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

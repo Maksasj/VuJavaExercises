@@ -1,4 +1,4 @@
-package com.tartar.tartar_mouse_edition;
+package com.tartar.tartar_mouse_edition.idea;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,13 +7,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class TartarMEIDEA extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(TartarMEIDEA.class.getResource("ideaWindow.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 600, 450);
+        stage.setTitle("Tartar: Mouse Edition IDEA");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="450.0" maxWidth="600.0" minHeight="450.0" minWidth="600.0" prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tartar.tartar_mouse_edition.idea.MainController">
+   <children>
+      <TextArea fx:id="codeTextArea" layoutX="14.0" layoutY="14.0" prefHeight="426.0" prefWidth="463.0" />
+      <Button layoutX="482.0" layoutY="415.0" mnemonicParsing="false" onAction="#onCodeSubmit" prefHeight="25.0" prefWidth="112.0" text="Submit" />
+   </children>
+</Pane>
