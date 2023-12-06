@@ -1,32 +1,37 @@
 package com.tartar_mouse_edition.game;
 
 import static com.raylib.Jaylib.RAYWHITE;
-import static com.raylib.Jaylib.VIOLET;
 import static com.raylib.Raylib.*;
 
+import com.tartar_mouse_edition.game.level.Level;
 import org.luaj.vm2.*;
 import org.luaj.vm2.lib.jse.*;
-// import org.luaj.vm2.lib.jse.JsePlatform;
 
 public class TartarMEGame implements Runnable {
     public static void main() {
         InitWindow(800, 800, "Tartar: Mouse Edition");
         SetTargetFPS(60);
         Camera3D camera = new Camera3D()
-                ._position(new Vector3().x(18).y(16).z(18))
-                .target(new Vector3())
-                .up(new Vector3().x(0).y(1).z(0))
-                .fovy(45).projection(CAMERA_PERSPECTIVE);
+            ._position(new Vector3().x(0).y(8).z(8))
+            .target(new Vector3().x(0).y(0).z(0))
+            .up(new Vector3().x(0).y(1).z(0))
+            .fovy(45).projection(CAMERA_PERSPECTIVE);
+
+        Level level = new Level();
+        Rat rat = new Rat();
 
         while (!WindowShouldClose()) {
-            UpdateCamera(camera, CAMERA_ORBITAL);
+            rat.act(camera);
+
             BeginDrawing();
-            ClearBackground(RAYWHITE);
-            BeginMode3D(camera);
-            DrawGrid(20, 1.0f);
-            EndMode3D();
-            DrawText("Hello world", 190, 200, 20, VIOLET);
-            DrawFPS(20, 20);
+                ClearBackground(RAYWHITE);
+
+                BeginMode3D(camera);
+                    level.render(camera);
+                    rat.render(camera);
+                EndMode3D();
+
+                level.render();
             EndDrawing();
         }
 
