@@ -8,7 +8,7 @@ import com.tartar_mouse_edition.game.common.IActor;
 import static com.raylib.Raylib.*;
 import static com.raylib.Raylib.GetMouseX;
 
-public class CameraActorEntity extends Entity implements IActor {
+public class CameraActorEntity extends SmoothEntity implements IActor {
     private boolean mauseHold;
     private float mauseX;
     private float prevMauseX;
@@ -33,9 +33,9 @@ public class CameraActorEntity extends Entity implements IActor {
             5.0f,
             (float) (position.z() - 7*Math.cos(mauseX)));
 
-        camPos.x(camPos.x() * zoom);
-        camPos.y(camPos.y() * zoom);
-        camPos.z(camPos.z() * zoom);
+        // camPos.x(camPos.x() * zoom);
+        // camPos.y(camPos.y() * zoom);
+        // camPos.z(camPos.z() * zoom);
 
         camera._position(camPos);
 

@@ -2,7 +2,6 @@ package com.tartar_mouse_edition.game.level;
 
 import com.raylib.Jaylib;
 import com.raylib.Raylib;
-import com.sun.prism.Texture;
 import com.tartar_mouse_edition.game.common.IRendarable2D;
 import com.tartar_mouse_edition.game.common.IRendarable3D;
 
@@ -16,7 +15,7 @@ public class Level implements IRendarable3D, IRendarable2D {
     private Vector3 position;
 
     public Level() {
-        this.map = new Map();
+        this.map = new Map(new MazeGenerator());
         this.model = LoadModelFromMesh(map.genMesh());
 
         var texture = LoadTexture("src/main/resources/cubicmap_atlas.png");
@@ -24,7 +23,11 @@ public class Level implements IRendarable3D, IRendarable2D {
             .maps()
             .texture(texture);
 
-        this.position = new Jaylib.Vector3( -12.0f, 0.0f,  -12.0f);
+        this.position = new Jaylib.Vector3( 0.0f, 0.0f,  0.0f);
+    }
+
+    public Map getMap() {
+        return map;
     }
 
     @Override

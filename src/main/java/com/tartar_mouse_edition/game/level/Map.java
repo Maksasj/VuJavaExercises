@@ -10,14 +10,30 @@ import static com.raylib.Raylib.*;
 public class Map implements IRendarable2D {
     private Raylib.Image image;
     private Raylib.Texture texture;
+    private Maze maze;
 
-    public Map() {
+    public Map(MazeGenerator mazeGenerator) {
         this.image = LoadImage("src/main/resources/map.png");
+        this.maze = mazeGenerator.getMaze();
+
+        for(int i = 0; i < maze.getSize(); ++i) {
+            for(int j = 0; j < maze.getSize(); ++j) {
+                if(maze.isSolidAt(i, j) == 0)
+                    ImageDrawPixel(image, i, j, new Jaylib.Color(0, 0, 0, 255));
+                else
+                    ImageDrawPixel(image, i, j, new Jaylib.Color(255, 255, 255, 255));
+            }
+        }
+
         this.texture = LoadTextureFromImage(image);
     }
 
     public Mesh genMesh() {
         return GenMeshCubicmap(image, new Jaylib.Vector3( 1.0f, 1.0f,  1.0f));
+    }
+
+    public Maze getMaze() {
+        return maze;
     }
 
     @Override
