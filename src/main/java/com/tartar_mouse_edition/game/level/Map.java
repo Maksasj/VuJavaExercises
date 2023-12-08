@@ -47,11 +47,11 @@ public class Map implements IRendarable2D {
         }
 
         for(int i = 0; i < maze.getSize(); ++i) {
-            ImageDrawPixel(miniMapImage, i, 0, new Jaylib.Color(79, 135, 200, 255));
-            ImageDrawPixel(miniMapImage, i, maze.getSize() - 1, new Jaylib.Color(79, 135, 200, 255));
+            ImageDrawPixel(miniMapImage, i, 0, new Jaylib.Color(0, 0, 0, 255));
+            ImageDrawPixel(miniMapImage, i, maze.getSize() - 1, new Jaylib.Color(0, 0, 0, 255));
 
-            ImageDrawPixel(miniMapImage, 0, i, new Jaylib.Color(79, 135, 200, 255));
-            ImageDrawPixel(miniMapImage, maze.getSize() - 1, i, new Jaylib.Color(79, 135, 200, 255));
+            ImageDrawPixel(miniMapImage, 0, i, new Jaylib.Color(0, 0, 0, 255));
+            ImageDrawPixel(miniMapImage, maze.getSize() - 1, i, new Jaylib.Color(0, 0, 0, 255));
         }
 
         ImageDrawPixel(miniMapImage, mouse.x, mouse.y, new Jaylib.Color(113, 200, 79, 255));

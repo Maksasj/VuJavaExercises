@@ -1,7 +1,6 @@
 package com.tartar_mouse_edition.game;
 
-import static com.raylib.Jaylib.RAYWHITE;
-import static com.raylib.Jaylib.WHITE;
+import static com.raylib.Jaylib.*;
 import static com.raylib.Raylib.*;
 
 import com.raylib.Jaylib;
@@ -13,6 +12,7 @@ import com.tartar_mouse_edition.game.rat.RatController;
 import javafx.scene.input.MouseButton;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class TartarMEGame implements Runnable {
     public static GameState state;
@@ -32,17 +32,19 @@ public class TartarMEGame implements Runnable {
     private static float levelCompleteOpacity = 0.0f;
     private static boolean restartLevel = true;
 
+    private static Font mainFont;
+
     public static void main() {
-        // SetTraceLogLevel(LOG_NONE);
+        SetTraceLogLevel(LOG_NONE);
         state = GameState.SPLASH_SCREEN;
         animationTimer = 0;
 
         InitWindow(800, 800, "Tartar: Mouse Edition");
         SetTargetFPS(60);
         Camera3D camera = new Camera3D()
-            ._position(new Vector3().x(0).y(8).z(8))
-            .target(new Vector3().x(0).y(0).z(0))
-            .up(new Vector3().x(0).y(1).z(0))
+            ._position(new Jaylib.Vector3().x(0).y(8).z(8))
+            .target(new Jaylib.Vector3().x(0).y(0).z(0))
+            .up(new Jaylib.Vector3().x(0).y(1).z(0))
             .fovy(45).projection(CAMERA_PERSPECTIVE);
 
         levelTarget = LoadRenderTexture(800, 800);
@@ -53,6 +55,8 @@ public class TartarMEGame implements Runnable {
         levelCompleteTexture = LoadTexture("src/main/resources/levelCompleteScreen.png");
 
         Shader shader = LoadShader("src/main/resources/shader/shader.vs", "src/main/resources/shader/shader.fs");
+
+        mainFont = LoadFont("src/main/resources/font.ttf");
 
         while (!WindowShouldClose()) {
             if(restartLevel) {
@@ -70,6 +74,7 @@ public class TartarMEGame implements Runnable {
 
             if(rat.getGridPos().equal(cheese.getGridPos()) && state != GameState.LEVEL_FINISHED) {
                 state = GameState.LEVEL_FINISHED;
+                level.levelFinished();
                 forceStop();
             }
 
@@ -129,6 +134,8 @@ public class TartarMEGame implements Runnable {
         DrawRectangle(0, 0, 800, 800, new Jaylib.Color(0, 0, 0, (int) (150 * titleOpacity)));
         DrawTexture(titleTexture, 0, 0, new Jaylib.Color(255, 255, 255, (int) (255 * titleOpacity)));
 
+        DrawTextEx(mainFont, level.getEclapsedTimeString(), new Jaylib.Vector2(10, 730), 65, 10, BLACK);
+
         level.render();
     }
 
@@ -151,6 +158,7 @@ public class TartarMEGame implements Runnable {
 
         DrawRectangle(0, 0, 800, 800, new Jaylib.Color(0, 0, 0, (int) (150 * levelCompleteOpacity)));
         DrawTexture(levelCompleteTexture, 0, 0, new Jaylib.Color(255, 255, 255, (int) (255 * levelCompleteOpacity)));
+        DrawTextEx(mainFont, level.getCompleteTime(), new Jaylib.Vector2(305, 415), 65, 10, new Jaylib.Color(255, 255, 255, (int) (255 * levelCompleteOpacity)));
     }
 
     public static void loadLevel() {
