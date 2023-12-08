@@ -3,12 +3,16 @@ package com.tartar_mouse_edition.idea;
 import java.awt.*;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.tartar_mouse_edition.game.TartarMEGame;
+import com.tartar_mouse_edition.idea.components.logMessage.LogMessage;
 import javafx.scene.layout.BorderPane;
 
 import com.tartar_mouse_edition.idea.components.codeEditor.CodeEditor;
@@ -37,6 +41,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class TartarMEIDEA extends Application {
+    public static TartarMEGame game;
+    public static Thread gameThread;
+    public static MainController controller;
+
+    public static ArrayList<LogMessage> logMessages;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -50,5 +60,12 @@ public class TartarMEIDEA extends Application {
 
         stage.setResizable(false);
         stage.show();
+
+        logMessages = new ArrayList<>();
+
+        game = new TartarMEGame();
+        gameThread = new Thread(game);
+
+        gameThread.start();
     }
 }

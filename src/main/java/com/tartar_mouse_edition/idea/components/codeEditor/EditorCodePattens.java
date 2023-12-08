@@ -7,7 +7,10 @@ public class EditorCodePattens {
             "and", "break", "do", "else", "elseif", "end",
             "false", "for", "function", "if", "in", "local",
             "nil", "not", "or", "repeat", "return", "then",
-            "true", "until", "while"
+            "true", "until", "while",
+
+            "rat", "walk", "rotate_left", "rotate_right",
+            "look", "look_left", "look_right"
     };
 
     public static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";

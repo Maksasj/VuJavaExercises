@@ -6,13 +6,35 @@ import static com.raylib.Raylib.*;
 import com.raylib.Jaylib;
 import com.tartar_mouse_edition.game.common.Pair2D;
 import com.tartar_mouse_edition.game.level.Level;
-import org.luaj.vm2.*;
-import org.luaj.vm2.lib.jse.*;
+import com.tartar_mouse_edition.game.rat.Rat;
+import com.tartar_mouse_edition.game.rat.RatController;
 
 import java.util.Random;
 
 public class TartarMEGame implements Runnable {
+    /*
+    -- write your code there
+
+    function path()
+        while(true) do
+            rat:rotate_left()
+
+            if(not rat:look()) then
+                rat:rotate_right()
+            end
+
+            if(not rat:look()) then
+                rat:rotate_right()
+            end
+
+            rat:walk()
+        end
+    end
+    */
+
     public static void main() {
+        SetTraceLogLevel(LOG_NONE);
+
         InitWindow(800, 800, "Tartar: Mouse Edition");
         SetTargetFPS(60);
         Camera3D camera = new Camera3D()
@@ -24,7 +46,8 @@ public class TartarMEGame implements Runnable {
         Level level = new Level();
 
         var random = new Random();
-        var maze = level.getMap().getMaze();
+        var map = level.getMap();
+        var maze = map.getMaze();
 
         Pair2D startPos = null;
         Pair2D endPos = null;
@@ -33,14 +56,10 @@ public class TartarMEGame implements Runnable {
             var start = new Pair2D(random.nextInt(0, 23), random.nextInt(0, 23));
             var finish = new Pair2D(random.nextInt(0, 23), random.nextInt(0, 23));
 
-            if(maze.isSolidAt(start.x, start.y) == 1)
-                continue;
+            if(start.equal(finish)) continue;
 
-            if(maze.isSolidAt(finish.x, finish.y) == 1)
-                continue;
-
-            if(start.equal(finish))
-                continue;
+            if(maze.isSolidAt(start.x, start.y) == 1) continue;
+            if(maze.isSolidAt(finish.x, finish.y) == 1) continue;
 
             if(maze.pathExist(start.x, start.y, finish.x, finish.y)) {
                 startPos = start;
@@ -52,9 +71,20 @@ public class TartarMEGame implements Runnable {
         Rat rat = new Rat(new Jaylib.Vector3(startPos.x, 0.0f, startPos.y));
         Cheese cheese = new Cheese(new Jaylib.Vector3(endPos.x, 0.0f, endPos.y));
 
+        RatController.setActiveRat(rat);
+        RatController.setActiveLevel(level);
+        RatController.setActiveCheese(cheese);
+
+        updateMiniMap();
+
         while (!WindowShouldClose()) {
             rat.tick();
             rat.act(camera);
+
+            if(rat.isMoved()) {
+                updateMiniMap();
+                rat.markMoved(false);
+            }
 
             BeginDrawing();
                 ClearBackground(RAYWHITE);
@@ -72,19 +102,29 @@ public class TartarMEGame implements Runnable {
         CloseWindow();
     }
 
-    public static void test() {
-        LuaValue globals = JsePlatform.standardGlobals();
-        Globals gl = JsePlatform.standardGlobals();
-        gl.load("x = 10 \n\t function TestF(v1, v2)\n\t  x = x + 10\n\t print('Test function, v1: ' .. x, 'v2: ' .. v2)\n\treturn v2\nend").call();
-        gl.get("TestF").call( LuaValue.valueOf("ARG1"), LuaValue.valueOf("ARG2"));
-        gl.get("TestF").call( LuaValue.valueOf("ARG1"), LuaValue.valueOf("ARG2"));
-        LuaValue lv = gl.get("TestF").call( LuaValue.valueOf("ARG1"), LuaValue.valueOf("ARG2"));
-        System.out.println(lv.toString());
+    public static void submitCode(String text) {
+        RatController.simulate(text);
+    }
+
+    public static void forceStop() {
+        RatController.forceStop();
+    }
+
+    public static void updateMiniMap() {
+        var level = RatController.getActiveLevel();
+        var rat = RatController.getActiveRat();
+        var cheese = RatController.getActiveCheese();
+
+        var map = level.getMap();
+
+        var ratPos = new Pair2D((int) rat.position.x(), (int) rat.position.z());
+        var cheesePos = new Pair2D((int) cheese.position.x(), (int) cheese.position.z());
+
+        map.updateMiniMap(ratPos, cheesePos);
     }
 
     @Override
     public void run() {
-        test();
         main();
     }
 }

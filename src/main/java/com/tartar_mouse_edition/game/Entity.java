@@ -1,5 +1,6 @@
 package com.tartar_mouse_edition.game;
 
+import com.raylib.Jaylib;
 import com.raylib.Raylib;
 import com.tartar_mouse_edition.game.common.ITickable;
 

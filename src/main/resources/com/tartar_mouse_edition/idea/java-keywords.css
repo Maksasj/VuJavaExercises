@@ -3,13 +3,15 @@
 }
 
 .keyword {
-    -fx-fill: #cd854f;
+    -fx-fill: #4f87c8;
     -fx-font-weight: bold;
 }
 
 .paren {
-    -fx-fill: #ff0000;
+    -fx-fill: #c8aa4f;
+    -fx-font-weight: bold;
 }
+
 .bracket {
     -fx-fill: darkgreen;
 }

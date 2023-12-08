@@ -38,11 +38,13 @@ public class CodeEditor extends CodeArea {
     }
 
     public CodeEditor() {
-        super();
+        super("-- write your code there\n" +
+            "\n" +
+            "function path()\n" +
+            "\n" +
+            "end\n");
 
         setParagraphGraphicFactory(LineNumberFactory.get(this));
-        // setContextMenu(new DefaultContextMenu());
-
         getVisibleParagraphs().addModificationObserver(new VisibleParagraphStyler<>(this, this::computeHighlighting));
 
         final Pattern whiteSpace = Pattern.compile( "^\\s+" );
@@ -54,7 +56,5 @@ public class CodeEditor extends CodeArea {
                 if ( m0.find() ) Platform.runLater( () -> insertText(caretPosition, m0.group()));
             }
         });
-
-        replaceText(0, 0, "");
     }
 }

@@ -11,23 +11,19 @@
       <Pane fx:id="codePane" maxHeight="450.0" maxWidth="600.0" minHeight="450.0" minWidth="600.0" prefHeight="450.0" prefWidth="600.0" />
       <Pane layoutY="450.0" maxHeight="150.0" maxWidth="600.0" minHeight="150.0" minWidth="600.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: #2b2d30;">
          <children>
-            <Button layoutX="525.0" layoutY="5.0" mnemonicParsing="false" onAction="#onCodeSubmit" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: c84f4f;" text="Execute" textFill="#1e1f22">
+            <Button layoutX="525.0" layoutY="5.0" mnemonicParsing="false" onAction="#onExecuteCode" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: #57955c;" text="Execute" textFill="#1e1f22">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button layoutX="422.0" layoutY="5.0" mnemonicParsing="false" onAction="#onCodeSubmit" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: c84f4f;" text="Execute step" textFill="#1e1f22">
+            <Button layoutX="82.0" layoutY="5.0" mnemonicParsing="false" onAction="#onForceStop" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #c84f4f;" text="Force stop" textFill="#1e1f22">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button layoutX="82.0" layoutY="4.0" mnemonicParsing="false" onAction="#onCodeSubmit" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #57955c;" text="Force stop" textFill="#1e1f22">
+            <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#onRestart" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: #c8aa4f;" text="Restart" textFill="#1e1f22">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#onCodeSubmit" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: #57955c;" text="Restart" textFill="#1e1f22">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Button>
-            <ListView layoutX="5.0" layoutY="38.0" prefHeight="91.0" prefWidth="590.0" style="-fx-background-color: #1e1f22;" />
+            <ListView fx:id="consoleListView" layoutX="5.0" layoutY="38.0" prefHeight="91.0" prefWidth="590.0" style="-fx-background-color: #1e1f22;" />
             <Text fill="#3c3f41" layoutX="444.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="execution 25ms" textAlignment="RIGHT" wrappingWidth="150.2933349609375">
                <font>
                   <Font name="System Bold" size="12.0" />
@@ -38,6 +34,11 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Text>
+            <Button layoutX="430.0" layoutY="5.0" mnemonicParsing="false" onAction="#onClearLogs" prefHeight="25.0" prefWidth="89.0" style="-fx-background-color: #4f87c8;" text="Clear logs" textFill="#1e1f22">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

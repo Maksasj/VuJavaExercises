@@ -19,6 +19,14 @@ public class SmoothEntity extends Entity implements ITickable {
         smoothPosition.z(smoothPosition.z() + (position.z() - smoothPosition.z()) / 10.0f);
     }
 
+    public void movePosition(Raylib.Vector3 move) {
+        setPosition(new Jaylib.Vector3(
+        position.x() + move.x(),
+        position.y() + move.y(),
+        position.z() + move.z()
+        ));
+    }
+
     @Override
     public Raylib.Vector3 getPosition() {
         return smoothPosition;
