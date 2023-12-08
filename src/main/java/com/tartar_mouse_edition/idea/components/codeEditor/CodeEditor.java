@@ -7,7 +7,9 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
+import org.reactfx.Subscription;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
@@ -22,10 +24,9 @@ public class CodeEditor extends CodeArea {
         while(matcher.find()) {
             String styleClass =
                 matcher.group("KEYWORD") != null ? "keyword" :
+                matcher.group("RATKEYWORDS") != null ? "rat_keyword" :
+                matcher.group("VALUEKEYWORDS") != null ? "value_keyword" :
                 matcher.group("PAREN") != null ? "paren" :
-                matcher.group("BRACE") != null ? "brace" :
-                matcher.group("BRACKET") != null ? "bracket" :
-                matcher.group("SEMICOLON") != null ? "semicolon" :
                 matcher.group("STRING") != null ? "string" :
                 matcher.group("COMMENT") != null ? "comment" : "clear_text";
 
@@ -38,13 +39,19 @@ public class CodeEditor extends CodeArea {
     }
 
     public CodeEditor() {
-        super("-- write your code there\n" +
-            "\n" +
-            "function path()\n" +
-            "\n" +
-            "end\n");
+        super();
 
         setParagraphGraphicFactory(LineNumberFactory.get(this));
+
+
+        Subscription cleanupWhenNoLongerNeedIt =
+                multiPlainChanges()
+                .successionEnds(Duration.ofMillis(50))
+                .subscribe(ignore -> this.setStyleSpans(0, computeHighlighting(this.getText())));
+
+        // when no longer need syntax highlighting and wish to clean up memory leaks
+        // run: `cleanupWhenNoLongerNeedIt.unsubscribe();`
+
         getVisibleParagraphs().addModificationObserver(new VisibleParagraphStyler<>(this, this::computeHighlighting));
 
         final Pattern whiteSpace = Pattern.compile( "^\\s+" );
@@ -56,5 +63,23 @@ public class CodeEditor extends CodeArea {
                 if ( m0.find() ) Platform.runLater( () -> insertText(caretPosition, m0.group()));
             }
         });
+
+        replaceText(0, 0,
+            "function path()\n" +
+            "    while(true) do\n" +
+            "        rat:rotate_left()\n" +
+            "\n" +
+            "        if(not rat:look()) then\n" +
+            "            rat:rotate_right()\n" +
+            "        end\n" +
+            "\n" +
+            "        if(not rat:look()) then\n" +
+            "            rat:rotate_right()\n" +
+            "        end\n" +
+            "\n" +
+            "        rat:walk()\n" +
+            "    end\n" +
+            "end\n"
+        );
     }
 }

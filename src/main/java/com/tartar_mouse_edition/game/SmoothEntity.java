@@ -3,6 +3,7 @@ package com.tartar_mouse_edition.game;
 import com.raylib.Jaylib;
 import com.raylib.Raylib;
 import com.tartar_mouse_edition.game.common.ITickable;
+import com.tartar_mouse_edition.game.common.Pair2D;
 
 public class SmoothEntity extends Entity implements ITickable {
     private Raylib.Vector3 smoothPosition;

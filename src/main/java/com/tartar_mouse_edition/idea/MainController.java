@@ -34,7 +34,7 @@ public class MainController implements Initializable {
         TartarMEGame.forceStop();
     }
     @FXML protected void onRestart() {
-
+        TartarMEGame.restart();
     }
 
     @Override

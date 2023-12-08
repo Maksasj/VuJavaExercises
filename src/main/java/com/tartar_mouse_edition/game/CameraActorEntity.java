@@ -29,9 +29,9 @@ public class CameraActorEntity extends SmoothEntity implements IActor {
         camera.target(position);
 
         var camPos = new Jaylib.Vector3(
-            (float) (position.x() - 7*Math.sin(mauseX)),
-            5.0f,
-            (float) (position.z() - 7*Math.cos(mauseX)));
+            (float) (position.x() - zoom * 7*Math.sin(mauseX)),
+                zoom * 5.0f,
+            (float) (position.z() - zoom * 7*Math.cos(mauseX)));
 
         // camPos.x(camPos.x() * zoom);
         // camPos.y(camPos.y() * zoom);

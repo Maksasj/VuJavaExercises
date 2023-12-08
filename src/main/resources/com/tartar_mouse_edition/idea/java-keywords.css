@@ -1,9 +1,20 @@
 .text {
     -fx-fill: #d2d2d2;
+    -fx-font-weight: bold;
 }
 
 .keyword {
     -fx-fill: #4f87c8;
+    -fx-font-weight: bold;
+}
+
+.rat_keyword {
+    -fx-fill: #f170de;
+    -fx-font-weight: bold;
+}
+
+.value_keyword {
+    -fx-fill: #58ff67;
     -fx-font-weight: bold;
 }
 
@@ -12,12 +23,6 @@
     -fx-font-weight: bold;
 }
 
-.bracket {
-    -fx-fill: darkgreen;
-}
-.brace {
-    -fx-fill: #2b2d30;
-}
 .string {
     -fx-fill: #69a966;
 }
@@ -33,7 +38,6 @@
 .lineno {
     -fx-background-color: #1e1f22;
     -fx-font-weight: bold;
-    -fx-text-fill: red;
 }
 
 .paragraph-text {

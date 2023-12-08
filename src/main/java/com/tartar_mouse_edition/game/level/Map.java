@@ -61,7 +61,7 @@ public class Map implements IRendarable2D {
     }
 
     public Mesh genMesh() {
-        return GenMeshCubicmap(image, new Jaylib.Vector3( 1.0f, 1.0f,  1.0f));
+        return GenMeshCubicmap(image, new Jaylib.Vector3( 1.0f, 0.3f,  1.0f));
     }
 
     public Maze getMaze() {
