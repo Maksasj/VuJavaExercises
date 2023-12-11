@@ -11,7 +11,7 @@ import java.util.List;
 
 public class TableViewer extends Application {
     private static List<Human> humanRecords;
-    private static List<ICommonController> controllers;
+    private static List<CommonController> controllers;
     private static List<String> threadErrorMessages;
 
     synchronized public static void addThreadErrorMessage(String message) {
@@ -26,7 +26,11 @@ public class TableViewer extends Application {
         return new ArrayList<>(humanRecords);
     }
 
-    public static void addController(ICommonController controller) {
+    public static List<String> getThreadErrorMessages() {
+        return new ArrayList<>(threadErrorMessages);
+    }
+
+    public static void addController(CommonController controller) {
         controllers.add(controller);
     }
 
@@ -46,7 +50,7 @@ public class TableViewer extends Application {
         var controller = (ThreadsController) fxmlLoader.getController();
 
         Stage stage = new Stage();
-        stage.setTitle("TableViewer: Threads");
+        stage.setTitle("TableViewer! Threads");
         stage.setScene(scene);
         stage.setResizable(false);
 

@@ -4,13 +4,16 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tableviewer.MainController">
    <children>
-      <TableView fx:id="humanTableView" layoutY="115.0" prefHeight="485.0" prefWidth="800.0">
+      <TableView fx:id="humanTableView" layoutY="108.0" prefHeight="493.0" prefWidth="800.0">
          <columns>
             <TableColumn fx:id="idTableColumn" prefWidth="75.0" text="ID" />
             <TableColumn fx:id="firstNameTableColumn" prefWidth="75.0" text="First Name" />
@@ -22,12 +25,21 @@
             <TableColumn fx:id="birthDateTableColumn" prefWidth="75.0" text="Birth Date" />
          </columns>
       </TableView>
-      <DatePicker layoutX="14.0" layoutY="42.0" promptText="start date" />
-      <DatePicker layoutX="14.0" layoutY="77.0" promptText="end date" />
-      <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Date filter" />
-      <CheckBox layoutX="201.0" layoutY="14.0" mnemonicParsing="false" text="Alphabet filter" />
-      <ChoiceBox layoutX="201.0" layoutY="42.0" prefWidth="150.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="14.0" layoutY="37.0" promptText="start date" />
+      <DatePicker fx:id="endDatePicker" layoutX="14.0" layoutY="73.0" promptText="end date" />
+      <CheckBox fx:id="dateFilterCheckBox" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" text="Date filter" />
+      <CheckBox fx:id="alphabetFilterCheckBox" layoutX="199.0" layoutY="6.0" mnemonicParsing="false" text="Alphabet filter" />
+      <ChoiceBox fx:id="tabChoiceBox" layoutX="201.0" layoutY="30.0" prefWidth="150.0" />
       <Button layoutX="743.0" layoutY="77.0" mnemonicParsing="false" onAction="#onFilter" text="Filter" />
-      <CheckBox layoutX="201.0" layoutY="81.0" mnemonicParsing="false" text="Reverse order" />
+      <CheckBox layoutX="266.0" layoutY="77.0" mnemonicParsing="false" text="Reverse order" />
+      <CheckBox fx:id="idFilterCheckBox" layoutX="387.0" layoutY="6.0" mnemonicParsing="false" text="ID filter" />
+      <TextField layoutX="201.0" layoutY="73.0" prefHeight="25.0" prefWidth="25.0" />
+      <Text layoutX="202.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
+      <TextField layoutX="235.0" layoutY="73.0" prefHeight="25.0" prefWidth="25.0" />
+      <Text layoutX="238.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End" />
+      <Spinner fx:id="startIdSpinner" editable="true" layoutX="387.0" layoutY="42.0" prefHeight="25.0" prefWidth="75.0" />
+      <Spinner fx:id="endIdSpinner" editable="true" layoutX="387.0" layoutY="76.0" prefHeight="25.0" prefWidth="75.0" />
+      <Text layoutX="462.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="start ID" />
+      <Text layoutX="462.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="end ID" />
    </children>
 </Pane>

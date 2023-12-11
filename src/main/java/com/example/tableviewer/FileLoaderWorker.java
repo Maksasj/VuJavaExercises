@@ -63,14 +63,14 @@ public class FileLoaderWorker implements Runnable {
         try {
             totalLines = countLines(file);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            TableViewer.addThreadErrorMessage("[Thread " + id + "]" + ex.getMessage());
             return;
         }
 
         try {
             reader = new BufferedReader(new FileReader(file));
         } catch (Exception ex) {
-            ex.printStackTrace();
+            TableViewer.addThreadErrorMessage("[Thread " + id + "]" + ex.getMessage());
             return;
         }
 
@@ -78,7 +78,7 @@ public class FileLoaderWorker implements Runnable {
         try {
             line = reader.readLine();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            TableViewer.addThreadErrorMessage("[Thread " + id + "]" + ex.getMessage());
             return;
         }
 
@@ -92,7 +92,7 @@ public class FileLoaderWorker implements Runnable {
                 try {
                     line = reader.readLine();
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    TableViewer.addThreadErrorMessage("[Thread " + id + "]" + ex.getMessage());
                     return;
                 }
                 continue;
@@ -103,13 +103,12 @@ public class FileLoaderWorker implements Runnable {
             try {
                 human = Human.loadFromString(line);
             } catch (Exception ex) {
-                System.out.println(line);
-                System.out.println("failed to parse human string");
+                TableViewer.addThreadErrorMessage("[Thread " + id + "] failed to parse human string");
 
                 try {
                     line = reader.readLine();
                 } catch (Exception exx) {
-                    exx.printStackTrace();
+                    TableViewer.addThreadErrorMessage("[Thread " + id + "]" + ex.getMessage());
                 }
 
                 continue;
@@ -118,7 +117,7 @@ public class FileLoaderWorker implements Runnable {
             try {
                 Thread.sleep(Math.round(Math.random() * 20));
             } catch (Exception ex) {
-                ex.printStackTrace();
+                TableViewer.addThreadErrorMessage("[Thread " + id + "]" + ex.getMessage());
             }
 
             TableViewer.addHumanRecord(human);
@@ -132,7 +131,7 @@ public class FileLoaderWorker implements Runnable {
             try {
                 line = reader.readLine();
             } catch (Exception ex) {
-                ex.printStackTrace();
+                TableViewer.addThreadErrorMessage("[Thread " + id + "]" + ex.getMessage());
             }
         }
 

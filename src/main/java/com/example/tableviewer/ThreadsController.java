@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ThreadsController implements Initializable, ICommonController {
+public class ThreadsController extends CommonController implements Initializable {
     @FXML public ListView<ThreadInfo> threadsListView;
     @FXML public ListView<String> logsListView;
 
@@ -44,7 +44,7 @@ public class ThreadsController implements Initializable, ICommonController {
     @Override
     public void onAnyUpdate() {
         Platform.runLater(() -> {
-
+            logsListView.getItems().setAll(TableViewer.getThreadErrorMessages());
         });
     }
 }
