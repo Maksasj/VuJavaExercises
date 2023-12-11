@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainAnchorPane" maxHeight="56.0" maxWidth="272.0" minHeight="30.0" minWidth="150.0" prefHeight="56.0" prefWidth="272.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ProgressBar fx:id="threadProgressBar" layoutX="8.0" layoutY="27.0" prefHeight="24.0" prefWidth="258.0" progress="0.0" />
+      <Text fx:id="threadNameText" layoutX="8.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thread 1">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+      <Text fx:id="fileNameText" fill="#7b7b7b" layoutX="80.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="file.csv" textAlignment="RIGHT" wrappingWidth="185.906982421875">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
