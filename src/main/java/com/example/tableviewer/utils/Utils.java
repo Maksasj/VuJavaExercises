@@ -33,6 +33,13 @@ public class Utils {
         return true;
     }
 
+    public static boolean inRange(char value, char min, char max) {
+        if(value < min) return false;
+        if(value > max) return false;
+
+        return true;
+    }
+
     public static boolean inRange(LocalDate value, LocalDate min, LocalDate max) {
         if(value.isAfter(max)) return false;
         if(value.isBefore(min)) return false;

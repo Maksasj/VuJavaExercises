@@ -18,6 +18,7 @@ import javax.security.auth.callback.Callback;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -45,12 +46,16 @@ public class MainController extends CommonController implements Initializable {
     @FXML public CheckBox alphabetFilterCheckBox;
 
     @FXML public ChoiceBox<AlpTabs> tabChoiceBox;
-
+    @FXML public TextField startCharTextField;
+    @FXML public TextField endCharTextField;
 
     @FXML public CheckBox idFilterCheckBox;
     @FXML public Spinner<Integer> startIdSpinner;
     @FXML public Spinner<Integer> endIdSpinner;
 
+    @FXML public CheckBox sortFilterCheckBox;
+    @FXML public ChoiceBox<AlpTabs> sortTabChoiceBox;
+    @FXML public CheckBox reverseOrederSortCheckBox;
 
     @FXML public void onFilter() {
         Stream<Human> stream = TableViewer.getHumanRecords().stream();
@@ -77,10 +82,62 @@ public class MainController extends CommonController implements Initializable {
             });
         }
 
+        if( alphabetFilterCheckBox.isSelected() &&
+            (tabChoiceBox.getValue() != null) &&
+            (startCharTextField.getText() != null) &&
+            (endCharTextField.getText() != null) &&
+            (!startCharTextField.getText().isEmpty()) &&
+            (!endCharTextField.getText().isEmpty())
+
+        ) {
+            stream = stream.filter(input -> {
+                var human = (Human) input;
+
+                var min = startCharTextField.getText().toLowerCase().charAt(0);
+                var max =  endCharTextField.getText().toLowerCase().charAt(0);
+
+                String fieldValue = " ";
+
+                switch (tabChoiceBox.getValue()) {
+                    case FIRST_NAME -> fieldValue = human.firstName;
+                    case LAST_NAME -> fieldValue = human.lastName;
+                    case EMAIL -> fieldValue = human.email;
+                    case GENDER -> fieldValue = human.gender;
+                    case COUNTRY -> fieldValue = human.country;
+                    case DOMAIN_NAME -> fieldValue = human.domain;
+                }
+
+                if(fieldValue.isEmpty())
+                    return false;
+
+                var val = fieldValue.toLowerCase().charAt(0);
+
+                return Utils.inRange(val, min, max);
+            });
+        }
+
+        if(sortFilterCheckBox.isSelected() && (sortTabChoiceBox.getValue() != null)) {
+            var cmp = Comparator.comparing(Human::getFirstName);
+
+            switch (sortTabChoiceBox.getValue()) {
+                case ID_TAB ->      cmp = Comparator.comparing(Human::getId);
+                case FIRST_NAME ->  cmp = Comparator.comparing(Human::getFirstName);
+                case LAST_NAME ->   cmp = Comparator.comparing(Human::getLastName);
+                case EMAIL ->       cmp = Comparator.comparing(Human::getEmail);
+                case GENDER ->      cmp = Comparator.comparing(Human::getGender);
+                case COUNTRY ->     cmp = Comparator.comparing(Human::getCountry);
+                case DOMAIN_NAME -> cmp = Comparator.comparing(Human::getDomain);
+                case BIRTH_DAY_TAB -> cmp = Comparator.comparing(Human::getBirthDate);
+            }
+
+            if(reverseOrederSortCheckBox.isSelected())
+                cmp = cmp.reversed();
+
+            stream = stream.sorted(cmp);
+        }
+
         List<Human> result = stream.collect(Collectors.toList());
         humanTableView.getItems().setAll(result);
-
-        System.out.println("Filtering");
     }
 
     @Override
@@ -109,6 +166,15 @@ public class MainController extends CommonController implements Initializable {
         tabChoiceBox.getItems().add(AlpTabs.GENDER);
         tabChoiceBox.getItems().add(AlpTabs.COUNTRY);
         tabChoiceBox.getItems().add(AlpTabs.DOMAIN_NAME);
+
+        sortTabChoiceBox.getItems().add(AlpTabs.ID_TAB);
+        sortTabChoiceBox.getItems().add(AlpTabs.FIRST_NAME);
+        sortTabChoiceBox.getItems().add(AlpTabs.LAST_NAME);
+        sortTabChoiceBox.getItems().add(AlpTabs.EMAIL);
+        sortTabChoiceBox.getItems().add(AlpTabs.GENDER);
+        sortTabChoiceBox.getItems().add(AlpTabs.COUNTRY);
+        sortTabChoiceBox.getItems().add(AlpTabs.DOMAIN_NAME);
+        sortTabChoiceBox.getItems().add(AlpTabs.BIRTH_DAY_TAB);
 
         setIntegerValueFactory(startIdSpinner, 0, Integer.MAX_VALUE);
         setIntegerValueFactory(endIdSpinner, 0, Integer.MAX_VALUE);

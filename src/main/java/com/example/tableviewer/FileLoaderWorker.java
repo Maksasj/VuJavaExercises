@@ -136,5 +136,7 @@ public class FileLoaderWorker implements Runnable {
         }
 
         done = true;
+
+        TableViewer.addThreadErrorMessage("[Thread " + id + "] is done");
     }
 }

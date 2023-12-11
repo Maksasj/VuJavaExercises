@@ -39,6 +39,7 @@ public class TableViewer extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("TableViewer!");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

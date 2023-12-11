@@ -15,6 +15,38 @@ public class Human {
     public String domain;
     public LocalDate birthDate;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
     private Human(int id, String firstName, String lastName, String email, String gender, String country, String domain, LocalDate birthDate) {
         this.id = id;
         this.firstName = firstName;

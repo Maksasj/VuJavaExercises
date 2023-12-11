@@ -31,15 +31,17 @@
       <CheckBox fx:id="alphabetFilterCheckBox" layoutX="199.0" layoutY="6.0" mnemonicParsing="false" text="Alphabet filter" />
       <ChoiceBox fx:id="tabChoiceBox" layoutX="201.0" layoutY="30.0" prefWidth="150.0" />
       <Button layoutX="743.0" layoutY="77.0" mnemonicParsing="false" onAction="#onFilter" text="Filter" />
-      <CheckBox layoutX="266.0" layoutY="77.0" mnemonicParsing="false" text="Reverse order" />
+      <CheckBox fx:id="reverseOrederSortCheckBox" layoutX="510.0" layoutY="59.0" mnemonicParsing="false" text="Reverse order" />
       <CheckBox fx:id="idFilterCheckBox" layoutX="387.0" layoutY="6.0" mnemonicParsing="false" text="ID filter" />
-      <TextField layoutX="201.0" layoutY="73.0" prefHeight="25.0" prefWidth="25.0" />
+      <TextField fx:id="startCharTextField" layoutX="201.0" layoutY="73.0" prefHeight="25.0" prefWidth="25.0" />
       <Text layoutX="202.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
-      <TextField layoutX="235.0" layoutY="73.0" prefHeight="25.0" prefWidth="25.0" />
+      <TextField fx:id="endCharTextField" layoutX="235.0" layoutY="73.0" prefHeight="25.0" prefWidth="25.0" />
       <Text layoutX="238.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End" />
       <Spinner fx:id="startIdSpinner" editable="true" layoutX="387.0" layoutY="42.0" prefHeight="25.0" prefWidth="75.0" />
       <Spinner fx:id="endIdSpinner" editable="true" layoutX="387.0" layoutY="76.0" prefHeight="25.0" prefWidth="75.0" />
       <Text layoutX="462.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="start ID" />
       <Text layoutX="462.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="end ID" />
+      <CheckBox fx:id="sortFilterCheckBox" layoutX="510.0" layoutY="6.0" mnemonicParsing="false" text="Alphabet sort" />
+      <ChoiceBox fx:id="sortTabChoiceBox" layoutX="510.0" layoutY="25.0" prefWidth="150.0" />
    </children>
 </Pane>
