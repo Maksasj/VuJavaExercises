@@ -18,6 +18,22 @@ public class RatLuaInterface {
         }
     }
 
+    public static float get_x() {
+        var value = TartarMEGame.rat.getPosition().x();
+
+        waitm(50);
+
+        return value;
+    }
+
+    public static float get_y() {
+        var value = TartarMEGame.rat.getPosition().z();
+
+        waitm(50);
+
+        return value;
+    }
+
     public static void walk() {
         TartarMEIDEA.controller.logMessage(new LogMessage(RAT, "walks forward"));
 
@@ -56,6 +72,25 @@ public class RatLuaInterface {
         waitm(400);
 
         rat.markMoved(true);
+    }
+
+    public static float cheese_distance() {
+        var cheese = TartarMEGame.cheese.getPosition();
+        var rat = TartarMEGame.rat.getPosition();
+
+        var x = cheese.x() - rat.x();
+        var y = cheese.y() - rat.y();
+        var z = cheese.z() - rat.z();
+
+        waitm(100);
+
+        return (float) Math.sqrt(x*x + y*y + z*z);
+    }
+
+    public static void say(String text) {
+        TartarMEIDEA.controller.logMessage(new LogMessage(RAT, "says: " + text));
+
+        waitm(100);
     }
 
     public static void rotate_left() {
@@ -107,26 +142,76 @@ public class RatLuaInterface {
         var pos = new Pair2D(Math.round(position.x()), Math.round(position.z()));
 
         switch (rotation) {
-            case X_PLUS -> {
-                if(maze.isInBounds(pos.x + 1, pos.y) && (maze.isSolidAt(pos.x + 1, pos.y) == 0)) {
-                    return true;
-                }
-            }
-            case X_MINUS -> {
-                if(maze.isInBounds(pos.x - 1, pos.y) && (maze.isSolidAt(pos.x - 1, pos.y) == 0)) {
-                    return true;
-                }
-            }
-            case Z_PLUS -> {
-                if(maze.isInBounds(pos.x, pos.y + 1) && (maze.isSolidAt(pos.x, pos.y + 1) == 0)) {
-                    return true;
-                }
-            }
-            case Z_MINUS -> {
-                if(maze.isInBounds(pos.x, pos.y - 1) && (maze.isSolidAt(pos.x, pos.y - 1) == 0)) {
-                    return true;
-                }
-            }
+            case X_PLUS ->  { if(maze.isInBounds(pos.x + 1, pos.y) && (maze.isSolidAt(pos.x + 1, pos.y) == 0)) return true; }
+            case X_MINUS -> { if(maze.isInBounds(pos.x - 1, pos.y) && (maze.isSolidAt(pos.x - 1, pos.y) == 0)) return true; }
+            case Z_PLUS ->  { if(maze.isInBounds(pos.x, pos.y + 1) && (maze.isSolidAt(pos.x, pos.y + 1) == 0)) return true; }
+            case Z_MINUS -> { if(maze.isInBounds(pos.x, pos.y - 1) && (maze.isSolidAt(pos.x, pos.y - 1) == 0)) return true; }
+        }
+
+        waitm(200);
+
+        rat.markMoved(true);
+
+        return false;
+    }
+
+    public static boolean look_left() {
+        TartarMEIDEA.controller.logMessage(new LogMessage(RAT, "looks left"));
+
+        var rat = RatController.getActiveRat();
+        var level = RatController.getActiveLevel();
+
+        var ratRotation = rat.getRotation();
+        var position = rat.getPosition();
+
+        var rotation = switch (ratRotation) {
+            case X_PLUS ->  Rotation.Z_MINUS;
+            case X_MINUS -> Rotation.Z_PLUS;
+            case Z_PLUS ->  Rotation.X_PLUS;
+            case Z_MINUS -> Rotation.X_MINUS;
+        };
+
+        var maze =level.getMap().getMaze();
+        var pos = new Pair2D(Math.round(position.x()), Math.round(position.z()));
+
+        switch (rotation) {
+            case X_PLUS ->  { if(maze.isInBounds(pos.x + 1, pos.y) && (maze.isSolidAt(pos.x + 1, pos.y) == 0)) return true; }
+            case X_MINUS -> { if(maze.isInBounds(pos.x - 1, pos.y) && (maze.isSolidAt(pos.x - 1, pos.y) == 0)) return true; }
+            case Z_PLUS ->  { if(maze.isInBounds(pos.x, pos.y + 1) && (maze.isSolidAt(pos.x, pos.y + 1) == 0)) return true; }
+            case Z_MINUS -> { if(maze.isInBounds(pos.x, pos.y - 1) && (maze.isSolidAt(pos.x, pos.y - 1) == 0)) return true; }
+        }
+
+        waitm(200);
+
+        rat.markMoved(true);
+
+        return false;
+    }
+
+    public static boolean look_right() {
+        TartarMEIDEA.controller.logMessage(new LogMessage(RAT, "looks right"));
+
+        var rat = RatController.getActiveRat();
+        var level = RatController.getActiveLevel();
+
+        var ratRotation = rat.getRotation();
+        var position = rat.getPosition();
+
+        var rotation = switch (ratRotation) {
+            case X_PLUS ->  Rotation.Z_PLUS;
+            case X_MINUS -> Rotation.Z_MINUS;
+            case Z_PLUS ->  Rotation.X_MINUS;
+            case Z_MINUS -> Rotation.X_PLUS;
+        };
+
+        var maze =level.getMap().getMaze();
+        var pos = new Pair2D(Math.round(position.x()), Math.round(position.z()));
+
+        switch (rotation) {
+            case X_PLUS ->  { if(maze.isInBounds(pos.x + 1, pos.y) && (maze.isSolidAt(pos.x + 1, pos.y) == 0)) return true; }
+            case X_MINUS -> { if(maze.isInBounds(pos.x - 1, pos.y) && (maze.isSolidAt(pos.x - 1, pos.y) == 0)) return true; }
+            case Z_PLUS ->  { if(maze.isInBounds(pos.x, pos.y + 1) && (maze.isSolidAt(pos.x, pos.y + 1) == 0)) return true; }
+            case Z_MINUS -> { if(maze.isInBounds(pos.x, pos.y - 1) && (maze.isSolidAt(pos.x, pos.y - 1) == 0)) return true; }
         }
 
         waitm(200);

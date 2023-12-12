@@ -12,7 +12,9 @@ public class EditorCodePattens {
 
     public static final String[] RATKEYWORDS = new String[] {
             "rat", "walk", "rotate_left", "rotate_right",
-            "look", "look_left", "look_right"
+            "look", "look_left", "look_right", "say",
+            "look_left", "look_right", "cheese_distance",
+            "get_x", "get_y"
     };
 
     public static final String[] VALUEKEYWORDS = new String[] {
