@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Tab xmlns="http://javafx.com/javafx"
+     xmlns:fx="http://javafx.com/fxml"
+     fx:controller="com.lab2.rkc.scenes.FileSaveController"
+     text="Išsaugoti">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+                <SplitPane dividerPositions="0.5" prefHeight="572.0" prefWidth="800.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="326.0">
+                            <children>
+                                <ChoiceBox fx:id="selectedCreditChoiceBox" layoutX="14.0" layoutY="33.0" prefWidth="150.0" />
+                                <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasirinktas kreditas" />
+                                <Text layoutX="16.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stulpeliai" />
+                                <CheckBox fx:id="collumTimeCheckBox" layoutX="18.0" layoutY="260.0" mnemonicParsing="false" selected="true" text="Laikas" />
+                                <CheckBox fx:id="collumMounthPayCheckBox" layoutX="17.0" layoutY="284.0" mnemonicParsing="false" selected="true" text="Mėnėsinė įmoka" />
+                                <CheckBox fx:id="collumInterestCheckBox" layoutX="17.0" layoutY="309.0" mnemonicParsing="false" selected="true" text="Palūkanos" />
+                                <CheckBox fx:id="collumCreditCheckBox" layoutX="17.0" layoutY="335.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="82.0" selected="true" text="Kreditas" />
+                                <CheckBox fx:id="collumLeftAmountCheckBox" layoutX="17.0" layoutY="360.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" selected="true" text="Liko sumokėti" />
+                                <Spinner fx:id="startMonthPeriod" disable="true" layoutX="152.0" layoutY="259.0" prefHeight="26.0" prefWidth="81.0" />
+                                <Text disable="true" layoutX="152.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laiko intervalas (menesiais)" />
+                                <Spinner fx:id="startEndPeriod" disable="true" layoutX="153.0" layoutY="294.0" prefHeight="26.0" prefWidth="81.0" />
+                                <CheckBox fx:id="enableTimePeriodOptionCheckBox" layoutX="151.0" layoutY="324.0" mnemonicParsing="false" onAction="#onEnableTimePeriod" prefHeight="18.0" prefWidth="166.0" text="Laiko intervalo filtras" />
+                                <Text layoutX="242.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pradžia" />
+                                <Text layoutX="242.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pabaiga" />
+                                <ListView fx:id="selectedCreditDeferralListView" layoutX="15.0" layoutY="88.0" prefHeight="145.0" prefWidth="362.0" />
+                                <Text layoutX="16.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasirinkto kredito atidėjimai" />
+                                <Text fx:id="errorText" fill="RED" layoutX="16.0" layoutY="553.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error:" />
+                                <Button layoutX="173.0" layoutY="33.0" mnemonicParsing="false" onAction="#onShowDeferrals" text="Rodyti Pasirinkto kredito atidėjimus" />
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <children>
+                                <TextField fx:id="folderNameTextField" layoutX="14.0" layoutY="48.0" prefHeight="26.0" prefWidth="247.0" text="C:\" />
+                                <Button layoutX="286.0" layoutY="48.0" mnemonicParsing="false" onAction="#onChoiceTargetPath" text="Pasirinkti kelią" />
+                                <Text fx:id="pathPreviewText" fill="#a1a1a1" layoutX="16.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Failas bus išsaugotas: C:\table.csv" />
+                                <TextField fx:id="fileNameTextField" layoutX="14.0" layoutY="14.0" promptText="Failo pavadinimas" text="table.csv" />
+                                <Button layoutX="181.0" layoutY="14.0" mnemonicParsing="false" onAction="#onGenerateRandomFileName" text="Sugeneruoti atsitiktinį pavadinimą" />
+                                <Button layoutX="294.0" layoutY="531.0" mnemonicParsing="false" onAction="#onSaveToFile" text="Išsaugoti faile" />
+                                <CheckBox fx:id="excelTableCheckBox" layoutX="16.0" layoutY="93.0" mnemonicParsing="false" text="Excel lentelė" />
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children>
+        </AnchorPane>
+    </content>
+</Tab>

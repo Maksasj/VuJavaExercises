@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<Tab xmlns="http://javafx.com/javafx"
+     xmlns:fx="http://javafx.com/fxml"
+     fx:controller="com.lab2.rkc.scenes.TableController"
+     text="Lentelė">
+    <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <children>
+                <TableView fx:id="creditTableTableView" layoutX="7.0" layoutY="93.0" prefHeight="474.0" prefWidth="787.0">
+                    <columns>
+                        <TableColumn fx:id="mounthTableCollum" prefWidth="77.60003662109375" text="Laikas" />
+                        <TableColumn fx:id="mounthPayTableCollum" prefWidth="165.5999755859375" text="Mėnesinė įmoka" />
+                        <TableColumn fx:id="interestTableCollum" prefWidth="221.60003662109375" text="Palūkanos" />
+                        <TableColumn fx:id="creditTableCollum" prefWidth="163.99993896484375" text="Kreditas" />
+                        <TableColumn fx:id="leftAmountTableCollum" prefWidth="158.4000244140625" text="Liko sumokėti" />
+                    </columns>
+                </TableView>
+                <Text layoutX="7.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pasirinktas kreditas" wrappingWidth="134.13671875" />
+                <Spinner fx:id="tableStartMonthSpinner" layoutX="179.0" layoutY="22.0" prefHeight="26.0" prefWidth="62.0" />
+                <Text layoutX="179.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Laiko intervalas (menesiais)" wrappingWidth="155.3453369140625" />
+                <Spinner fx:id="tableEndMonthSpinner" layoutX="179.0" layoutY="54.0" prefHeight="26.0" prefWidth="62.0" />
+                <Text layoutX="249.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pradžia" wrappingWidth="52.9453125" />
+                <Text layoutX="249.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pabaiga" wrappingWidth="52.9453125" />
+                <ChoiceBox fx:id="selectedCreditTableBox" layoutX="7.0" layoutY="22.0" prefWidth="150.0" />
+                <Button layoutX="306.0" layoutY="54.0" mnemonicParsing="false" onAction="#onFilterTable" text="Filtruoti" />
+                <Button layoutX="306.0" layoutY="23.0" mnemonicParsing="false" onAction="#onClearTable" text="Nuvalyti lenelė" />
+                <Button layoutX="7.0" layoutY="54.0" mnemonicParsing="false" onAction="#onShowCreditTableData" text="Rodyti lentelė" />
+                <Text fx:id="errorTextTable" fill="RED" layoutX="403.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error" wrappingWidth="382.417236328125" />
+            </children>
+        </AnchorPane>
+    </content>
+</Tab>
