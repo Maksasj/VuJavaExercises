@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.radioboos.poke_pedia.common;
 
 import javafx.scene.image.Image;
