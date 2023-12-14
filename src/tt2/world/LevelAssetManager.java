@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas radioboos@gmail.com
+*/
+
 package tt2.world;
 
 import com.google.gson.Gson;

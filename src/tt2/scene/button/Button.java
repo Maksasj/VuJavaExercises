@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas radioboos@gmail.com
+*/
+
 package tt2.scene.button;
 
 import com.raylib.java.core.Color;

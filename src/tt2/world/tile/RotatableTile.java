@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas radioboos@gmail.com
+*/
+
 package tt2.world.tile;
 
 import com.raylib.java.raymath.Vector3;

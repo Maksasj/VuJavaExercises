@@ -1,13 +1,9 @@
-package tt2;
-
 /**
- * @file
- * Tartar2.java
- *
  * @author
  * Maksim Jaroslavcevas radioboos@gmail.com
- *
- */
+*/
+
+package tt2;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
