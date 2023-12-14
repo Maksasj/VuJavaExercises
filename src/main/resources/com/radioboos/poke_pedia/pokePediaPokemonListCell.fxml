@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane fx:id="thingAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="64.0" prefWidth="376.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="pokemonIcon" fitHeight="54.0" fitWidth="69.0" layoutX="7.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@icons/abomasnow.jpg" />
+         </image>
+      </ImageView>
+      <Text fx:id="pokemonNameText" layoutX="67.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pokemon name">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="pokemonGenerationText" layoutX="67.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Generation 1" />
+      <Text fx:id="pokemonStatusText" layoutX="67.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status: Legendary" />
+      <Text fx:id="pokemonSpeciesText" layoutX="170.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Species: Seed Pokémon" textAlignment="RIGHT" wrappingWidth="200.85076904296875" AnchorPane.rightAnchor="6.98828125" />
+      <Text fx:id="pokemonTypeText" layoutX="255.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Grass" textAlignment="RIGHT" wrappingWidth="115.005859375" AnchorPane.rightAnchor="5.994140625" />
+      <Text fx:id="pokemonTotalPointsText" layoutX="219.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Points: 325" textAlignment="RIGHT" wrappingWidth="150.5859375" AnchorPane.rightAnchor="6.98828125" />
+   </children>
+</AnchorPane>
