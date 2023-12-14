@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="543.0" style="-fx-background-color: #1e1f22;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="messageText" fill="#ebebeb" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="[Rat] tries to walk forward" wrappingWidth="570.1367607116699" />
+      <Text fx:id="timestampText" fill="#3c3f41" layoutX="319.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2023-12-08 10:27" textAlignment="RIGHT" wrappingWidth="283.7366271018982" AnchorPane.rightAnchor="0.0" />
+   </children>
+</AnchorPane>

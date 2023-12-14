@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #1e1f22;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tartar_mouse_edition.idea.MainController">
+   <children>
+      <Pane fx:id="codePane" maxHeight="450.0" maxWidth="600.0" minHeight="450.0" minWidth="600.0" prefHeight="450.0" prefWidth="600.0" />
+      <Pane layoutY="450.0" maxHeight="150.0" maxWidth="600.0" minHeight="150.0" minWidth="600.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-color: #2b2d30;">
+         <children>
+            <Button layoutX="525.0" layoutY="5.0" mnemonicParsing="false" onAction="#onExecuteCode" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: #57955c;" text="Execute" textFill="#1e1f22">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button layoutX="82.0" layoutY="5.0" mnemonicParsing="false" onAction="#onForceStop" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #c84f4f;" text="Force stop" textFill="#1e1f22">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#onRestart" prefHeight="25.0" prefWidth="71.0" style="-fx-background-color: #c8aa4f;" text="Restart" textFill="#1e1f22">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <ListView fx:id="consoleListView" layoutX="5.0" layoutY="38.0" prefHeight="91.0" prefWidth="590.0" style="-fx-background-color: #1e1f22;" />
+            <Text fill="#3c3f41" layoutX="444.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="execution 25ms" textAlignment="RIGHT" wrappingWidth="150.2933349609375">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Text fill="#3c3f41" layoutX="5.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="535 lines" wrappingWidth="150.2933349609375">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Button layoutX="430.0" layoutY="5.0" mnemonicParsing="false" onAction="#onClearLogs" prefHeight="25.0" prefWidth="89.0" style="-fx-background-color: #4f87c8;" text="Clear logs" textFill="#1e1f22">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</Pane>
