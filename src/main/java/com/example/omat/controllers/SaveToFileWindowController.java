@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.controllers;
 
 import com.example.omat.Omat;
@@ -80,7 +85,7 @@ public class SaveToFileWindowController extends CommonController {
 
         defaultInitialize();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     public void notifyError(String error) {

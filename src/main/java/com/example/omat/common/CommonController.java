@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.common;
 
 import com.example.omat.OmatApplication;
@@ -8,7 +13,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public abstract class CommonController implements Initializable {
+public abstract class CommonController implements Initializable, OnAnyUpdateble {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         OmatApplication.addController(this);
@@ -25,5 +30,4 @@ public abstract class CommonController implements Initializable {
     }
 
     public abstract void notifyError(String error);
-    public abstract void onAnyUpdate();
 }

@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.controllers;
 
 import com.example.omat.Omat;
@@ -95,7 +100,7 @@ public class AttendanceTabController extends CommonController {
     protected void onMonthChange() {
         monthText.setText(monthsChoiceBox.getValue().toString());
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     private void defaultInitialize() {
@@ -117,7 +122,7 @@ public class AttendanceTabController extends CommonController {
 
         fillTable();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @Override
@@ -134,7 +139,7 @@ public class AttendanceTabController extends CommonController {
             if(!selectedStudents.contains(selected))
                 selectedStudents.add(selected);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML private void onDeleteStudent() {
@@ -144,13 +149,13 @@ public class AttendanceTabController extends CommonController {
             selectedStudents.remove(selected);
         }
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML private void onClearSelectedStudents() {
         selectedStudents.clear();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML private void onSaveToFile() throws IOException {
@@ -170,7 +175,7 @@ public class AttendanceTabController extends CommonController {
         stage.show();
         stage.setResizable(false);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     public void notifyError(String error) {

@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.controllers;
 
 import com.example.omat.Omat;
@@ -82,7 +87,7 @@ public class StudentWindowController extends CommonController {
 
         selectedMonth.getSelectionModel()
             .selectedItemProperty()
-            .addListener( (ObservableValue<? extends Month> observable, Month oldValue, Month newValue) -> OmatApplication.onAnyUpdate() );
+            .addListener( (ObservableValue<? extends Month> observable, Month oldValue, Month newValue) -> OmatApplication.updateControllers() );
 
         setIntegerValueFactory(studentIDSpinner, 0, Integer.MAX_VALUE);
 
@@ -101,7 +106,7 @@ public class StudentWindowController extends CommonController {
         );
         studentFacultyChoiceBox.getSelectionModel().select(0);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     public Group getStudentGroup(Student student) {
@@ -144,7 +149,7 @@ public class StudentWindowController extends CommonController {
         studentGroupChoiceBox.getSelectionModel().select(getStudentGroup(student));
         studentFacultyChoiceBox.getSelectionModel().select(student.getFaculty());
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     private void deleteFromGroups(Student student) {
@@ -166,7 +171,7 @@ public class StudentWindowController extends CommonController {
         Group group = studentGroupChoiceBox.getValue();
         group.addStudent(student);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     public void notifyError(String error) {

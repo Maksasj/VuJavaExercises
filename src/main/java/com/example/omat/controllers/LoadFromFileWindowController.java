@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.controllers;
 
 import com.example.omat.Omat;
@@ -64,7 +69,7 @@ public class LoadFromFileWindowController extends CommonController {
 
         defaultInitialize();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     public void notifyError(String error) {
@@ -83,7 +88,7 @@ public class LoadFromFileWindowController extends CommonController {
 
         filePathTextField.setText(selectedFile.getAbsolutePath());
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML protected void onLoadFromFile() {
@@ -103,13 +108,13 @@ public class LoadFromFileWindowController extends CommonController {
 
         importer.importt(Omat.getGroups(), Omat.getStudents());
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML
     protected void onResetToDefaults() {
         defaultInitialize();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 }

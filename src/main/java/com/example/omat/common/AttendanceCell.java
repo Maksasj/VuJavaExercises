@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.common;
 
 import com.example.omat.OmatApplication;
@@ -65,7 +70,7 @@ public class AttendanceCell extends AnchorPane {
 
         display();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML

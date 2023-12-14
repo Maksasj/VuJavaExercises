@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.controllers;
 
 import com.example.omat.Omat;
@@ -61,7 +66,7 @@ public class StudentTabController extends CommonController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     public void notifyError(String error) {
@@ -130,7 +135,7 @@ public class StudentTabController extends CommonController {
         Omat.addStudent(student);
         selectedGroup.addStudent(student);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML
@@ -158,7 +163,7 @@ public class StudentTabController extends CommonController {
         stage.show();
         stage.setResizable(false);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML
@@ -167,7 +172,7 @@ public class StudentTabController extends CommonController {
         if(selected != null)
             Omat.getStudents().remove(selected);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
 
@@ -175,6 +180,6 @@ public class StudentTabController extends CommonController {
     protected void onDeleteAllStudents() {
         Omat.deleteAllStudents();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 }

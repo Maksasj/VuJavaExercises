@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.controllers;
 
 import com.example.omat.Omat;
@@ -34,13 +39,13 @@ public class GroupsTabController extends CommonController {
     public void initialize(URL location, ResourceBundle resources) {
         super.initialize(location, resources);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML public void onDeleteAllGroups() {
         Omat.deleteAllGroups();
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML public void onDeleteSelectedGroup() {
@@ -50,7 +55,7 @@ public class GroupsTabController extends CommonController {
             Omat.deleteGroup(selected);
         }
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @Override
@@ -84,16 +89,16 @@ public class GroupsTabController extends CommonController {
 
         Omat.addGroup(new Group(groupName, groupDescription));
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML public void onClearGroupName() {
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 
     @FXML public void onClearGroupDescription() {
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 }

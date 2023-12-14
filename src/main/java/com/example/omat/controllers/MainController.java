@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.controllers;
 
 import com.example.omat.OmatApplication;
@@ -31,6 +36,6 @@ public class MainController {
         stage.show();
         stage.setResizable(false);
 
-        OmatApplication.onAnyUpdate();
+        OmatApplication.updateControllers();
     }
 }

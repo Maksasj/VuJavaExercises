@@ -1,6 +1,12 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.example.omat.students;
 
 import com.example.omat.students.attendance.YearAttendanceData;
+import com.microsoft.schemas.office.office.STInsetMode;
 
 import java.util.HashMap;
 
@@ -30,6 +36,11 @@ public class Student {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return  getName() + " " + getSurname();
     }
 
     public String getSurname() {
