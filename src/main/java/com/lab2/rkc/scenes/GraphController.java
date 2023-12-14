@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.lab2.rkc.scenes;
 
 import com.lab2.rkc.CreditCalculator;

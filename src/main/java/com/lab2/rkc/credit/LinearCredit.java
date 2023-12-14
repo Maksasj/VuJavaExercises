@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.lab2.rkc.credit;
 
 import com.lab2.rkc.PayData;
@@ -42,16 +47,17 @@ public class LinearCredit extends Credit {
             }
 
             int daysInMonth = Utils.DAYS_IN_MONTH[i % 12];
-            double monthPayment = balance / (monthsToLast - i) + balance * getCreditRate() * daysInMonth / Utils.DAYS_IN_YEAR;
-            monthPayment = Math.round(monthPayment * 100) / 100.0;
 
-            double interest = balance * monthInterest;
-            interest = Math.round(interest * 100) / 100.0;
+            double monthPayment = Math.round((balance / (monthsToLast - i) + balance * getCreditRate() * daysInMonth / Utils.DAYS_IN_YEAR) * 100) / 100.0;
+            double interest = Math.round((balance * monthInterest) * 100) / 100.0;
+            double credit = Math.round((monthPayment - interest) * 100) / 100.0;
 
-            double credit = monthPayment - interest;
-            credit = Math.round(credit * 100) / 100.0;
-
-            PayData paymentData = new PayData(balance, monthPayment, interest, credit);
+            PayData paymentData = new PayData(
+                    (double) Math.round(interest * 100) / 100,
+                    (double) Math.round(monthPayment * 100) / 100,
+                      (double) Math.round(interest * 100) / 100,
+                       (double) Math.round(credit * 100) / 100
+            );
             paymentDataList.add(paymentData);
 
             balance -= credit;

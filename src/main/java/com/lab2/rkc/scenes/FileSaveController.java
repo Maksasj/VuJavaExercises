@@ -1,14 +1,15 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
 package com.lab2.rkc.scenes;
 
 import com.lab2.rkc.CreditCalculator;
-import com.lab2.rkc.PayData;
-import com.lab2.rkc.PayDataTable;
 import com.lab2.rkc.credit.Credit;
 import com.lab2.rkc.credit.Deferral;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 
@@ -16,11 +17,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
