@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.moody_blues.client.controllers;
 
 import com.moody_blues.client.ClientData;
@@ -58,7 +63,6 @@ public class ChatTabController extends CommonController implements Initializable
         var text = messageTextField.getText();
         if(text != null && !text.isEmpty()) {
             var message = new Message(MoodyBluesClient.getClientData().getUsername(), text);
-
 
             if(room.getType() == RoomType.PUBLIC) {
                 ClientOutputWorker.queuePacket(new SendMessagePacket(room.getRoomUUID(), message));

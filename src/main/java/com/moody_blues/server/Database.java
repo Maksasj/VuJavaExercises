@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.moody_blues.server;
 
 import com.moody_blues.common.PrivateRoom;
@@ -7,10 +12,11 @@ import com.moody_blues.common.RoomType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class Database implements Serializable {
-    private ArrayList<Room> rooms;
+    private List<Room> rooms;
     private transient ArrayList<Room> privateRooms;
 
     public Database() {

@@ -1,3 +1,8 @@
+/**
+ * @author
+ * Maksim Jaroslavcevas 2 grupe radioboos@gmail.com
+*/
+
 package com.moody_blues.server;
 
 import com.moody_blues.common.Logger;
